@@ -52,7 +52,7 @@ public:
     QString opticalFilePath = "./Content/Optical";
     QString audioFilePath = "./Content/Audio";
     QString opticalButtonIconsPath = opticalFilePath + "/images/ButtonIcons/";
-    QSize *buttonIconSize = new QSize(180,180);
+    QSize *buttonIconSize = new QSize(125,125);
 
     void initializeFileMaps();
     QString readTextFromFile(QString filePath);
@@ -60,13 +60,15 @@ public:
     QWidget *createOpticalWidget(QString filePath);
     QWidget *createAudioWidget();
     QList<QImage> *loadFrameSequence(QString filePath);
-    QScrollArea *createMenuWidget();
+    QWidget *createIllusionTypeButtons();
+    QWidget *createMenuWidget();
     ClickableWidget *createIdleScreenWidget();
 
 private slots:
     void nextIllusionSlot();
     void prevIllusionSlot();
-    void switchIllusionMenu();
+    void switchToOpticalMenu();
+    void switchToAudioMenu();
     void switchToIdleScreen();
     void idleStackedSwitch();
     void switchToExhibitScreen();
@@ -111,14 +113,12 @@ private:
     QProgressBar *audioProgressBar;
 
     //Exhibit navigation widget
-    QPushButton *menuSwitchButton;
+    QPushButton *audioMenuButton;
+    QPushButton *opticalMenuButton;
     QScrollArea *scrollMenu;
-    QStackedWidget *menuWidget;
+    QStackedWidget *illusionSelectWidget;
     QList<WidgetButton*> *opticalButtonsList;
     QList<WidgetButton*> *audioButtonsList;
-
-    //Text widget on exhibit screen
-    //QLabel *illusionExplanationText;
 
     //Idle widget
     ClickableWidget *idleWidget;

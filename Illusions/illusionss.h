@@ -12,11 +12,15 @@ public:
     IllusionSS();
 
     //Paths
-    QString chaletBookBoldPath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf";
-    QString chaletBookRegularPath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Fonts/ChaletBook_10032 2.ttf";
-    QString chaletBookObliquePath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Fonts/ChaletOblique-London.ttf";
-    QString backgroundPath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Illusions_Background_APR24.png";
-    QString idlePath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/idleScreen.png";
+    QString chaletBookBoldPath = ":/fonts/StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf";
+    QString chaletBookRegularPath = ":/fonts/StyleResources/Fonts/ChaletBook_10032 2.ttf";
+    QString chaletBookObliquePath = ":/fonts/StyleResources/Fonts/ChaletOblique-London.ttf";
+    QString backgroundPath = ":/images/StyleResources/Illusions_Background_APR24.png";
+    QString idlePath = ":/images/StyleResources/idleScreen.png";
+    QString audioMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Auditory-Button_APR24.png",
+                                      ":/images/StyleResources/Illusions_Brown-Auditory-Button_APR24.png" };
+    QString opticalMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Optical-Button_APR24.png",
+                                        ":/images/StyleResources/Illusions_Brown-Optical-Button_APR24.png" };
 
     //Stylesheets
     QString menuButton =
