@@ -21,7 +21,7 @@ public:
                                       ":/images/StyleResources/Illusions_Brown-Auditory-Button_APR24.png" };
     QString opticalMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Optical-Button_APR24.png",
                                         ":/images/StyleResources/Illusions_Brown-Optical-Button_APR24.png" };
-
+  
     //Stylesheets
     QString menuButton =
         "QToolButton {"
