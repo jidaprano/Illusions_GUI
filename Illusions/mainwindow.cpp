@@ -56,16 +56,11 @@ MainWindow::MainWindow(QWidget *parent)
     illusionExplanationText->setMaximumHeight(300);
     exhibitVLayout->addWidget(illusionExplanationText);
 
-    //Button to switch between optical and audio illusion menus
-    menuSwitchButton = new QPushButton("Press to switch to audio illusions");
-    connect(menuSwitchButton, SIGNAL(clicked()), this, SLOT(switchIllusionMenu()));
-    exhibitVLayout->addWidget(menuSwitchButton);
-
     //Illusion select widget
-    scrollMenu = createMenuWidget();
-    menuWidget = (QStackedWidget*)scrollMenu->widget();
-    menuWidget->setCurrentIndex(0);
-    exhibitVLayout->addWidget(scrollMenu);
+    QWidget* menuWidget = createMenuWidget();
+    illusionSelectWidget = (QStackedWidget*)menuWidget->findChild<QStackedWidget*>("illusionSelectWidget");
+    illusionSelectWidget->setCurrentIndex(0);
+    exhibitVLayout->addWidget(menuWidget);
 
     //Select first illusion
     //opticalButtonsList->first()->click();
@@ -235,9 +230,34 @@ QList<QImage>* MainWindow::loadFrameSequence(QString filePath) {
     return frameList;
 }
 
-QScrollArea* MainWindow::createMenuWidget() {
-    //Create top-level stacked widget to switch between audio and optical illusions
-    QStackedWidget *menuWidget = new QStackedWidget();
+QWidget* MainWindow::createIllusionTypeButtons() {
+    QWidget* illusionTypeSelection = new QWidget(this);
+
+    //Create and connect audio menu button
+    audioMenuButton = new QPushButton();
+    audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[1]));
+    connect(audioMenuButton, SIGNAL(clicked()), this, SLOT(switchToAudioMenu()));
+
+    //Create and connect optical menu button
+    opticalMenuButton = new QPushButton();
+    opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[0]));
+    connect(opticalMenuButton, SIGNAL(clicked()), this, SLOT(switchToOpticalMenu()));
+
+    //Create layout and add buttons
+    QVBoxLayout *layout = new QVBoxLayout(illusionTypeSelection);
+    layout->addWidget(opticalMenuButton);
+    layout->addWidget(audioMenuButton);
+
+    return illusionTypeSelection;
+}
+
+QWidget* MainWindow::createMenuWidget() {
+    //Top-level menu widget
+    QWidget *topMenuWidget = new QWidget(this);
+
+    //Create stacked widget to switch between audio and optical illusions
+    QStackedWidget *illusionSelectWidget = new QStackedWidget(topMenuWidget);
+    illusionSelectWidget->setParent(topMenuWidget);
 
     //Instantiate optical and audio menu widgets
     QWidget *opticalSelectWidget = new QWidget();
@@ -249,7 +269,7 @@ QScrollArea* MainWindow::createMenuWidget() {
         WidgetButton* button = opticalButtonsList->at(i);
         opticalSelectLayout->addWidget(button);
     }
-    menuWidget->addWidget(opticalSelectWidget);
+    illusionSelectWidget->addWidget(opticalSelectWidget);
 
     //For each audio illusion, add button to layout
     QHBoxLayout *audioSelectLayout = new QHBoxLayout(audioSelectWidget);
@@ -259,7 +279,7 @@ QScrollArea* MainWindow::createMenuWidget() {
         button->setStyleSheet(ss->menuButton);
         audioSelectLayout->addWidget(button);
     }
-    menuWidget->addWidget(audioSelectWidget);
+    illusionSelectWidget->addWidget(audioSelectWidget);
 
 //    QPushButton *prevButton = new QPushButton("Previous Illusion");
 //    connect(prevButton, SIGNAL(clicked(bool)), this, SLOT(prevIllusionSlot()));
@@ -272,7 +292,7 @@ QScrollArea* MainWindow::createMenuWidget() {
 
     //QScrollArea setup
     QScrollArea *scrollArea = new QScrollArea(this);
-    scrollArea->setWidget(menuWidget);
+    scrollArea->setWidget(illusionSelectWidget);
     scrollArea->setMaximumHeight(400);
 
     // hide scrollbars
@@ -281,8 +301,12 @@ QScrollArea* MainWindow::createMenuWidget() {
     // configure gesture and add rubberband effect
     QScroller::grabGesture(scrollArea, QScroller::LeftMouseButtonGesture);
 
+    //Create layout to hold menu for switching between illusions AND for switching between types of illusions
+    QHBoxLayout *topMenuLayout = new QHBoxLayout(topMenuWidget);
+    topMenuLayout->addWidget(scrollArea);
+    topMenuLayout->addWidget(createIllusionTypeButtons());
 
-    return scrollArea;
+    return topMenuWidget;
 }
 
 ClickableWidget* MainWindow::createIdleScreenWidget() {
@@ -303,18 +327,24 @@ ClickableWidget* MainWindow::createIdleScreenWidget() {
     return idleWidget;
 }
 
-void MainWindow::switchIllusionMenu() {
-    if(menuWidget->currentIndex() == 0) {
-        menuWidget->setCurrentIndex(1);
-        menuSwitchButton->setText("Press to switch to optical illusions");
+void MainWindow::switchToOpticalMenu() {
+    if(illusionSelectWidget->currentIndex() != 0) {
+        illusionSelectWidget->setCurrentIndex(0);
+        opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[0]));
+        audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[1]));
+        opticalButtonsList->first()->click();
+        mediaPlayer->pause();
+    }
+}
+
+void MainWindow::switchToAudioMenu() {
+    if(illusionSelectWidget->currentIndex() != 1) {
+        illusionSelectWidget->setCurrentIndex(1);
+        opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[1]));
+        audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[0]));
         audioButtonsList->first()->click();
         illusionStackedWidget->setCurrentWidget(audioIllusionWidget);
         mediaPlayer->play();
-    } else {
-        menuWidget->setCurrentIndex(0);
-        menuSwitchButton->setText("Press to switch to audio illusions");
-        opticalButtonsList->first()->click();
-        mediaPlayer->pause();
     }
 }
 
@@ -352,6 +382,7 @@ void MainWindow::switchToIdleScreen() {
     a->start(QPropertyAnimation::DeleteWhenStopped);
     a->setPaused(true);
 
+    //Create connections for transition
     connect(b, SIGNAL(finished()), a, SLOT(resume()));
     connect(b, SIGNAL(finished()), this, SLOT(idleStackedSwitch()));
 }

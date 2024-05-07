@@ -1,7 +1,17 @@
 <RCC>
     <qresource prefix="/fonts">
-        <file>StyleResources/Fonts/ChaletBook_10032 2.ttf</file>
-        <file>StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf</file>
         <file>StyleResources/Fonts/ChaletOblique-London.ttf</file>
+        <file>StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf</file>
+        <file>StyleResources/Fonts/ChaletBook_10032 2.ttf</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>StyleResources/Illusions_Right-Arrow_APR24.png</file>
+        <file>StyleResources/Illusions_Red-Optical-Button_APR24.png</file>
+        <file>StyleResources/Illusions_Left-Arrow_APR24.png</file>
+        <file>StyleResources/Illusions_Brown-Auditory-Button_APR24.png</file>
+        <file>StyleResources/Illusions_Background_APR24.png</file>
+        <file>StyleResources/idleScreen.png</file>
+        <file>StyleResources/Illusions_Red-Auditory-Button_APR24.png</file>
+        <file>StyleResources/Illusions_Brown-Optical-Button_APR24.png</file>
     </qresource>
 </RCC>
