@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>StyleResources/Fonts/ChaletBook_10032 2.ttf</file>
+        <file>StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf</file>
+        <file>StyleResources/Fonts/ChaletOblique-London.ttf</file>
+    </qresource>
+</RCC>

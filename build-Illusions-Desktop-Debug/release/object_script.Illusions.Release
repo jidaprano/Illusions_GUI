@@ -1,0 +1,17 @@
+release/clickablewidget.o
+release/framesequencewidget.o
+release/hiddentextwidget.o
+release/illusionss.o
+release/main.o
+release/mainwindow.o
+release/qimprovedslider.o
+release/videowidget.o
+release/widgetbutton.o
+release/qrc_Resources.o
+release/moc_clickablewidget.o
+release/moc_framesequencewidget.o
+release/moc_hiddentextwidget.o
+release/moc_mainwindow.o
+release/moc_qimprovedslider.o
+release/moc_videowidget.o
+release/moc_widgetbutton.o

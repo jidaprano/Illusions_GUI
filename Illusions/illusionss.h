@@ -12,9 +12,9 @@ public:
     IllusionSS();
 
     //Paths
-    QString chaletBookBoldPath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf";
-    QString chaletBookRegularPath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Fonts/ChaletBook_10032 2.ttf";
-    QString chaletBookObliquePath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Fonts/ChaletOblique-London.ttf";
+    QString chaletBookBoldPath = ":/fonts/StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf";
+    QString chaletBookRegularPath = ":/fonts/StyleResources/Fonts/ChaletBook_10032 2.ttf";
+    QString chaletBookObliquePath = ":/fonts/StyleResources/Fonts/ChaletOblique-London.ttf";
     QString backgroundPath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/Illusions_Background_APR24.png";
     QString idlePath = "/home/exhibits/Desktop/IllusionsProject/Illusions/StyleResources/idleScreen.png";
 

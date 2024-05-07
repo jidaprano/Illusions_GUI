@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     exhibitVLayout->addWidget(scrollMenu);
 
     //Select first illusion
-    opticalButtonsList->first()->click();
+    //opticalButtonsList->first()->click();
 
     //Idle screen widget
     idleWidget = createIdleScreenWidget();
