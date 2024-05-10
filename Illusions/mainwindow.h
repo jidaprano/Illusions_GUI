@@ -52,13 +52,15 @@ public:
     QString opticalFilePath = "./Content/Optical";
     QString audioFilePath = "./Content/Audio";
     QString opticalButtonIconsPath = opticalFilePath + "/images/ButtonIcons/";
-    QSize *buttonIconSize = new QSize(125,125);
+    QString audioButtonIconsPath = audioFilePath + "/audios/ButtonIcons/";
 
     void initializeFileMaps();
-    QString readTextFromFile(QString filePath);
+    QString readFirstLine(QString filePath);
+    QString readTextExcludingFirstLine(QString filePath);
     void importIllusions();
     QWidget *createOpticalWidget(QString filePath);
     QWidget *createAudioWidget();
+    QWidget *getSpacedIllusion(QWidget *illusion);
     QList<QImage> *loadFrameSequence(QString filePath);
     QWidget *createIllusionTypeButtons();
     QWidget *createMenuWidget();
@@ -105,8 +107,10 @@ private:
 
     //Audio widget components
     QWidget *audioIllusionWidget;
-    QMediaPlayer *mediaPlayer;
+    QMediaPlayer *audioMediaPlayer;
     QAudioOutput *audioOutput;
+    QMediaPlayer *videoMediaPlayer;
+    QVideoWidget *videoOutput;
     QLabel *audioIllusionLabel;
     QPushButton *audioRestartButton;
     HiddenTextWidget *illusionExplanationText;
@@ -119,6 +123,7 @@ private:
     QStackedWidget *illusionSelectWidget;
     QList<WidgetButton*> *opticalButtonsList;
     QList<WidgetButton*> *audioButtonsList;
+    WidgetButton *activeButton;
 
     //Idle widget
     ClickableWidget *idleWidget;

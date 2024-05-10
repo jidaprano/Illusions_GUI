@@ -42,19 +42,17 @@ static constexpr auto qt_meta_stringdata_CLASSVideoWidgetENDCLASS = QtMocHelpers
     "VideoWidget",
     "changePosition",
     "",
-    "changeScrubberLocation",
     "pause",
     "i"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[10];
     char stringdata0[12];
     char stringdata1[15];
     char stringdata2[1];
-    char stringdata3[23];
-    char stringdata4[6];
-    char stringdata5[2];
+    char stringdata3[6];
+    char stringdata4[2];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -63,14 +61,12 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t qt_meta_s
         QT_MOC_LITERAL(0, 11),  // "VideoWidget"
         QT_MOC_LITERAL(12, 14),  // "changePosition"
         QT_MOC_LITERAL(27, 0),  // ""
-        QT_MOC_LITERAL(28, 22),  // "changeScrubberLocation"
-        QT_MOC_LITERAL(51, 5),  // "pause"
-        QT_MOC_LITERAL(57, 1)   // "i"
+        QT_MOC_LITERAL(28, 5),  // "pause"
+        QT_MOC_LITERAL(34, 1)   // "i"
     },
     "VideoWidget",
     "changePosition",
     "",
-    "changeScrubberLocation",
     "pause",
     "i"
 };
@@ -84,7 +80,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,14 +88,12 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   32,    2, 0x08,    1 /* Private */,
-       3,    1,   35,    2, 0x08,    3 /* Private */,
-       4,    1,   38,    2, 0x08,    5 /* Private */,
+       1,    1,   26,    2, 0x08,    1 /* Private */,
+       3,    1,   29,    2, 0x08,    3 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::LongLong,    2,
-    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int,    4,
 
        0        // eod
 };
@@ -116,9 +110,6 @@ Q_CONSTINIT const QMetaObject VideoWidget::staticMetaObject = { {
         // method 'changePosition'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        // method 'changeScrubberLocation'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
         // method 'pause'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>
@@ -133,8 +124,7 @@ void VideoWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         (void)_t;
         switch (_id) {
         case 0: _t->changePosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 1: _t->changeScrubberLocation((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
-        case 2: _t->pause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 1: _t->pause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
@@ -159,13 +149,13 @@ int VideoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 2)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }

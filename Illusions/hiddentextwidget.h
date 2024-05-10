@@ -12,10 +12,11 @@ class HiddenTextWidget : public QWidget
 {
     Q_OBJECT
 public:
-    HiddenTextWidget(QString hiddenText);
-    void setText(QString newText);
+    HiddenTextWidget(QString questionText, QString hiddenText);
+    void setText(QString newQuestionText, QString newHiddenText);
 private:
     QVBoxLayout *layout;
+    QLabel *question;
     QPushButton *revealTextButton;
     QStackedWidget *stackedWidget;
     QLabel *text;

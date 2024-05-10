@@ -21,10 +21,8 @@ private:
     QMediaPlayer *mediaPlayer;
     QVideoWidget *videoOutput;
     QVBoxLayout *layout;
-    QImprovedSlider *scrubber;
 private slots:
     void changePosition(int);
-    void changeScrubberLocation(qint64);
     void pause(int i);
 };
 

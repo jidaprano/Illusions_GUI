@@ -14,4 +14,7 @@
         <file>StyleResources/Illusions_Red-Auditory-Button_APR24.png</file>
         <file>StyleResources/Illusions_Brown-Optical-Button_APR24.png</file>
     </qresource>
+    <qresource prefix="/videos">
+        <file>StyleResources/soundwave.mp4</file>
+    </qresource>
 </RCC>

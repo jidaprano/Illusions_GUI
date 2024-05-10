@@ -1100,6 +1100,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_Resources.cpp
 qrc_Resources.cpp: ../Illusions/Resources.qrc \
 		../../../../Qt/6.5.3/gcc_64/libexec/rcc \
+		../Illusions/StyleResources/soundwave.mp4 \
 		../Illusions/StyleResources/Illusions_Right-Arrow_APR24.png \
 		../Illusions/StyleResources/Illusions_Red-Auditory-Button_APR24.png \
 		../Illusions/StyleResources/Illusions_Left-Arrow_APR24.png \

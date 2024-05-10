@@ -23,7 +23,7 @@ private:
     QLabel *image;
     QVBoxLayout *layout;
     QPixmap pixmap;
-    QImprovedSlider *scrubber;
+    QSlider *scrubber;
     QTimer *autoScrubTimer;
 public slots:
     void scrubSequence(int value);

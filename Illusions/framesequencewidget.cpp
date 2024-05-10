@@ -2,20 +2,17 @@
 
 FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq)
 {
-
-
     this->frameSequence = frameSeq;
     layout = new QVBoxLayout(this);
     image = new QLabel(this);
     pixmap = QPixmap::fromImage(this->frameSequence->first());
-    pixmap = pixmap.scaledToWidth(qApp->screens()[0]->size().width() - 200);
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(pixmap);
 
     layout->addWidget(image);
 
     //Scrubber setup
-    scrubber = new QImprovedSlider(this);
+    scrubber = new QSlider();
     scrubber->setOrientation(Qt::Horizontal);
     scrubber->setRange(0, frameSequence->length() - 1);
     connect(scrubber, SIGNAL(valueChanged(int)), this, SLOT(scrubSequence(int)));
@@ -27,7 +24,7 @@ FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq)
     autoScrubTimer->setInterval(24);
     connect(autoScrubTimer, SIGNAL(timeout()), this, SLOT(playSequence()));
 
-    layout->addWidget(scrubber);
+    //layout->addWidget(scrubber);
     pauseSequence();
 }
 
@@ -37,7 +34,7 @@ void FrameSequenceWidget::scrubSequence(int value) {
         playSequence();
     }
     pixmap = QPixmap::fromImage(this->frameSequence->at(value));
-    pixmap = pixmap.scaledToWidth(qApp->screens()[0]->size().width() - 200);
+    pixmap = pixmap.scaledToWidth(700);
     image->setPixmap(pixmap);
 }
 
