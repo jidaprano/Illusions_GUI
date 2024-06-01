@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QPalette>
 #include <QFontDatabase>
+#include <QDir>
 
 class IllusionSS
 {
@@ -21,6 +22,7 @@ public:
                                       ":/images/StyleResources/Illusions_Brown-Auditory-Button_APR24.png" };
     QString opticalMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Optical-Button_APR24.png",
                                         ":/images/StyleResources/Illusions_Brown-Optical-Button_APR24.png" };
+    QString soundwavePath = ":/soundwaveSequence/StyleResources/soundwave";
 
     //EVIL PATH MUST BE HANDLED
     QString visualizerPath = "/home/exhibits/Desktop/IllusionsProject/Illusions_GUI/Illusions/StyleResources/soundwave.mp4";
@@ -49,12 +51,10 @@ public:
     QString audioProgressBarStyle = "QProgressBar {"
                                     "background-color: #dfd7b8; "
                                     "border: 0px;"
-                                    "border-radius: 10px;"
                                     "}"
                                     "QProgressBar::chunk:horizontal {"
                                     "background-color: #b23428;"
-                                    "border-bottom-left-radius: 10px;"
-                                    "border-top-left-radius: 10px;"
+                                    "width: 1px;"
                                     "}";
 
     //Sizing and spacing
@@ -70,9 +70,17 @@ public:
     QFont ChaletBook_Regular;
     QFont ChaletBook_Oblique;
 
+    //Frame sequence intervals
+    int visualizerInterval = 38;
+    int defaultInterval = 24;
+
     //Functions
     QPalette backgroundImage();
     QPalette idleImage();
+    QList<QImage>* getSoundwaveSeq();
+
+private:
+    QList<QImage> *soundwaveSeq;
 };
 
 #endif // ILLUSIONSS_H

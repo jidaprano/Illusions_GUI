@@ -1,6 +1,6 @@
 #include "framesequencewidget.h"
 
-FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq)
+FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval)
 {
     this->frameSequence = frameSeq;
     layout = new QVBoxLayout(this);
@@ -21,7 +21,7 @@ FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq)
 
     //Timer setup
     autoScrubTimer = new QTimer(this);
-    autoScrubTimer->setInterval(24);
+    autoScrubTimer->setInterval(interval);
     connect(autoScrubTimer, SIGNAL(timeout()), this, SLOT(playSequence()));
 
     //layout->addWidget(scrubber);
@@ -34,7 +34,6 @@ void FrameSequenceWidget::scrubSequence(int value) {
         playSequence();
     }
     pixmap = QPixmap::fromImage(this->frameSequence->at(value));
-    pixmap = pixmap.scaledToWidth(700);
     image->setPixmap(pixmap);
 }
 
@@ -50,6 +49,6 @@ void FrameSequenceWidget::pauseSequence() {
 }
 
 void FrameSequenceWidget::restartSequence(int i) {
-    scrubber->setValue(scrubber->minimum() + 1);
+    scrubber->setValue(scrubber->minimum());
     pauseSequence();
 }

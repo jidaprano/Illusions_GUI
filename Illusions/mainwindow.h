@@ -51,8 +51,8 @@ public:
         ;
     QString opticalFilePath = "./Content/Optical";
     QString audioFilePath = "./Content/Audio";
-    QString opticalButtonIconsPath = opticalFilePath + "/images/ButtonIcons/";
-    QString audioButtonIconsPath = audioFilePath + "/audios/ButtonIcons/";
+    QString opticalButtonIconsPath = opticalFilePath + "/ButtonIcons/";
+    QString audioButtonIconsPath = audioFilePath + "/ButtonIcons/";
 
     void initializeFileMaps();
     QString readFirstLine(QString filePath);
@@ -115,6 +115,7 @@ private:
     QPushButton *audioRestartButton;
     HiddenTextWidget *illusionExplanationText;
     QProgressBar *audioProgressBar;
+    FrameSequenceWidget *visualizer;
 
     //Exhibit navigation widget
     QPushButton *audioMenuButton;
@@ -124,6 +125,7 @@ private:
     QList<WidgetButton*> *opticalButtonsList;
     QList<WidgetButton*> *audioButtonsList;
     WidgetButton *activeButton;
+    QScrollArea *scrollArea;
 
     //Idle widget
     ClickableWidget *idleWidget;

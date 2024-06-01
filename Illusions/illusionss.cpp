@@ -10,6 +10,13 @@ IllusionSS::IllusionSS() {
     //chalet oblique
     id = QFontDatabase::addApplicationFont(chaletBookObliquePath);
     ChaletBook_Oblique = QFont(QFontDatabase::applicationFontFamilies(id).at(0));
+
+    //Import soundwave frame sequence
+    soundwaveSeq = new QList<QImage>();
+    QFileInfoList soundwaveFiles = QDir(soundwavePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+    for(QFileInfo file : soundwaveFiles) {
+        soundwaveSeq->insert(0, QImage(file.absoluteFilePath()));
+    }
 }
 
 QPalette IllusionSS::backgroundImage() {
@@ -26,4 +33,8 @@ QPalette IllusionSS::idleImage() {
     QPalette palette;
     palette.setBrush(QPalette::Window, idle);
     return palette;
+}
+
+QList<QImage>* IllusionSS::getSoundwaveSeq() {
+    return soundwaveSeq;
 }

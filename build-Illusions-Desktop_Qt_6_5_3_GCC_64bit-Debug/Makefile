@@ -1109,6 +1109,67 @@ qrc_Resources.cpp: ../Illusions/Resources.qrc \
 		../Illusions/StyleResources/Illusions_Brown-Auditory-Button_APR24.png \
 		../Illusions/StyleResources/idleScreen.png \
 		../Illusions/StyleResources/Illusions_Red-Optical-Button_APR24.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00010.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00047.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00000.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00034.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00054.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00020.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00060.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00043.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00040.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00003.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00014.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00035.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00051.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00012.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00005.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00019.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00058.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00029.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00039.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00013.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00046.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00044.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00031.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00024.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00027.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00011.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00009.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00056.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00001.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00008.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00042.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00038.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00028.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00002.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00023.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00025.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00017.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00007.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00018.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00016.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00015.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00048.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00055.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00057.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00032.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00037.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00026.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00006.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00041.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00059.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00052.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00036.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00033.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00004.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00045.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00021.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00030.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00053.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00050.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00022.png \
+		../Illusions/StyleResources/soundwave/soundwaves_00049.png \
 		../Illusions/StyleResources/Fonts/ChaletOblique-London.ttf \
 		../Illusions/StyleResources/Fonts/ChaletBook_10032\ 2.ttf \
 		../Illusions/StyleResources/Fonts/ChaletBook-Bold_10028\ 2.ttf
@@ -1706,6 +1767,14 @@ moc_hiddentextwidget.cpp: ../Illusions/hiddentextwidget.h \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QPalette \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QFontDatabase \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfontdatabase.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/QDir \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
 		moc_predefs.h \
 		../../../../Qt/6.5.3/gcc_64/libexec/moc
 	/home/exhibits/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /home/exhibits/Desktop/IllusionsProject/Illusions_GUI/build-Illusions-Desktop_Qt_6_5_3_GCC_64bit-Debug/moc_predefs.h -I/home/exhibits/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/home/exhibits/Desktop/IllusionsProject/Illusions_GUI/Illusions -I/home/exhibits/Qt/6.5.3/gcc_64/include -I/home/exhibits/Qt/6.5.3/gcc_64/include/QtMultimediaWidgets -I/home/exhibits/Qt/6.5.3/gcc_64/include/QtMultimedia -I/home/exhibits/Qt/6.5.3/gcc_64/include/QtWidgets -I/home/exhibits/Qt/6.5.3/gcc_64/include/QtGui -I/home/exhibits/Qt/6.5.3/gcc_64/include/QtNetwork -I/home/exhibits/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Illusions/hiddentextwidget.h -o moc_hiddentextwidget.cpp
@@ -3182,7 +3251,15 @@ hiddentextwidget.o: ../Illusions/hiddentextwidget.cpp ../Illusions/hiddentextwid
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QPixmap \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QPalette \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QFontDatabase \
-		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfontdatabase.h
+		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfontdatabase.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/QDir \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qlocale.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hiddentextwidget.o ../Illusions/hiddentextwidget.cpp
 
 illusionss.o: ../Illusions/illusionss.cpp ../Illusions/illusionss.h \
@@ -3301,7 +3378,31 @@ illusionss.o: ../Illusions/illusionss.cpp ../Illusions/illusionss.h \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/qbrush.h \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QFontDatabase \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfontdatabase.h \
-		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfont.h
+		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfont.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/QDir \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qiodevice.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt/6.5.3/gcc_64/include/QtCore/q20memory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o illusionss.o ../Illusions/illusionss.cpp
 
 main.o: ../Illusions/main.cpp ../Illusions/mainwindow.h \

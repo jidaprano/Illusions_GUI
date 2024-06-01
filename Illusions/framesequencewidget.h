@@ -17,7 +17,7 @@ class FrameSequenceWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FrameSequenceWidget(QList<QImage> *frameSeq);
+    FrameSequenceWidget(QList<QImage> *frameSeq, int interval);
     QList<QImage> *frameSequence;
 private:
     QLabel *image;
