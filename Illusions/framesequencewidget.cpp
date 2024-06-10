@@ -8,6 +8,7 @@ FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval)
     pixmap = QPixmap::fromImage(this->frameSequence->first());
     image->setAlignment(Qt::AlignCenter);
     image->setPixmap(pixmap);
+    image->setScaledContents(true);
 
     layout->addWidget(image);
 

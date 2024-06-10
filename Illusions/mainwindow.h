@@ -47,7 +47,7 @@ public:
     ~MainWindow();
     void keyPressEvent(QKeyEvent *event);
 
-    int idleWaitSeconds = 300
+    int idleWaitSeconds = 2
         ;
     QString opticalFilePath = "./Content/Optical";
     QString audioFilePath = "./Content/Audio";
@@ -74,6 +74,7 @@ private slots:
     void switchToIdleScreen();
     void idleStackedSwitch();
     void switchToExhibitScreen();
+    void restartInteractionTimer();
     void changeAudioIllusion(QWidget* widget);
     void changeOpticalIllusion(QWidget* widget);
     void restartAudio();
@@ -93,7 +94,7 @@ private:
     QStackedWidget *topStackedWidget;
 
     //Top-level exhibit screen
-    QWidget *exhibitWidget;
+    ClickableWidget *exhibitWidget;
     QVBoxLayout *exhibitVLayout;
 
     //Exhibit title widget

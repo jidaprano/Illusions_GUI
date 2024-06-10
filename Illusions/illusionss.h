@@ -23,6 +23,8 @@ public:
     QString opticalMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Optical-Button_APR24.png",
                                         ":/images/StyleResources/Illusions_Brown-Optical-Button_APR24.png" };
     QString soundwavePath = ":/soundwaveSequence/StyleResources/soundwave";
+    QString forwardButtonPath = ":/images/StyleResources/Illusions_Right-Arrow_APR24.png";
+    QString backButtonPath = ":/images/StyleResources/Illusions_Left-Arrow_APR24.png";
 
     //EVIL PATH MUST BE HANDLED
     QString visualizerPath = "/home/exhibits/Desktop/IllusionsProject/Illusions_GUI/Illusions/StyleResources/soundwave.mp4";
@@ -56,6 +58,9 @@ public:
                                     "background-color: #b23428;"
                                     "width: 1px;"
                                     "}";
+    QString menuScrollButtonStyle = "QToolButton {"
+                                    "border: 0px solid #dfd7b8; }"
+        ;
 
     //Sizing and spacing
     QSize physicalScreenDimensions = QSize(1080, 1920);

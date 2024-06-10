@@ -12,6 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     //Color all labels brown
     this->setStyleSheet(ss->labelColor);
 
+    //Idle screen timer
+    interactionTimer = new QTimer(this);
+    connect(interactionTimer, SIGNAL(timeout()), this, SLOT(switchToIdleScreen()));
+    interactionTimer->start(idleWaitSeconds * 1000);
+
     //Initialize and populate file path maps from illusion to text description
     initializeFileMaps();
 
@@ -19,7 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
     topStackedWidget = new QStackedWidget(this);
 
     //Top-level exhibit widget
-    exhibitWidget = new QWidget(topStackedWidget);
+    exhibitWidget = new ClickableWidget();
+    //Every click on exhibit restarts idle screen timer
+    connect(exhibitWidget, SIGNAL(clicked()), this, SLOT(restartInteractionTimer()));
+    //Create layout and set margins
     exhibitVLayout = new QVBoxLayout(exhibitWidget);
     exhibitVLayout->setContentsMargins(ss->overallMargins);
     //Instantiate opacity for exhibit widget
@@ -53,13 +61,14 @@ MainWindow::MainWindow(QWidget *parent)
     exhibitVLayout->addWidget(illusionStackedWidget);
 
     //Add text explanation to layout
-    //illusionExplanationText->setMaximumHeight(300);
+    illusionExplanationText->setFixedHeight(400);
     exhibitVLayout->addWidget(illusionExplanationText);
 
     //Illusion select widget
     QWidget* menuWidget = createMenuWidget();
     illusionSelectWidget->setCurrentIndex(0);
     exhibitVLayout->addWidget(menuWidget);
+    exhibitVLayout->addSpacing(300);
 
     //Select first illusion
     activeButton = opticalButtonsList->first();
@@ -71,11 +80,6 @@ MainWindow::MainWindow(QWidget *parent)
     idleOpacity = new QGraphicsOpacityEffect(this);
     idleWidget->setGraphicsEffect(idleOpacity);
     idleOpacity->setOpacity(0);
-
-    //Idle screen timer
-    interactionTimer = new QTimer(this);
-    connect(interactionTimer, SIGNAL(timeout()), this, SLOT(switchToIdleScreen()));
-    interactionTimer->start(idleWaitSeconds * 1000);
 
     //Add background image
     QPalette backgroundImage = ss->backgroundImage();
@@ -354,15 +358,6 @@ QWidget* MainWindow::createMenuWidget() {
     illusionSelectWidget->addWidget(audioSelectWidget);
     illusionSelectWidget->setStyleSheet(ss->illusionSelectStyle);
 
-//    QPushButton *prevButton = new QPushButton("Previous Illusion");
-//    connect(prevButton, SIGNAL(clicked(bool)), this, SLOT(prevIllusionSlot()));
-
-//    QPushButton *nextButton = new QPushButton("Next Illusion");
-//    connect(nextButton, SIGNAL(clicked(bool)), this, SLOT(nextIllusionSlot()));
-
-//    illusionSelectLayout->addWidget(prevButton);
-//    illusionSelectLayout->addWidget(nextButton);
-
     //QScrollArea setup
     scrollArea = new QScrollArea(this);
     scrollArea->setWidget(illusionSelectWidget);
@@ -379,20 +374,29 @@ QWidget* MainWindow::createMenuWidget() {
     //Create layout to hold menu for switching between illusions AND for switching between types of illusions
     QHBoxLayout *topMenuLayout = new QHBoxLayout(topMenuWidget);
 
-    QPushButton *prevButton = new QPushButton("Previous Illusion");
-    connect(prevButton, SIGNAL(clicked(bool)), this, SLOT(prevIllusionSlot()));
-    topMenuLayout->addWidget(prevButton);
+    QToolButton *backButton = new QToolButton();
+    backButton->setIcon(QIcon(ss->backButtonPath));
+    backButton->setStyleSheet("");
+    backButton->setStyleSheet(ss->menuScrollButtonStyle);
+    backButton->setIconSize(QSize(50, 50));
+    connect(backButton, SIGNAL(clicked(bool)), this, SLOT(prevIllusionSlot()));
+    topMenuLayout->addWidget(backButton);
 
     topMenuLayout->addWidget(scrollArea);
 
-    QPushButton *nextButton = new QPushButton("nn Illusion");
-    connect(nextButton, SIGNAL(clicked(bool)), this, SLOT(nextIllusionSlot()));
-    topMenuLayout->addWidget(nextButton);
+    QToolButton *forwardButton = new QToolButton();
+    forwardButton->setIcon(QIcon(ss->forwardButtonPath));
+    forwardButton->setStyleSheet("");
+    forwardButton->setStyleSheet(ss->menuScrollButtonStyle);
+    forwardButton->setIconSize(QSize(50, 50));
+    connect(forwardButton, SIGNAL(clicked(bool)), this, SLOT(nextIllusionSlot()));
+    topMenuLayout->addWidget(forwardButton);
 
     topMenuLayout->addWidget(createIllusionTypeButtons());
 
     //Set illusionSelectWidget to be able to switch between menus
     this->illusionSelectWidget = illusionSelectWidget;
+    topMenuWidget->setStyleSheet(ss->scrollAreaStyle);
 
     return topMenuWidget;
 }
@@ -403,13 +407,13 @@ ClickableWidget* MainWindow::createIdleScreenWidget() {
     QLabel *idlePicture = new QLabel();
     QPixmap illusionIcon;
     QRect dimensions(0, 0, 1080, 1920);
-    illusionIcon.load("/home/exhibits/Desktop/illusionsContentDemo/output-onlinetools (1).png");
+    illusionIcon.load(ss->idlePath);
     //illusionIcon = illusionIcon.scaledToHeight(qApp->screens()[0]->size().height());
     idlePicture->setPixmap(illusionIcon.copy(dimensions));
 
     idleLayout->addWidget(idlePicture);
-    // QPalette idlePalette = ss->idleImage();
-    // idleWidget->setPalette(idlePalette);
+    //QPalette idlePalette = ss->idleImage();
+    //idleWidget->setPalette(idlePalette);
     connect(idleWidget, SIGNAL(clicked()), this, SLOT(switchToExhibitScreen()));
 
     return idleWidget;
@@ -437,18 +441,10 @@ void MainWindow::switchToAudioMenu() {
 }
 
 void MainWindow::nextIllusionSlot() {
-    // if(illusionStackIndex < (illusionStackedWidget->count() - 1)) {
-    //     illusionStackIndex++;
-    //     illusionStackedWidget->setCurrentIndex(illusionStackIndex);
-    // }
     scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + 10);
 }
 
 void MainWindow::prevIllusionSlot() {
-    // if(illusionStackIndex > 0) {
-    //     illusionStackIndex--;
-    //     illusionStackedWidget->setCurrentIndex(illusionStackIndex);
-    // }
     scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() - 10);
 }
 
@@ -485,6 +481,10 @@ void MainWindow::switchToExhibitScreen() {
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
     topStackedWidget->setCurrentWidget(exhibitWidget);
+    restartInteractionTimer();
+}
+
+void MainWindow::restartInteractionTimer() {
     interactionTimer->start(idleWaitSeconds * 1000);
 }
 
