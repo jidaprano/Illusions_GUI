@@ -47,7 +47,7 @@ public:
     ~MainWindow();
     void keyPressEvent(QKeyEvent *event);
 
-    int idleWaitSeconds = 2
+    int idleWaitSeconds = 60
         ;
     QString opticalFilePath = "./Content/Optical";
     QString audioFilePath = "./Content/Audio";

@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(exhibitWidget, SIGNAL(clicked()), this, SLOT(restartInteractionTimer()));
     //Create layout and set margins
     exhibitVLayout = new QVBoxLayout(exhibitWidget);
-    exhibitVLayout->setContentsMargins(ss->overallMargins);
+    exhibitVLayout->setContentsMargins(ss->exhibitMargins);
     //Instantiate opacity for exhibit widget
     exhibitOpacity = new QGraphicsOpacityEffect(this);
     exhibitWidget->setGraphicsEffect(exhibitOpacity);
@@ -367,7 +367,7 @@ QWidget* MainWindow::createMenuWidget() {
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //Set style and dimensions
     scrollArea->setStyleSheet(ss->scrollAreaStyle);
-    scrollArea->setMaximumHeight(200);
+    //scrollArea->setMaximumHeight(200);
     // configure gesture and add rubberband effect
     QScroller::grabGesture(scrollArea, QScroller::LeftMouseButtonGesture);
 
@@ -378,7 +378,7 @@ QWidget* MainWindow::createMenuWidget() {
     backButton->setIcon(QIcon(ss->backButtonPath));
     backButton->setStyleSheet("");
     backButton->setStyleSheet(ss->menuScrollButtonStyle);
-    backButton->setIconSize(QSize(50, 50));
+    backButton->setIconSize(ss->menuBackForwardButtonSize);
     connect(backButton, SIGNAL(clicked(bool)), this, SLOT(prevIllusionSlot()));
     topMenuLayout->addWidget(backButton);
 
@@ -388,7 +388,7 @@ QWidget* MainWindow::createMenuWidget() {
     forwardButton->setIcon(QIcon(ss->forwardButtonPath));
     forwardButton->setStyleSheet("");
     forwardButton->setStyleSheet(ss->menuScrollButtonStyle);
-    forwardButton->setIconSize(QSize(50, 50));
+    forwardButton->setIconSize(ss->menuBackForwardButtonSize);
     connect(forwardButton, SIGNAL(clicked(bool)), this, SLOT(nextIllusionSlot()));
     topMenuLayout->addWidget(forwardButton);
 
@@ -404,16 +404,14 @@ QWidget* MainWindow::createMenuWidget() {
 ClickableWidget* MainWindow::createIdleScreenWidget() {
     ClickableWidget *idleWidget = new ClickableWidget();
     QVBoxLayout *idleLayout = new QVBoxLayout((QWidget*)idleWidget);
+    idleLayout->setContentsMargins(ss->idleMargins);
     QLabel *idlePicture = new QLabel();
     QPixmap illusionIcon;
     QRect dimensions(0, 0, 1080, 1920);
     illusionIcon.load(ss->idlePath);
-    //illusionIcon = illusionIcon.scaledToHeight(qApp->screens()[0]->size().height());
     idlePicture->setPixmap(illusionIcon.copy(dimensions));
 
     idleLayout->addWidget(idlePicture);
-    //QPalette idlePalette = ss->idleImage();
-    //idleWidget->setPalette(idlePalette);
     connect(idleWidget, SIGNAL(clicked()), this, SLOT(switchToExhibitScreen()));
 
     return idleWidget;
@@ -453,13 +451,13 @@ void MainWindow::switchToIdleScreen() {
 
     //Fade in idle widget
     QPropertyAnimation *a = new QPropertyAnimation(idleOpacity,"opacity");
-    a->setDuration(2500);
+    a->setDuration(ss->fadeDuration);
     a->setStartValue(0);
     a->setEndValue(1);
 
     //Fade out exhibit widget
     QPropertyAnimation *b = new QPropertyAnimation(exhibitOpacity,"opacity");
-    b->setDuration(2500);
+    b->setDuration(ss->fadeDuration);
     b->setStartValue(1);
     b->setEndValue(0);
 

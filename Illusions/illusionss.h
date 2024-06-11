@@ -64,11 +64,14 @@ public:
 
     //Sizing and spacing
     QSize physicalScreenDimensions = QSize(1080, 1920);
-    QMargins overallMargins = QMargins(50, 50, 50, 50);
+    QMargins exhibitMargins = QMargins(50,50,50,50);
+    QMargins idleMargins = QMargins(0,0,0,0);
     QSize illusionButtonSize = QSize(125,125);
     QSize illusionTypeButtonSize = QSize(255,87);
+    QSize menuBackForwardButtonSize = QSize(50, 50);
     QSize illusionSize = QSize(700,700);
     int illusionSideMargin = 125;
+    int fadeDuration = 1000;
 
     //Fonts
     QFont ChaletBook_Bold;
