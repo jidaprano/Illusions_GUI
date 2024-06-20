@@ -18,6 +18,7 @@ private:
     QVBoxLayout *layout;
     QLabel *question;
     QPushButton *revealTextButton;
+    QLabel *revealLabel;
     QStackedWidget *stackedWidget;
     QLabel *text;
 public slots:

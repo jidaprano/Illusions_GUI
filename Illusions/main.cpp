@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.setWindowTitle("Illusions");
     //w.setWindowState(Qt::WindowFullScreen);
-    //w.setFixedSize(1080, 1920);
+    w.setFixedSize(1080, 1200);
     w.show();
     return a.exec();
 }

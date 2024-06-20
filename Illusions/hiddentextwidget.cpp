@@ -22,11 +22,19 @@ HiddenTextWidget::HiddenTextWidget(QString questionText, QString hiddenText) : Q
     layout->addSpacing(30);
 
     //button
-    revealTextButton = new QPushButton("Touch to reveal explanation!");
+    revealTextButton = new QPushButton();
     buttonFont.setPixelSize(30);
     revealTextButton->setFont(buttonFont);
     revealTextButton->setStyleSheet(ss->hiddenTextButtonStyle);
     stackedWidget->addWidget(revealTextButton);
+
+    //touch to reveal label
+    revealLabel = new QLabel("Touch to reveal explanation!");
+    revealLabel->setAlignment(Qt::AlignHCenter);
+    revealLabel->setWordWrap(true);
+    questionFont.setPixelSize(40);
+    revealLabel->setFont(buttonFont);
+    layout->addWidget(revealLabel);
 
     //hidden text
     text = new QLabel(hiddenText);

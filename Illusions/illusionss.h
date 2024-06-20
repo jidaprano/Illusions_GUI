@@ -40,9 +40,20 @@ public:
         "color: rgb(123, 45, 25); }"
         ;
 
-    QString hiddenTextButtonStyle = "QPushButton {text-align: left;"
-                                    "background-color: #dfd7b8;"
-                                    "color: rgb(123, 45, 25);}";
+//    QString hiddenTextButtonStyle = "QPushButton {text-align: left;"
+//                                    "background-color: #dfd7b8;"
+//                                    "color: rgb(123, 45, 25);}";
+    QString hiddenTextButtonStyle = "QPushButton {"
+                                    " background-color: #b23428;"
+                                    "border-style: solid;"
+                                    "border-width:1px;"
+                                    "border-radius:50px;"
+                                    "border-color: #7b2d19;"
+                                    "max-width:150px;"
+                                    "max-height:150px;"
+                                    "min-width:150px;"
+                                    "min-height:150px;"
+                                    "}";
 
     QString scrollAreaStyle = "QScrollArea {background-color:transparent;"
                               "border: 4px solid #7b2d19; }";
@@ -66,12 +77,14 @@ public:
     QSize physicalScreenDimensions = QSize(1080, 1920);
     QMargins exhibitMargins = QMargins(50,50,50,50);
     QMargins idleMargins = QMargins(0,0,0,0);
-    QSize illusionButtonSize = QSize(125,125);
+    QSize illusionButtonSize = QSize(170,170);
     QSize illusionTypeButtonSize = QSize(255,87);
     QSize menuBackForwardButtonSize = QSize(50, 50);
     QSize illusionSize = QSize(700,700);
     int illusionSideMargin = 125;
     int fadeDuration = 1000;
+    int scrollDuration = 300;
+    int scrollDistance = 100;
 
     //Fonts
     QFont ChaletBook_Bold;

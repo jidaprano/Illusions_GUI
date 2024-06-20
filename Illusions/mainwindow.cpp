@@ -396,7 +396,6 @@ QWidget* MainWindow::createMenuWidget() {
 
     //Set illusionSelectWidget to be able to switch between menus
     this->illusionSelectWidget = illusionSelectWidget;
-    topMenuWidget->setStyleSheet(ss->scrollAreaStyle);
 
     return topMenuWidget;
 }
@@ -439,11 +438,29 @@ void MainWindow::switchToAudioMenu() {
 }
 
 void MainWindow::nextIllusionSlot() {
-    scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + 10);
+    QScrollBar *scrollBar = scrollArea->horizontalScrollBar();
+    int startValue = scrollBar->value();
+    int endValue = startValue + ss->scrollDistance;
+
+    QPropertyAnimation *animation = new QPropertyAnimation(scrollBar, "value");
+    animation->setDuration(ss->scrollDuration);
+    animation->setStartValue(startValue);
+    animation->setEndValue(endValue);
+    animation->setEasingCurve(QEasingCurve::InOutQuad);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 void MainWindow::prevIllusionSlot() {
-    scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() - 10);
+    QScrollBar *scrollBar = scrollArea->horizontalScrollBar();
+    int startValue = scrollBar->value();
+    int endValue = startValue - ss->scrollDistance;
+
+    QPropertyAnimation *animation = new QPropertyAnimation(scrollBar, "value");
+    animation->setDuration(ss->scrollDuration);
+    animation->setStartValue(startValue);
+    animation->setEndValue(endValue);
+    animation->setEasingCurve(QEasingCurve::InOutQuad);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 void MainWindow::switchToIdleScreen() {
