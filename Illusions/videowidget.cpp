@@ -17,7 +17,7 @@ void VideoWidget::changePosition(int val) {
     mediaPlayer->setPosition(static_cast<qint64>(val));
 }
 
-void VideoWidget::pause(int i) {
+void VideoWidget::pause([[maybe_unused]] int i) {
     mediaPlayer->pause();
 }
 

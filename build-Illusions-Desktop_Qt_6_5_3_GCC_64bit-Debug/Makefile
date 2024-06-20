@@ -4005,12 +4005,7 @@ mainwindow.o: ../Illusions/mainwindow.cpp ../Illusions/mainwindow.h \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QPalette \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/QFontDatabase \
 		../../../../Qt/6.5.3/gcc_64/include/QtGui/qfontdatabase.h \
-		ui_mainwindow.h \
-		../../../../Qt/6.5.3/gcc_64/include/QtWidgets/QMenuBar \
-		../../../../Qt/6.5.3/gcc_64/include/QtWidgets/qmenubar.h \
-		../../../../Qt/6.5.3/gcc_64/include/QtWidgets/qmenu.h \
-		../../../../Qt/6.5.3/gcc_64/include/QtWidgets/QStatusBar \
-		../../../../Qt/6.5.3/gcc_64/include/QtWidgets/qstatusbar.h
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Illusions/mainwindow.cpp
 
 qimprovedslider.o: ../Illusions/qimprovedslider.cpp ../Illusions/qimprovedslider.h \

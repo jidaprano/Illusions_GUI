@@ -49,7 +49,7 @@ void FrameSequenceWidget::pauseSequence() {
     autoScrubTimer->stop();
 }
 
-void FrameSequenceWidget::restartSequence(int i) {
+void FrameSequenceWidget::restartSequence([[maybe_unused]] int i) {
     scrubber->setValue(scrubber->minimum());
     pauseSequence();
 }

@@ -10,6 +10,7 @@
 #include <QFont>
 #include <QPicture>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <QScreen>
 #include <QPushButton>
 #include <QFileInfo>
@@ -46,6 +47,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void keyPressEvent(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
     int idleWaitSeconds = 60
         ;
@@ -94,7 +96,7 @@ private:
     QStackedWidget *topStackedWidget;
 
     //Top-level exhibit screen
-    ClickableWidget *exhibitWidget;
+    QWidget *exhibitWidget;
     QVBoxLayout *exhibitVLayout;
 
     //Exhibit title widget

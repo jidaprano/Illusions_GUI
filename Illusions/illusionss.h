@@ -46,7 +46,7 @@ public:
     QString hiddenTextButtonStyle = "QPushButton {"
                                     " background-color: #b23428;"
                                     "border-style: solid;"
-                                    "border-width:1px;"
+                                    "border-width:10px;"
                                     "border-radius:50px;"
                                     "border-color: #7b2d19;"
                                     "max-width:100px;"

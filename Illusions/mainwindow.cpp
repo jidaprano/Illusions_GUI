@@ -24,9 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     topStackedWidget = new QStackedWidget(this);
 
     //Top-level exhibit widget
-    exhibitWidget = new ClickableWidget();
-    //Every click on exhibit restarts idle screen timer
-    connect(exhibitWidget, SIGNAL(clicked()), this, SLOT(restartInteractionTimer()));
+    exhibitWidget = new QWidget();
+
     //Create layout and set margins
     exhibitVLayout = new QVBoxLayout(exhibitWidget);
     exhibitVLayout->setContentsMargins(ss->exhibitMargins);
@@ -352,7 +351,7 @@ QWidget* MainWindow::createMenuWidget() {
     //For each audio illusion, add button to layout
     QHBoxLayout *audioSelectLayout = new QHBoxLayout(audioSelectWidget);
     for(int i = 0; i < audioButtonsList->count(); i++) {
-        QWidget* button = audioButtonsList->at(i);
+        WidgetButton* button = audioButtonsList->at(i);
         audioSelectLayout->addWidget(button);
     }
     illusionSelectWidget->addWidget(audioSelectWidget);
@@ -406,7 +405,7 @@ ClickableWidget* MainWindow::createIdleScreenWidget() {
     idleLayout->setContentsMargins(ss->idleMargins);
     QLabel *idlePicture = new QLabel();
     QPixmap illusionIcon;
-    QRect dimensions(0, 0, 1080, 1920);
+    QRect dimensions(0, 0, 1080, 1970);
     illusionIcon.load(ss->idlePath);
     idlePicture->setPixmap(illusionIcon.copy(dimensions));
 
@@ -417,6 +416,7 @@ ClickableWidget* MainWindow::createIdleScreenWidget() {
 }
 
 void MainWindow::switchToOpticalMenu() {
+    scrollArea->horizontalScrollBar()->setValue(0);
     if(illusionSelectWidget->currentIndex() != 0) {
         illusionSelectWidget->setCurrentIndex(0);
         opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[0]));
@@ -427,6 +427,7 @@ void MainWindow::switchToOpticalMenu() {
 }
 
 void MainWindow::switchToAudioMenu() {
+    scrollArea->horizontalScrollBar()->setValue(0);
     if(illusionSelectWidget->currentIndex() != 1) {
         illusionSelectWidget->setCurrentIndex(1);
         opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[1]));
@@ -493,6 +494,7 @@ void MainWindow::idleStackedSwitch() {
 }
 
 void MainWindow::switchToExhibitScreen() {
+    illusionExplanationText->hideText();
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
     topStackedWidget->setCurrentWidget(exhibitWidget);
@@ -574,17 +576,25 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     switch(event->key())
     {
     case Qt::Key_Escape:
-        close();
-        break;
     case Qt::Key_Backspace:
-        close();
-        break;
     case Qt::Key_Delete:
         close();
         break;
     default:
         QMainWindow::keyPressEvent(event);
     }
+}
+
+/*
+ * Function to filter clicks that should reset the interaction timer
+ *
+ * Arguments: QKeyEvent* - click event pointer to filter
+ * Returns: void
+ */
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    restartInteractionTimer();
+    QMainWindow::mousePressEvent(event);
 }
 
 MainWindow::~MainWindow()
