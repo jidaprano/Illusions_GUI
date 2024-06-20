@@ -16,6 +16,8 @@ public:
     void setText(QString newQuestionText, QString newHiddenText);
 private:
     QVBoxLayout *layout;
+    QVBoxLayout *visibleLayout;
+    QWidget *visibleWidget;
     QLabel *question;
     QPushButton *revealTextButton;
     QLabel *revealLabel;

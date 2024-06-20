@@ -49,10 +49,10 @@ public:
                                     "border-width:1px;"
                                     "border-radius:50px;"
                                     "border-color: #7b2d19;"
-                                    "max-width:150px;"
-                                    "max-height:150px;"
-                                    "min-width:150px;"
-                                    "min-height:150px;"
+                                    "max-width:100px;"
+                                    "max-height:100px;"
+                                    "min-width:100px;"
+                                    "min-height:100px;"
                                     "}";
 
     QString scrollAreaStyle = "QScrollArea {background-color:transparent;"

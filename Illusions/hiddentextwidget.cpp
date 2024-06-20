@@ -21,20 +21,25 @@ HiddenTextWidget::HiddenTextWidget(QString questionText, QString hiddenText) : Q
     layout->addWidget(question);
     layout->addSpacing(30);
 
+    //initially visible widget setup
+    visibleWidget = new QWidget(this);
+    visibleLayout = new QVBoxLayout(visibleWidget);
+    visibleLayout->setAlignment(Qt::AlignHCenter);
+
     //button
     revealTextButton = new QPushButton();
     buttonFont.setPixelSize(30);
     revealTextButton->setFont(buttonFont);
     revealTextButton->setStyleSheet(ss->hiddenTextButtonStyle);
-    stackedWidget->addWidget(revealTextButton);
+    visibleLayout->addWidget(revealTextButton);
 
     //touch to reveal label
     revealLabel = new QLabel("Touch to reveal explanation!");
-    revealLabel->setAlignment(Qt::AlignHCenter);
     revealLabel->setWordWrap(true);
     questionFont.setPixelSize(40);
     revealLabel->setFont(buttonFont);
-    layout->addWidget(revealLabel);
+    visibleLayout->addWidget(revealLabel);
+    stackedWidget->addWidget(visibleWidget);
 
     //hidden text
     text = new QLabel(hiddenText);
