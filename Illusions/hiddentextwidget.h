@@ -26,6 +26,8 @@ private:
 public slots:
     void revealText();
     void hideText();
+signals:
+    void textRevealed();
 };
 
 #endif // HIDDENTEXTWIDGET_H

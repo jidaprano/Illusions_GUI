@@ -7,7 +7,6 @@ ClickableWidget::ClickableWidget() : QWidget()
 
 void ClickableWidget::mousePressEvent(QMouseEvent *event) {
     emit clicked();
-
     QWidget::mousePressEvent(event);
 }
 

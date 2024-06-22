@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Create text explanation widget
     illusionExplanationText = new HiddenTextWidget("", "");
+    connect(illusionExplanationText, SIGNAL(textRevealed()), this, SLOT(restartInteractionTimer()));
 
     //Import optical and audio illusions
     importIllusions();
@@ -89,6 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
     topStackedWidget->addWidget(idleWidget);
     topStackedWidget->setCurrentWidget(exhibitWidget);
     this->setCentralWidget(topStackedWidget);
+
+    restartInteractionTimer();
 }
 
 void MainWindow::initializeFileMaps() {
@@ -176,11 +179,15 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
     } else if(QFileInfo(filePath).isDir()){ //File is folder, so illusion is frame sequence
         QList<QImage> *frameList = loadFrameSequence(filePath);
         FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval);
+        connect(frameSeq, SIGNAL(sequenceStarted()), this, SLOT(pauseInteractionTimer()));
+        connect(frameSeq, SIGNAL(sequenceFinished()), this, SLOT(restartInteractionTimer()));
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(frameSeq));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(restartSequence(int)));
     } else { //File is video
         VideoWidget *videoWidget = new VideoWidget(filePath);
+        connect(videoWidget, SIGNAL(videoStarted()), this, SLOT(pauseInteractionTimer()));
+        connect(videoWidget, SIGNAL(videoFinished()), this, SLOT(restartInteractionTimer()));
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(videoWidget));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(pause(int)));
@@ -424,6 +431,8 @@ void MainWindow::switchToOpticalMenu() {
         opticalButtonsList->first()->click();
         audioMediaPlayer->pause();
     }
+
+    restartInteractionTimer();
 }
 
 void MainWindow::switchToAudioMenu() {
@@ -436,6 +445,8 @@ void MainWindow::switchToAudioMenu() {
         illusionStackedWidget->setCurrentWidget(audioIllusionWidget);
         audioMediaPlayer->play();
     }
+
+    restartInteractionTimer();
 }
 
 void MainWindow::nextIllusionSlot() {
@@ -449,6 +460,8 @@ void MainWindow::nextIllusionSlot() {
     animation->setEndValue(endValue);
     animation->setEasingCurve(QEasingCurve::InOutQuad);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+
+    restartInteractionTimer();
 }
 
 void MainWindow::prevIllusionSlot() {
@@ -462,6 +475,8 @@ void MainWindow::prevIllusionSlot() {
     animation->setEndValue(endValue);
     animation->setEasingCurve(QEasingCurve::InOutQuad);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+
+    restartInteractionTimer();
 }
 
 void MainWindow::switchToIdleScreen() {
@@ -501,7 +516,12 @@ void MainWindow::switchToExhibitScreen() {
     restartInteractionTimer();
 }
 
+void MainWindow::pauseInteractionTimer() {
+    interactionTimer->stop();
+}
+
 void MainWindow::restartInteractionTimer() {
+    std::cout << "TIMER RESTARTED" + std::to_string(++idleWaitSeconds)<< std::endl;
     interactionTimer->start(idleWaitSeconds * 1000);
 }
 
@@ -522,6 +542,8 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
 
     visualizer->restartSequence(0);
     visualizer->playSequence();
+
+    restartInteractionTimer();
 }
 
 void MainWindow::changeOpticalIllusion(QWidget *widget) {
@@ -551,12 +573,14 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
     if(timer != nullptr) {
         timer->start();
     }
+    restartInteractionTimer();
 }
 
 void MainWindow::restartAudio() {
     audioMediaPlayer->setPosition(0);
     visualizer->restartSequence(0);
     visualizer->playSequence();
+    restartInteractionTimer();
 }
 
 void MainWindow::setProgressBarPosition(qint64 val) {

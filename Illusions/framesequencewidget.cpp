@@ -27,18 +27,24 @@ FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval)
 
     //layout->addWidget(scrubber);
     pauseSequence();
+
+    isFirstPlay = true;
 }
 
 void FrameSequenceWidget::scrubSequence(int value) {
     if(value >= frameSequence->length() - 1) { //If sequence is over, restart and play
         restartSequence(0);
         playSequence();
+        if(isFirstPlay) {
+            emit sequenceFinished();
+        }
     }
     pixmap = QPixmap::fromImage(this->frameSequence->at(value));
     image->setPixmap(pixmap);
 }
 
 void FrameSequenceWidget::playSequence() {
+    emit sequenceStarted();
     autoScrubTimer->start();
     int val = scrubber->value();
     scrubber->setValue(++val);

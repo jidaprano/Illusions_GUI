@@ -66,6 +66,7 @@ void HiddenTextWidget::setText(QString newQuestionText, QString newHiddenText) {
 }
 
 void HiddenTextWidget::revealText() {
+    emit textRevealed();
     stackedWidget->setCurrentIndex(1);
 }
 

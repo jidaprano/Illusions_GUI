@@ -25,11 +25,15 @@ private:
     QPixmap pixmap;
     QSlider *scrubber;
     QTimer *autoScrubTimer;
+    bool isFirstPlay;
 public slots:
     void scrubSequence(int value);
     void playSequence();
     void pauseSequence();
     void restartSequence(int i);
+signals:
+    void sequenceStarted();
+    void sequenceFinished();
 };
 
 #endif // FRAMESEQUENCEWIDGET_H

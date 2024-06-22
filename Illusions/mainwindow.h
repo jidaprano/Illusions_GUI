@@ -76,6 +76,7 @@ private slots:
     void switchToIdleScreen();
     void idleStackedSwitch();
     void switchToExhibitScreen();
+    void pauseInteractionTimer();
     void restartInteractionTimer();
     void changeAudioIllusion(QWidget* widget);
     void changeOpticalIllusion(QWidget* widget);
