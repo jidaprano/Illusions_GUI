@@ -37,6 +37,7 @@ void FrameSequenceWidget::scrubSequence(int value) {
         playSequence();
         if(isFirstPlay) {
             emit sequenceFinished();
+            isFirstPlay = false;
         }
     }
     pixmap = QPixmap::fromImage(this->frameSequence->at(value));
