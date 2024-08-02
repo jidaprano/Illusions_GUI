@@ -17,9 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(interactionTimer, SIGNAL(timeout()), this, SLOT(switchToIdleScreen()));
     interactionTimer->start(idleWaitSeconds * 1000);
 
-    //Initialize and populate file path maps from illusion to text description
-    initializeFileMaps();
-
     //Top-level layered widget
     topStackedWidget = new QStackedWidget(this);
 
@@ -50,12 +47,15 @@ MainWindow::MainWindow(QWidget *parent)
     opticalButtonsList = new QList<WidgetButton*>();
     audioButtonsList = new QList<WidgetButton*>();
 
+    //Initialize and populate file path maps from illusion to text description
+    initializeFileMaps();
+
     //Create text explanation widget
     illusionExplanationText = new HiddenTextWidget("", "");
     connect(illusionExplanationText, SIGNAL(textRevealed()), this, SLOT(restartInteractionTimer()));
 
     //Import optical and audio illusions
-    importIllusions();
+    importAudioIllusions();
     audioIllusionWidget = createAudioWidget();
     illusionStackedWidget->addWidget(audioIllusionWidget);
     exhibitVLayout->addWidget(illusionStackedWidget);
@@ -96,49 +96,73 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initializeFileMaps() {
     //Instantiate maps
-    opticalFileMap = new QMap<QString, QString>();
+    opticalFileMap = new QMap<QWidget*, QString>();
     audioFileMap = new QMap<QString, QString>();
 
     //Create optical file lists to search through
     QFileInfoList imageFileList = QDir(opticalFilePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
 
-    for(QFileInfo illusionDir : imageFileList) { //for each file in folder
-        if(illusionDir.baseName() != "ButtonIcons") {
-            for(QFileInfo file : QDir(illusionDir.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot)) {
-                if(file.isDir() || file.completeSuffix() != "") {
-                    QString aa = file.absoluteFilePath();
-                    opticalFileMap->insert(file.absoluteFilePath(), file.path() + "/" + file.baseName() + " Text");
+    if(!imageFileList.empty()) {
+        QDirIterator opticalFileIterator(opticalFilePath);
+        while(opticalFileIterator.hasNext()) {
+            QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+            QString illusionPath = "";
+            QString textPath = "";
+            for(QFileInfo file : illusionFile) {
+                if(file.isDir()) {
+                    illusionPath = file.absoluteFilePath();
+                } else if(file.suffix() == "txt") {
+                    textPath = file.absoluteFilePath();
+                }
+                if(!illusionPath.isEmpty() && !textPath.isEmpty()) {
+                    QWidget *illusion = createOpticalWidget(illusionPath);
+                    QString iconPath = opticalButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
+                    WidgetButton *button = new WidgetButton(illusion, iconPath);
+                    button->setIconSize(ss->illusionButtonSize);
+                    button->setMaximumSize(ss->illusionButtonSize);
+                    opticalButtonsList->push_front(button);
+                    illusionStackedWidget->addWidget(illusion);
+                    connect(button, SIGNAL(buttonClicked(QWidget*)), this, SLOT(changeOpticalIllusion(QWidget*)));
+
+                    opticalFileMap->insert(illusion, textPath);
+                    break;
                 }
             }
+            opticalFileIterator.next();
         }
+    } else {
+        QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
     }
 
     //Create audio file lists to search through
     QFileInfoList audioFileList = QDir(audioFilePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
 
-    for(QFileInfo illusionDir : audioFileList) { //for each file in folder
-        if(illusionDir.baseName() != "ButtonIcons") {
-            for(QFileInfo file : QDir(illusionDir.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot)) {
-                if(file.completeSuffix() != "") {
-                    audioFileMap->insert(file.absoluteFilePath(), file.path() + "/" + file.baseName());
+    if(!audioFileList.empty()) {
+        QDirIterator audioFileIterator(audioFilePath);
+        while(audioFileIterator.hasNext()) {
+            QFileInfoList illusionFile = QDir(audioFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+            QString illusionPath = "";
+            QString textPath = "";
+            for(QFileInfo file : illusionFile) {
+                if(file.suffix() == "mp3" || file.suffix() == "ogg" || file.suffix() == "WAV") {
+                    illusionPath = file.absoluteFilePath();
+                } else if(file.suffix() == "txt") {
+                    textPath = file.absoluteFilePath();
+                }
+                if(!illusionPath.isEmpty() && !textPath.isEmpty()) {
+                    audioFileMap->insert(illusionPath, textPath);
+                    break;
                 }
             }
+            audioFileIterator.next();
         }
+    } else {
+        QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
     }
+
 }
 
-void MainWindow::importIllusions() {
-    //Create illusion widget for each illusion in optical map
-    for(QString filePath : opticalFileMap->keys()) {
-        QWidget *illusion = createOpticalWidget(filePath);
-        QString iconPath = opticalButtonIconsPath + QFileInfo(filePath).baseName() + ".jpg";
-        WidgetButton *button = new WidgetButton(illusion, iconPath);
-        button->setIconSize(ss->illusionButtonSize);
-        button->setMaximumSize(ss->illusionButtonSize);
-        opticalButtonsList->push_front(button);
-        illusionStackedWidget->addWidget(illusion);
-        connect(button, SIGNAL(buttonClicked(QWidget*)), this, SLOT(changeOpticalIllusion(QWidget*)));
-    }
+void MainWindow::importAudioIllusions() {
 
     //Create button for each audio widget and add to list
     for(QString filePath : audioFileMap->keys()) {
@@ -271,7 +295,7 @@ QString MainWindow::readFirstLine(QString filePath) {
     QString totalText = "";
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0, "error reading text file " + filePath, file.errorString());
+        QMessageBox::warning(0, file.errorString(), "error reading text file" + filePath);
     }
     QTextStream in(&file);
     //Read only first line
@@ -284,7 +308,7 @@ QString MainWindow::readTextExcludingFirstLine(QString filePath) {
     QString totalText = "";
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0, "error reading text file " + filePath, file.errorString());
+        QMessageBox::warning(0, file.errorString(), "error reading text file" + filePath);
     }
     QTextStream in(&file);
     //Discard first line
@@ -557,7 +581,7 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
 
     //Set text of new illusion
     QLabel* opticalLabel = widget->findChild<QLabel*>();
-    QString textPath = opticalFilePath + "/" + opticalLabel->text() + "/" + opticalLabel->text() + " Text";
+    QString textPath = opticalFileMap->value(widget);
     illusionExplanationText->hideText();
     illusionExplanationText->setText(readFirstLine(textPath), readTextExcludingFirstLine(textPath));
 

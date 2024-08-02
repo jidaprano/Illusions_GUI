@@ -26,6 +26,7 @@
 #include <QAudioOutput>
 #include <QScrollArea>
 #include <QScroller>
+#include <QDirIterator>
 
 #include "clickablewidget.h"
 #include "widgetbutton.h"
@@ -59,7 +60,7 @@ public:
     void initializeFileMaps();
     QString readFirstLine(QString filePath);
     QString readTextExcludingFirstLine(QString filePath);
-    void importIllusions();
+    void importAudioIllusions();
     QWidget *createOpticalWidget(QString filePath);
     QWidget *createAudioWidget();
     QWidget *getSpacedIllusion(QWidget *illusion);
@@ -90,7 +91,7 @@ private:
     IllusionSS *ss;
 
     //Mapping illusions to corresponding text description files
-    QMap<QString, QString> *opticalFileMap;
+    QMap<QWidget*, QString> *opticalFileMap;
     QMap<QString, QString> *audioFileMap;
 
     //Top-level stacked widget (swap between exhibit screen and timeout screen)
