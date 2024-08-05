@@ -27,8 +27,8 @@ private slots:
     void pause(int i);
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 signals:
-    void videoStarted();
-    void videoFinished();
+    void firstVideoStarted();
+    void firstVideoFinished();
 };
 
 #endif // VIDEOWIDGET_H

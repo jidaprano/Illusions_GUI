@@ -32,8 +32,8 @@ public slots:
     void pauseSequence();
     void restartSequence(int i);
 signals:
-    void sequenceStarted();
-    void sequenceFinished();
+    void firstSequenceStarted();
+    void firstSequenceFinished();
 };
 
 #endif // FRAMESEQUENCEWIDGET_H

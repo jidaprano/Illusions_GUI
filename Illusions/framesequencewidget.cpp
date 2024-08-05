@@ -43,7 +43,7 @@ void FrameSequenceWidget::scrubSequence(int value) {
         restartSequence(0);
         playSequence();
         if(isFirstPlay) { //If sequence has finished its first playthrough, change isFirstPlay flag and emit finished signal
-            emit sequenceFinished();
+            emit firstSequenceFinished();
             isFirstPlay = false;
         }
     }
@@ -60,7 +60,7 @@ void FrameSequenceWidget::scrubSequence(int value) {
  * Returns: void
  */
 void FrameSequenceWidget::playSequence() {
-    emit sequenceStarted();
+    emit firstSequenceStarted();
     autoScrubTimer->start();
     int val = scrubber->value();
     scrubber->setValue(++val);

@@ -55,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(illusionExplanationText, SIGNAL(textRevealed()), this, SLOT(restartInteractionTimer()));
 
     //Import optical and audio illusions
-    importAudioIllusions();
     audioIllusionWidget = createAudioWidget();
     illusionStackedWidget->addWidget(audioIllusionWidget);
     exhibitVLayout->addWidget(illusionStackedWidget);
@@ -99,10 +98,7 @@ void MainWindow::initializeFileMaps() {
     opticalFileMap = new QMap<QWidget*, QString>();
     audioFileMap = new QMap<QString, QString>();
 
-    //Create optical file lists to search through
-    QFileInfoList imageFileList = QDir(opticalFilePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-
-    if(!imageFileList.empty()) {
+    if(!QDir(opticalFilePath).isEmpty()) {
         QDirIterator opticalFileIterator(opticalFilePath);
         while(opticalFileIterator.hasNext()) {
             QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -134,10 +130,7 @@ void MainWindow::initializeFileMaps() {
         QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
     }
 
-    //Create audio file lists to search through
-    QFileInfoList audioFileList = QDir(audioFilePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-
-    if(!audioFileList.empty()) {
+    if(!QDir(audioFilePath).isEmpty()) {
         QDirIterator audioFileIterator(audioFilePath);
         while(audioFileIterator.hasNext()) {
             QFileInfoList illusionFile = QDir(audioFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -151,6 +144,14 @@ void MainWindow::initializeFileMaps() {
                 }
                 if(!illusionPath.isEmpty() && !textPath.isEmpty()) {
                     audioFileMap->insert(illusionPath, textPath);
+
+                    QLabel *illusion = new QLabel(illusionPath);
+                    QString iconPath = audioButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
+                    WidgetButton *button = new WidgetButton(illusion, iconPath);
+                    button->setIconSize(ss->illusionButtonSize);
+                    button->setMaximumSize(ss->illusionButtonSize);
+                    audioButtonsList->push_front(button);
+                    connect(button, SIGNAL(buttonClicked(QWidget*)), this, SLOT(changeAudioIllusion(QWidget*)));
                     break;
                 }
             }
@@ -158,21 +159,6 @@ void MainWindow::initializeFileMaps() {
         }
     } else {
         QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
-    }
-
-}
-
-void MainWindow::importAudioIllusions() {
-
-    //Create button for each audio widget and add to list
-    for(QString filePath : audioFileMap->keys()) {
-        QLabel *illusion = new QLabel(filePath);
-        QString iconPath = audioButtonIconsPath + QFileInfo(filePath).baseName() + ".jpg";
-        WidgetButton *button = new WidgetButton(illusion, iconPath);
-        button->setIconSize(ss->illusionButtonSize);
-        button->setMaximumSize(ss->illusionButtonSize);
-        audioButtonsList->push_front(button);
-        connect(button, SIGNAL(buttonClicked(QWidget*)), this, SLOT(changeAudioIllusion(QWidget*)));
     }
 }
 
@@ -189,8 +175,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
     opticalIllusionLabel->setAlignment(Qt::AlignLeft);
     illusionLayout->addWidget(opticalIllusionLabel);
 
-    //File is single image
-    if(QFileInfo(filePath).isFile() && !QImageReader::imageFormat(filePath).isNull()) {
+    if(QFileInfo(filePath).isFile() && !QImageReader::imageFormat(filePath).isNull()) { //File is single image
         //Create illusion icon and add to layout
         QLabel *illusion = new QLabel(illusionWidget);
         QPixmap *illusionIcon = new QPixmap();
@@ -203,15 +188,15 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
     } else if(QFileInfo(filePath).isDir()){ //File is folder, so illusion is frame sequence
         QList<QImage> *frameList = loadFrameSequence(filePath);
         FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval);
-        connect(frameSeq, SIGNAL(sequenceStarted()), this, SLOT(pauseInteractionTimer()));
-        connect(frameSeq, SIGNAL(sequenceFinished()), this, SLOT(restartInteractionTimer()));
+        connect(frameSeq, SIGNAL(firstSequenceStarted()), this, SLOT(pauseInteractionTimer()));
+        connect(frameSeq, SIGNAL(firstSequenceFinished()), this, SLOT(restartInteractionTimer()));
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(frameSeq));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(restartSequence(int)));
     } else { //File is video
         VideoWidget *videoWidget = new VideoWidget(filePath);
-        connect(videoWidget, SIGNAL(videoStarted()), this, SLOT(pauseInteractionTimer()));
-        connect(videoWidget, SIGNAL(videoFinished()), this, SLOT(restartInteractionTimer()));
+        connect(videoWidget, SIGNAL(firstVideoStarted()), this, SLOT(pauseInteractionTimer()));
+        connect(videoWidget, SIGNAL(firstVideoFinished()), this, SLOT(restartInteractionTimer()));
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(videoWidget));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(pause(int)));
@@ -570,8 +555,14 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
     restartInteractionTimer();
 }
 
+/*
+ * Slot function to switch the interface to display a different optical illusion
+ *
+ * Arguments: QWidget* - optical illusion widget to switch to
+ * Returns: void
+ */
 void MainWindow::changeOpticalIllusion(QWidget *widget) {
-    //Set appropriate button outlining
+    //Set button corresponding to new display illusion to active outline and set old button to standard outline
     activeButton->setStyleSheet("");
     activeButton = (WidgetButton*)sender();
     activeButton->setStyleSheet(ss->activeIllusionButton);
@@ -600,13 +591,28 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
     restartInteractionTimer();
 }
 
+/*
+ * Slot function to restart an audio file and the corresponding visualizer
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::restartAudio() {
+    //Restart audio player
     audioMediaPlayer->setPosition(0);
+    //Restart and play visualizer
     visualizer->restartSequence(0);
     visualizer->playSequence();
+    //Restart interaction timer
     restartInteractionTimer();
 }
 
+/*
+ * Slot function to set the audio progress bar position to parameter value
+ *
+ * Arguments: qint64 - value to set the progress bar's position to
+ * Returns: void
+ */
 void MainWindow::setProgressBarPosition(qint64 val) {
     int pos = static_cast<int>(val);
     audioProgressBar->setValue(pos);

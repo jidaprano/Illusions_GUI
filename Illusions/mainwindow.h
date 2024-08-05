@@ -60,7 +60,6 @@ public:
     void initializeFileMaps();
     QString readFirstLine(QString filePath);
     QString readTextExcludingFirstLine(QString filePath);
-    void importAudioIllusions();
     QWidget *createOpticalWidget(QString filePath);
     QWidget *createAudioWidget();
     QWidget *getSpacedIllusion(QWidget *illusion);

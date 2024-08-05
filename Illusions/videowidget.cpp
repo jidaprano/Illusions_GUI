@@ -54,10 +54,10 @@ void VideoWidget::pause([[maybe_unused]] int i) {
 void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if(isFirstPlay) { //If video has changed during its first playthrough
         if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
-            emit videoFinished(); //Emit finished signal
+            emit firstVideoFinished(); //Emit finished signal
             isFirstPlay = false; //Set first playthrough flag to false
         } else {
-            emit videoStarted(); //Emit started signal
+            emit firstVideoStarted(); //Emit started signal
         }
     }
 }
