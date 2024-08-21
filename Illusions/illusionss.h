@@ -26,9 +26,6 @@ public:
     const QString forwardButtonPath = ":/images/StyleResources/Illusions_Right-Arrow_APR24.png";
     const QString backButtonPath = ":/images/StyleResources/Illusions_Left-Arrow_APR24.png";
 
-    //EVIL PATH MUST BE HANDLED
-    const QString visualizerPath = "/home/exhibits/Desktop/IllusionsProject/Illusions_GUI/Illusions/StyleResources/soundwave.mp4";
-
     //Stylesheets
     const QString activeIllusionButton =
         "QToolButton {"
@@ -101,6 +98,9 @@ public:
     //Error messages
     const QString warningTitle = "Warning";
 
+    //Valid suffix lists
+    const QList<QString> audioFileSuffixes = { "mp3", "ogg", "WAV", "wav" };
+    const QList<QString> videoFileSuffixes = { "mp4", "mov", "m4v" };
 private:
     QList<QImage> *soundwaveSeq;
 };

@@ -105,7 +105,7 @@ void MainWindow::initializeFileMaps() {
             QString illusionPath = "";
             QString textPath = "";
             for(QFileInfo file : illusionFile) {
-                if(file.isDir()) {
+                if(file.isDir() || QImageReader::imageFormat(file.absoluteFilePath()) != "" || ss->videoFileSuffixes.contains(file.suffix())) {
                     illusionPath = file.absoluteFilePath();
                 } else if(file.suffix() == "txt") {
                     textPath = file.absoluteFilePath();
@@ -137,7 +137,7 @@ void MainWindow::initializeFileMaps() {
             QString illusionPath = "";
             QString textPath = "";
             for(QFileInfo file : illusionFile) {
-                if(file.suffix() == "mp3" || file.suffix() == "ogg" || file.suffix() == "WAV") {
+                if(ss->audioFileSuffixes.contains(file.suffix())) {
                     illusionPath = file.absoluteFilePath();
                 } else if(file.suffix() == "txt") {
                     textPath = file.absoluteFilePath();
@@ -530,7 +530,6 @@ void MainWindow::pauseInteractionTimer() {
 }
 
 void MainWindow::restartInteractionTimer() {
-    std::cout << "TIMER RESTARTED" + std::to_string(++idleWaitSeconds)<< std::endl;
     interactionTimer->start(idleWaitSeconds * 1000);
 }
 

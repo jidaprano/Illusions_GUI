@@ -40,9 +40,9 @@ namespace {
 struct qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS = QtMocHelpers::stringData(
     "FrameSequenceWidget",
-    "sequenceStarted",
+    "firstSequenceStarted",
     "",
-    "sequenceFinished",
+    "firstSequenceFinished",
     "scrubSequence",
     "value",
     "playSequence",
@@ -54,9 +54,9 @@ static constexpr auto qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS = QtMo
 struct qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS_t {
     uint offsetsAndSizes[20];
     char stringdata0[20];
-    char stringdata1[16];
+    char stringdata1[21];
     char stringdata2[1];
-    char stringdata3[17];
+    char stringdata3[22];
     char stringdata4[14];
     char stringdata5[6];
     char stringdata6[13];
@@ -69,20 +69,20 @@ struct qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS_t {
 Q_CONSTINIT static const qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS_t qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS = {
     {
         QT_MOC_LITERAL(0, 19),  // "FrameSequenceWidget"
-        QT_MOC_LITERAL(20, 15),  // "sequenceStarted"
-        QT_MOC_LITERAL(36, 0),  // ""
-        QT_MOC_LITERAL(37, 16),  // "sequenceFinished"
-        QT_MOC_LITERAL(54, 13),  // "scrubSequence"
-        QT_MOC_LITERAL(68, 5),  // "value"
-        QT_MOC_LITERAL(74, 12),  // "playSequence"
-        QT_MOC_LITERAL(87, 13),  // "pauseSequence"
-        QT_MOC_LITERAL(101, 15),  // "restartSequence"
-        QT_MOC_LITERAL(117, 1)   // "i"
+        QT_MOC_LITERAL(20, 20),  // "firstSequenceStarted"
+        QT_MOC_LITERAL(41, 0),  // ""
+        QT_MOC_LITERAL(42, 21),  // "firstSequenceFinished"
+        QT_MOC_LITERAL(64, 13),  // "scrubSequence"
+        QT_MOC_LITERAL(78, 5),  // "value"
+        QT_MOC_LITERAL(84, 12),  // "playSequence"
+        QT_MOC_LITERAL(97, 13),  // "pauseSequence"
+        QT_MOC_LITERAL(111, 15),  // "restartSequence"
+        QT_MOC_LITERAL(127, 1)   // "i"
     },
     "FrameSequenceWidget",
-    "sequenceStarted",
+    "firstSequenceStarted",
     "",
-    "sequenceFinished",
+    "firstSequenceFinished",
     "scrubSequence",
     "value",
     "playSequence",
@@ -139,9 +139,9 @@ Q_CONSTINIT const QMetaObject FrameSequenceWidget::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSFrameSequenceWidgetENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<FrameSequenceWidget, std::true_type>,
-        // method 'sequenceStarted'
+        // method 'firstSequenceStarted'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'sequenceFinished'
+        // method 'firstSequenceFinished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'scrubSequence'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -163,8 +163,8 @@ void FrameSequenceWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         auto *_t = static_cast<FrameSequenceWidget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->sequenceStarted(); break;
-        case 1: _t->sequenceFinished(); break;
+        case 0: _t->firstSequenceStarted(); break;
+        case 1: _t->firstSequenceFinished(); break;
         case 2: _t->scrubSequence((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 3: _t->playSequence(); break;
         case 4: _t->pauseSequence(); break;
@@ -175,14 +175,14 @@ void FrameSequenceWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (FrameSequenceWidget::*)();
-            if (_t _q_method = &FrameSequenceWidget::sequenceStarted; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &FrameSequenceWidget::firstSequenceStarted; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
             using _t = void (FrameSequenceWidget::*)();
-            if (_t _q_method = &FrameSequenceWidget::sequenceFinished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &FrameSequenceWidget::firstSequenceFinished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
@@ -221,13 +221,13 @@ int FrameSequenceWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void FrameSequenceWidget::sequenceStarted()
+void FrameSequenceWidget::firstSequenceStarted()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void FrameSequenceWidget::sequenceFinished()
+void FrameSequenceWidget::firstSequenceFinished()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
