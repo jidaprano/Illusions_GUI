@@ -523,17 +523,27 @@ void MainWindow::switchToExhibitScreen() {
     idleOpacity->setOpacity(0);
     topStackedWidget->setCurrentWidget(exhibitWidget);
     restartInteractionTimer();
+
+//    VideoWidget* videoWidget = dynamic_cast<VideoWidget*>(illusionStackedWidget->currentWidget());
+//    if(videoWidget != nullptr) {
+//        videoWidget->changePosition(0);
+//        videoWidget->play(0);
+//    }
 }
 
 void MainWindow::pauseInteractionTimer() {
+    std::cout << "TIMER PAUSED" << std::endl;
     interactionTimer->stop();
 }
 
 void MainWindow::restartInteractionTimer() {
+    std::cout << "TIMER RESTARTED" + std::to_string(++idleWaitSeconds)<< std::endl;
     interactionTimer->start(idleWaitSeconds * 1000);
 }
 
 void MainWindow::changeAudioIllusion(QWidget *widget) {
+    restartInteractionTimer();
+
     //Set appropriate button outlining
     activeButton->setStyleSheet("");
     activeButton = (WidgetButton*)sender();
@@ -550,8 +560,6 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
 
     visualizer->restartSequence(0);
     visualizer->playSequence();
-
-    restartInteractionTimer();
 }
 
 /*
@@ -561,6 +569,8 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
  * Returns: void
  */
 void MainWindow::changeOpticalIllusion(QWidget *widget) {
+    restartInteractionTimer();
+
     //Set button corresponding to new display illusion to active outline and set old button to standard outline
     activeButton->setStyleSheet("");
     activeButton = (WidgetButton*)sender();
@@ -587,7 +597,6 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
     if(timer != nullptr) {
         timer->start();
     }
-    restartInteractionTimer();
 }
 
 /*

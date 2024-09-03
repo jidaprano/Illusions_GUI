@@ -20,8 +20,6 @@ FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval)
     scrubber->setOrientation(Qt::Horizontal);
     scrubber->setRange(0, frameSequence->length() - 1);
     connect(scrubber, SIGNAL(valueChanged(int)), this, SLOT(scrubSequence(int)));
-    connect(scrubber, SIGNAL(sliderReleased()), this, SLOT(playSequence()));
-    connect(scrubber, SIGNAL(sliderPressed()), this, SLOT(pauseSequence()));
 
     //Timer setup
     autoScrubTimer = new QTimer(this);
@@ -60,7 +58,9 @@ void FrameSequenceWidget::scrubSequence(int value) {
  * Returns: void
  */
 void FrameSequenceWidget::playSequence() {
-    emit firstSequenceStarted();
+    if(isFirstPlay) {
+        emit firstSequenceStarted();
+    }
     autoScrubTimer->start();
     int val = scrubber->value();
     scrubber->setValue(++val);

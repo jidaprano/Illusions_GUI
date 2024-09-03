@@ -44,25 +44,27 @@ static constexpr auto qt_meta_stringdata_CLASSVideoWidgetENDCLASS = QtMocHelpers
     "",
     "firstVideoFinished",
     "changePosition",
-    "pause",
+    "play",
     "i",
+    "pause",
     "onMediaStatusChanged",
     "QMediaPlayer::MediaStatus",
     "status"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t {
-    uint offsetsAndSizes[20];
+    uint offsetsAndSizes[22];
     char stringdata0[12];
     char stringdata1[18];
     char stringdata2[1];
     char stringdata3[19];
     char stringdata4[15];
-    char stringdata5[6];
+    char stringdata5[5];
     char stringdata6[2];
-    char stringdata7[21];
-    char stringdata8[26];
-    char stringdata9[7];
+    char stringdata7[6];
+    char stringdata8[21];
+    char stringdata9[26];
+    char stringdata10[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -73,19 +75,21 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t qt_meta_s
         QT_MOC_LITERAL(30, 0),  // ""
         QT_MOC_LITERAL(31, 18),  // "firstVideoFinished"
         QT_MOC_LITERAL(50, 14),  // "changePosition"
-        QT_MOC_LITERAL(65, 5),  // "pause"
-        QT_MOC_LITERAL(71, 1),  // "i"
-        QT_MOC_LITERAL(73, 20),  // "onMediaStatusChanged"
-        QT_MOC_LITERAL(94, 25),  // "QMediaPlayer::MediaStatus"
-        QT_MOC_LITERAL(120, 6)   // "status"
+        QT_MOC_LITERAL(65, 4),  // "play"
+        QT_MOC_LITERAL(70, 1),  // "i"
+        QT_MOC_LITERAL(72, 5),  // "pause"
+        QT_MOC_LITERAL(78, 20),  // "onMediaStatusChanged"
+        QT_MOC_LITERAL(99, 25),  // "QMediaPlayer::MediaStatus"
+        QT_MOC_LITERAL(125, 6)   // "status"
     },
     "VideoWidget",
     "firstVideoStarted",
     "",
     "firstVideoFinished",
     "changePosition",
-    "pause",
+    "play",
     "i",
+    "pause",
     "onMediaStatusChanged",
     "QMediaPlayer::MediaStatus",
     "status"
@@ -100,7 +104,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -108,13 +112,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x06,    1 /* Public */,
-       3,    0,   45,    2, 0x06,    2 /* Public */,
+       1,    0,   50,    2, 0x06,    1 /* Public */,
+       3,    0,   51,    2, 0x06,    2 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    1,   46,    2, 0x08,    3 /* Private */,
-       5,    1,   49,    2, 0x08,    5 /* Private */,
-       7,    1,   52,    2, 0x08,    7 /* Private */,
+       4,    1,   52,    2, 0x0a,    3 /* Public */,
+       5,    1,   55,    2, 0x0a,    5 /* Public */,
+       7,    1,   58,    2, 0x0a,    7 /* Public */,
+       8,    1,   61,    2, 0x0a,    9 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -123,7 +128,8 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int,    6,
-    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void, QMetaType::Int,    6,
+    QMetaType::Void, 0x80000000 | 9,   10,
 
        0        // eod
 };
@@ -142,6 +148,9 @@ Q_CONSTINIT const QMetaObject VideoWidget::staticMetaObject = { {
         // method 'firstVideoFinished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'changePosition'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'play'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'pause'
@@ -163,8 +172,9 @@ void VideoWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 0: _t->firstVideoStarted(); break;
         case 1: _t->firstVideoFinished(); break;
         case 2: _t->changePosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 3: _t->pause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 4: _t->onMediaStatusChanged((*reinterpret_cast< std::add_pointer_t<QMediaPlayer::MediaStatus>>(_a[1]))); break;
+        case 3: _t->play((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 4: _t->pause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 5: _t->onMediaStatusChanged((*reinterpret_cast< std::add_pointer_t<QMediaPlayer::MediaStatus>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -205,13 +215,13 @@ int VideoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

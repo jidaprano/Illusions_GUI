@@ -22,8 +22,9 @@ private:
     QVideoWidget *videoOutput;
     QVBoxLayout *layout;
     bool isFirstPlay;
-private slots:
+public slots:
     void changePosition(int);
+    void play(int i);
     void pause(int i);
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 signals:

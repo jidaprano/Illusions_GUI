@@ -11,7 +11,7 @@ VideoWidget::VideoWidget(QString filePath) : QWidget()
     layout = new QVBoxLayout(this);
 
     //Instantiate and add video playing widget
-    videoOutput = new QVideoWidget;
+    videoOutput = new QVideoWidget(this);
     layout->addWidget(videoOutput);
 
     //Instantiate media player object and attach it to the video output widget
@@ -46,6 +46,16 @@ void VideoWidget::pause([[maybe_unused]] int i) {
 }
 
 /*
+ * Slot function to play video
+ *
+ * Arguments: [unused]int - necessary for connect statement
+ * Returns: void
+ */
+void VideoWidget::play([[maybe_unused]] int i) {
+    mediaPlayer->play();
+}
+
+/*
  * Slot function to handle media status changes
  *
  * Arguments: QMediaPlayer::MediaStatus - status of media player
@@ -56,6 +66,8 @@ void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
             emit firstVideoFinished(); //Emit finished signal
             isFirstPlay = false; //Set first playthrough flag to false
+            changePosition(0);
+            play(0);
         } else {
             emit firstVideoStarted(); //Emit started signal
         }
