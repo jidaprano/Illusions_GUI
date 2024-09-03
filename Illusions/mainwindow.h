@@ -50,12 +50,13 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
+    int restartTracker = 0;
     int idleWaitSeconds = 3
         ;
-    QString opticalFilePath = "./Content/Optical";
-    QString audioFilePath = "./Content/Audio";
-    QString opticalButtonIconsPath = opticalFilePath + "/ButtonIcons/";
-    QString audioButtonIconsPath = audioFilePath + "/ButtonIcons/";
+    QString opticalFilePath = "./Content/Optical/";
+    QString audioFilePath = "./Content/Audio/";
+    QString opticalButtonIconsPath = opticalFilePath + "ButtonIcons/";
+    QString audioButtonIconsPath = audioFilePath + "ButtonIcons/";
 
     void initializeFileMaps();
     QString readFirstLine(QString filePath);

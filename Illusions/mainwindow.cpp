@@ -99,8 +99,9 @@ void MainWindow::initializeFileMaps() {
     audioFileMap = new QMap<QString, QString>();
 
     if(!QDir(opticalFilePath).isEmpty()) {
-        QDirIterator opticalFileIterator(opticalFilePath);
+        QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot);
         while(opticalFileIterator.hasNext()) {
+            QString aa = opticalFileIterator.filePath();
             QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
             QString illusionPath = "";
             QString textPath = "";
@@ -537,7 +538,7 @@ void MainWindow::pauseInteractionTimer() {
 }
 
 void MainWindow::restartInteractionTimer() {
-    std::cout << "TIMER RESTARTED" + std::to_string(++idleWaitSeconds)<< std::endl;
+    std::cout << "TIMER RESTARTED" + std::to_string(++restartTracker)<< std::endl;
     interactionTimer->start(idleWaitSeconds * 1000);
 }
 

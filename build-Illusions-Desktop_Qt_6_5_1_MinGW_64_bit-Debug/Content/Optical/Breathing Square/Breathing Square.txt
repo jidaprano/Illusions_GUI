@@ -1,0 +1,3 @@
+Does the square look like it’s spinning or swelling/breathing? 
+
+Our brain tells us something is moving by detecting a change over time. The blue square remains one size as it turns. But when the orange squares move and close the opening around it, we see the motion related to the edges of the opening. Our brain interprets this as increasing and decreasing in size. This could be in part due to a tendency to see objects that are moving in overlapping ways as connected, called motion binding. 
