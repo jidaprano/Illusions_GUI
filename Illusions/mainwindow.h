@@ -58,7 +58,7 @@ public:
     QString opticalButtonIconsPath = opticalFilePath + "ButtonIcons/";
     QString audioButtonIconsPath = audioFilePath + "ButtonIcons/";
 
-    void initializeFileMaps();
+    void importIllusions();
     QString readFirstLine(QString filePath);
     QString readTextExcludingFirstLine(QString filePath);
     QWidget *createOpticalWidget(QString filePath);

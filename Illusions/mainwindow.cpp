@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     audioButtonsList = new QList<WidgetButton*>();
 
     //Initialize and populate file path maps from illusion to text description
-    initializeFileMaps();
+    importIllusions();
 
     //Create text explanation widget
     illusionExplanationText = new HiddenTextWidget("", "");
@@ -93,15 +93,15 @@ MainWindow::MainWindow(QWidget *parent)
     restartInteractionTimer();
 }
 
-void MainWindow::initializeFileMaps() {
+void MainWindow::importIllusions() {
     //Instantiate maps
     opticalFileMap = new QMap<QWidget*, QString>();
     audioFileMap = new QMap<QString, QString>();
 
+    //Import optical illusions
     if(!QDir(opticalFilePath).isEmpty()) {
         QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot);
         while(opticalFileIterator.hasNext()) {
-            QString aa = opticalFileIterator.filePath();
             QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
             QString illusionPath = "";
             QString textPath = "";
