@@ -17,7 +17,7 @@ VideoWidget::VideoWidget(QString filePath) : QWidget()
     //Instantiate media player object and attach it to the video output widget
     mediaPlayer = new QMediaPlayer(this);
     mediaPlayer->setVideoOutput(videoOutput);
-    connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &VideoWidget::onMediaStatusChanged);
+    connect(mediaPlayer, &QMediaPlayer::playbackStateChanged, this, &VideoWidget::onPlaybackStateChanged);
 
     //Set video file source to parameter path
     mediaPlayer->setSource(QUrl::fromLocalFile(filePath));
@@ -58,12 +58,12 @@ void VideoWidget::play([[maybe_unused]] int i) {
 /*
  * Slot function to handle media status changes
  *
- * Arguments: QMediaPlayer::MediaStatus - status of media player
+ * Arguments: QMediaPlayer::PlaybackState - state of media player
  * Returns: void
  */
-void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
+void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState status) {
     if(isFirstPlay) { //If video has changed during its first playthrough
-        if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
+        if(status == QMediaPlayer::StoppedState) { //If the status change is the video is over
             emit firstVideoFinished(); //Emit finished signal
             isFirstPlay = false; //Set first playthrough flag to false
             changePosition(0);
@@ -73,3 +73,14 @@ void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         }
     }
 }
+
+/*
+ * Slot function to set isFirstPlay to true
+ *
+ * Arguments: int - required for connect statement but unused
+ * Returns: void
+ */
+void VideoWidget::resetIsFirstPlay([[maybe_unused]] int i) {
+    isFirstPlay = true;
+}
+

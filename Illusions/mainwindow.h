@@ -84,6 +84,9 @@ private slots:
     void restartAudio();
     void setProgressBarPosition(qint64 val);
 
+signals:
+    void switchedToExhibitScreen(int val);
+
 private:
     Ui::MainWindow *ui;
 

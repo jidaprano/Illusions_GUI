@@ -80,10 +80,20 @@ void FrameSequenceWidget::pauseSequence() {
 /*
  * Slot function to restart sequence and pause its playing
  *
- * Arguments: none
+ * Arguments: int - required for connect statement but unused
  * Returns: void
  */
 void FrameSequenceWidget::restartSequence([[maybe_unused]] int i) {
     scrubber->setValue(scrubber->minimum());
     pauseSequence();
+}
+
+/*
+ * Slot function to set isFirstPlay to true
+ *
+ * Arguments: int - required for connect statement but unused
+ * Returns: void
+ */
+void FrameSequenceWidget::resetIsFirstPlay([[maybe_unused]] int i) {
+    isFirstPlay = true;
 }

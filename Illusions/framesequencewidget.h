@@ -31,6 +31,7 @@ public slots:
     void playSequence();
     void pauseSequence();
     void restartSequence(int i);
+    void resetIsFirstPlay(int i);
 signals:
     void firstSequenceStarted();
     void firstSequenceFinished();

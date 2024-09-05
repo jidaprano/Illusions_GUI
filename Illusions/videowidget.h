@@ -26,7 +26,8 @@ public slots:
     void changePosition(int);
     void play(int i);
     void pause(int i);
-    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    void onPlaybackStateChanged(QMediaPlayer::PlaybackState status);
+    void resetIsFirstPlay(int i);
 signals:
     void firstVideoStarted();
     void firstVideoFinished();

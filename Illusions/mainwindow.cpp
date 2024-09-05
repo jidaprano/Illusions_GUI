@@ -194,10 +194,14 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(frameSeq));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(restartSequence(int)));
+        connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(resetIsFirstPlay(int)));
+        connect(this, SIGNAL(switchedToExhibitScreen(int)), frameSeq, SLOT(resetIsFirstPlay(int)));
     } else { //File is video
         VideoWidget *videoWidget = new VideoWidget(filePath);
         connect(videoWidget, SIGNAL(firstVideoStarted()), this, SLOT(pauseInteractionTimer()));
         connect(videoWidget, SIGNAL(firstVideoFinished()), this, SLOT(restartInteractionTimer()));
+        connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(resetIsFirstPlay(int)));
+        connect(this, SIGNAL(switchedToExhibitScreen(int)), videoWidget, SLOT(resetIsFirstPlay(int)));
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(videoWidget));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(pause(int)));
@@ -519,6 +523,8 @@ void MainWindow::idleStackedSwitch() {
 }
 
 void MainWindow::switchToExhibitScreen() {
+    emit switchedToExhibitScreen(0);
+
     illusionExplanationText->hideText();
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
@@ -581,7 +587,6 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
     illusionStackedWidget->setCurrentWidget(widget);
 
     //Set text of new illusion
-    QLabel* opticalLabel = widget->findChild<QLabel*>();
     QString textPath = opticalFileMap->value(widget);
     illusionExplanationText->hideText();
     illusionExplanationText->setText(readFirstLine(textPath), readTextExcludingFirstLine(textPath));
