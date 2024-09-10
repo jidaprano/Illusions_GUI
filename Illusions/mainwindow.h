@@ -86,6 +86,7 @@ private slots:
 
 signals:
     void switchedToExhibitScreen(int val);
+    void switchedActiveIllusion(QWidget* widget);
 
 private:
     Ui::MainWindow *ui;

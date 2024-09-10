@@ -10,7 +10,7 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <iostream>
-#include "qimprovedslider.h"
+#include <QThread>
 
 class VideoWidget : public QWidget
 {
@@ -22,12 +22,17 @@ private:
     QVideoWidget *videoOutput;
     QVBoxLayout *layout;
     bool isFirstPlay;
+    bool hasPlayed;
+    QWidget* activeWidget;
 public slots:
     void changePosition(int);
     void play(int i);
     void pause(int i);
     void onPlaybackStateChanged(QMediaPlayer::PlaybackState status);
-    void resetIsFirstPlay(int i);
+    void resetAndPause(int i);
+    void resetAndPlay(int i);
+    void updateActiveWidget(QWidget* widget);
+    void checkPosition(qint64 pos);
 signals:
     void firstVideoStarted();
     void firstVideoFinished();

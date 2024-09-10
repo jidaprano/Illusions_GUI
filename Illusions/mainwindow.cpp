@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
     //Color all labels brown
     this->setStyleSheet(ss->labelColor);
 
+    //Currently active button
+    activeButton = new WidgetButton(nullptr, "");
+
     //Idle screen timer
     interactionTimer = new QTimer(this);
     connect(interactionTimer, SIGNAL(timeout()), this, SLOT(switchToIdleScreen()));
@@ -69,10 +72,6 @@ MainWindow::MainWindow(QWidget *parent)
     exhibitVLayout->addWidget(menuWidget);
     exhibitVLayout->addSpacing(300);
 
-    //Select first illusion
-    activeButton = opticalButtonsList->first();
-    opticalButtonsList->first()->click();
-
     //Idle screen widget
     idleWidget = createIdleScreenWidget();
     //instantiate opacity for idle screen
@@ -91,6 +90,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(topStackedWidget);
 
     restartInteractionTimer();
+
+    //Select first illusion
+    activeButton = opticalButtonsList->first();
+    opticalButtonsList->first()->click();
+
 }
 
 void MainWindow::importIllusions() {
@@ -184,6 +188,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         *illusionIcon = illusionIcon->scaledToWidth(qApp->screens()[0]->size().width() - 200);
         illusion->setAlignment(Qt::AlignCenter);
         illusion->setPixmap(*illusionIcon);
+
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(illusion));
     } else if(QFileInfo(filePath).isDir()){ //File is folder, so illusion is frame sequence
@@ -191,6 +196,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval);
         connect(frameSeq, SIGNAL(firstSequenceStarted()), this, SLOT(pauseInteractionTimer()));
         connect(frameSeq, SIGNAL(firstSequenceFinished()), this, SLOT(restartInteractionTimer()));
+
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(frameSeq));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(restartSequence(int)));
@@ -200,11 +206,12 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         VideoWidget *videoWidget = new VideoWidget(filePath);
         connect(videoWidget, SIGNAL(firstVideoStarted()), this, SLOT(pauseInteractionTimer()));
         connect(videoWidget, SIGNAL(firstVideoFinished()), this, SLOT(restartInteractionTimer()));
-        connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(resetIsFirstPlay(int)));
-        connect(this, SIGNAL(switchedToExhibitScreen(int)), videoWidget, SLOT(resetIsFirstPlay(int)));
+        connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(resetAndPause(int)));
+        connect(this, SIGNAL(switchedToExhibitScreen(int)), videoWidget, SLOT(resetAndPlay(int)));
+        connect(this, SIGNAL(switchedActiveIllusion(QWidget*)), videoWidget, SLOT(updateActiveWidget(QWidget*)));
+
         //Sizing and spacing
         illusionLayout->addWidget(getSpacedIllusion(videoWidget));
-        connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(pause(int)));
     }
 
     return illusionWidget;
@@ -524,18 +531,12 @@ void MainWindow::idleStackedSwitch() {
 
 void MainWindow::switchToExhibitScreen() {
     emit switchedToExhibitScreen(0);
-
+    //pauseInteractionTimer();
     illusionExplanationText->hideText();
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
     topStackedWidget->setCurrentWidget(exhibitWidget);
     restartInteractionTimer();
-
-//    VideoWidget* videoWidget = dynamic_cast<VideoWidget*>(illusionStackedWidget->currentWidget());
-//    if(videoWidget != nullptr) {
-//        videoWidget->changePosition(0);
-//        videoWidget->play(0);
-//    }
 }
 
 void MainWindow::pauseInteractionTimer() {
@@ -576,6 +577,8 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
  * Returns: void
  */
 void MainWindow::changeOpticalIllusion(QWidget *widget) {
+    emit switchedActiveIllusion(widget);
+
     restartInteractionTimer();
 
     //Set button corresponding to new display illusion to active outline and set old button to standard outline
