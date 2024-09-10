@@ -1121,6 +1121,7 @@ release/moc_mainwindow.cpp: ../Illusions/mainwindow.h \
 		../Illusions/qimprovedslider.h \
 		C:/Qt/6.5.1/mingw_64/include/QtWidgets/QSlider \
 		../Illusions/videowidget.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/QThread \
 		../Illusions/hiddentextwidget.h \
 		../Illusions/illusionss.h \
 		C:/Qt/6.5.1/mingw_64/include/QtCore/QString \
@@ -1480,9 +1481,10 @@ release/moc_videowidget.cpp: ../Illusions/videowidget.h \
 		C:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
 		C:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
 		C:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
-		../Illusions/qimprovedslider.h \
-		C:/Qt/6.5.1/mingw_64/include/QtWidgets/QSlider \
-		C:/Qt/6.5.1/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/QThread \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/qthread.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/qdeadlinetimer.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/qelapsedtimer.h \
 		release/moc_predefs.h \
 		C:/Qt/6.5.1/mingw_64/bin/moc.exe
 	C:\Qt\6.5.1\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/jidap/Documents/GitHub/Illusions_GUI/build-Illusions-Desktop_Qt_6_5_1_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.5.1/mingw_64/mkspecs/win32-g++ -IC:/Users/jidap/Documents/GitHub/Illusions_GUI/Illusions -IC:/Qt/6.5.1/mingw_64/include -IC:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets -IC:/Qt/6.5.1/mingw_64/include/QtMultimedia -IC:/Qt/6.5.1/mingw_64/include/QtWidgets -IC:/Qt/6.5.1/mingw_64/include/QtGui -IC:/Qt/6.5.1/mingw_64/include/QtNetwork -IC:/Qt/6.5.1/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\Illusions\videowidget.h -o release\moc_videowidget.cpp
@@ -2759,6 +2761,7 @@ release/main.o: ../Illusions/main.cpp ../Illusions/mainwindow.h \
 		../Illusions/qimprovedslider.h \
 		C:/Qt/6.5.1/mingw_64/include/QtWidgets/QSlider \
 		../Illusions/videowidget.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/QThread \
 		../Illusions/hiddentextwidget.h \
 		../Illusions/illusionss.h \
 		C:/Qt/6.5.1/mingw_64/include/QtCore/QString \
@@ -3063,6 +3066,7 @@ release/mainwindow.o: ../Illusions/mainwindow.cpp ../Illusions/mainwindow.h \
 		../Illusions/qimprovedslider.h \
 		C:/Qt/6.5.1/mingw_64/include/QtWidgets/QSlider \
 		../Illusions/videowidget.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/QThread \
 		../Illusions/hiddentextwidget.h \
 		../Illusions/illusionss.h \
 		C:/Qt/6.5.1/mingw_64/include/QtCore/QString \
@@ -3436,9 +3440,10 @@ release/videowidget.o: ../Illusions/videowidget.cpp ../Illusions/videowidget.h \
 		C:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
 		C:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
 		C:/Qt/6.5.1/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
-		../Illusions/qimprovedslider.h \
-		C:/Qt/6.5.1/mingw_64/include/QtWidgets/QSlider \
-		C:/Qt/6.5.1/mingw_64/include/QtWidgets/qslider.h
+		C:/Qt/6.5.1/mingw_64/include/QtCore/QThread \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/qthread.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/qdeadlinetimer.h \
+		C:/Qt/6.5.1/mingw_64/include/QtCore/qelapsedtimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\videowidget.o ..\Illusions\videowidget.cpp
 
 release/widgetbutton.o: ../Illusions/widgetbutton.cpp ../Illusions/widgetbutton.h \

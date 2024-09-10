@@ -17,6 +17,7 @@ class VideoWidget : public QWidget
     Q_OBJECT
 public:
     VideoWidget(QString filePath);
+    ~VideoWidget();
 private:
     QMediaPlayer *mediaPlayer;
     QVideoWidget *videoOutput;
@@ -28,7 +29,8 @@ public slots:
     void changePosition(int);
     void play(int i);
     void pause(int i);
-    void onPlaybackStateChanged(QMediaPlayer::PlaybackState status);
+    void onPlaybackStateChanged(QMediaPlayer::PlaybackState state);
+    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void resetAndPause(int i);
     void resetAndPlay(int i);
     void updateActiveWidget(QWidget* widget);

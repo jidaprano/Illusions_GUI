@@ -12,9 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     //Color all labels brown
     this->setStyleSheet(ss->labelColor);
 
-    //Currently active button
-    activeButton = new WidgetButton(nullptr, "");
-
     //Idle screen timer
     interactionTimer = new QTimer(this);
     connect(interactionTimer, SIGNAL(timeout()), this, SLOT(switchToIdleScreen()));

@@ -22,6 +22,7 @@ VideoWidget::VideoWidget(QString filePath) : QWidget()
     connect(mediaPlayer, SIGNAL(playbackStateChanged(QMediaPlayer::PlaybackState)),
             this, SLOT(onPlaybackStateChanged(QMediaPlayer::PlaybackState)));
     connect(mediaPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(checkPosition(qint64)));
+    connect(mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
     //Set video file source to parameter path
     mediaPlayer->setSource(QUrl::fromLocalFile(filePath));
@@ -86,9 +87,7 @@ void VideoWidget::resetAndPlay([[maybe_unused]] int i) {
 }
 
 void VideoWidget::checkPosition(qint64 pos) {
-    if(!hasPlayed && pos > mediaPlayer->duration()/2) {
-        hasPlayed = true;
-    }
+
 }
 
 
@@ -98,19 +97,32 @@ void VideoWidget::checkPosition(qint64 pos) {
  * Arguments: QMediaPlayer::PlaybackState - state of media player
  * Returns: void
  */
-void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState status) {
+void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
     if(isFirstPlay) { //If video has changed during its first playthrough
-        //VideoWidget* activeVideo = dynamic_cast<VideoWidget*>(activeWidget);
         QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
         if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
-            if(status == QMediaPlayer::StoppedState && hasPlayed) { //If the status change is the video is over
-                QMediaPlayer::MediaStatus var = mediaPlayer->mediaStatus();
-                emit firstVideoFinished(); //Emit finished signal
-                isFirstPlay = false; //Set first playthrough flag to false
-                changePosition(0);
-                play(0);
+            if(state == QMediaPlayer::StoppedState) { //If the status change is the video is over
+//                emit firstVideoFinished(); //Emit finished signal
+//                isFirstPlay = false; //Set first playthrough flag to false
+//                changePosition(0);
+//                play(0);
             } else {
                 emit firstVideoStarted(); //Emit started signal
+            }
+        }
+    }
+}
+
+void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
+    if(activeWidget == nullptr) return;
+    if(isFirstPlay) { //If video has changed during its first playthrough
+        QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
+        if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
+            if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
+                                emit firstVideoFinished(); //Emit finished signal
+                                isFirstPlay = false; //Set first playthrough flag to false
+                                changePosition(0);
+                                play(0);
             }
         }
     }
