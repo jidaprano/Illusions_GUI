@@ -7,6 +7,8 @@
 
 VideoWidget::VideoWidget(QString filePath) : QWidget()
 {
+    hasPlayed = false;
+
     //Setup layout
     layout = new QVBoxLayout(this);
 
@@ -65,6 +67,7 @@ void VideoWidget::play([[maybe_unused]] int i) {
  */
 void VideoWidget::resetAndPause([[maybe_unused]] int i) {
     isFirstPlay = true;
+    hasPlayed = false;
     changePosition(0);
     pause(0);
 }
@@ -77,13 +80,14 @@ void VideoWidget::resetAndPause([[maybe_unused]] int i) {
  */
 void VideoWidget::resetAndPlay([[maybe_unused]] int i) {
     isFirstPlay = true;
+    hasPlayed = false;
     changePosition(0);
     play(0);
 }
 
 void VideoWidget::checkPosition(qint64 pos) {
-    if(!hasPlayed) {
-
+    if(!hasPlayed && pos > mediaPlayer->duration()/2) {
+        hasPlayed = true;
     }
 }
 
@@ -99,7 +103,7 @@ void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState status) {
         //VideoWidget* activeVideo = dynamic_cast<VideoWidget*>(activeWidget);
         QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
         if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
-            if(status == QMediaPlayer::StoppedState) { //If the status change is the video is over
+            if(status == QMediaPlayer::StoppedState && hasPlayed) { //If the status change is the video is over
                 QMediaPlayer::MediaStatus var = mediaPlayer->mediaStatus();
                 emit firstVideoFinished(); //Emit finished signal
                 isFirstPlay = false; //Set first playthrough flag to false
