@@ -16,13 +16,12 @@ class VideoWidget : public QWidget
 {
     Q_OBJECT
 public:
-    VideoWidget(QString filePath);
-    ~VideoWidget();
+    VideoWidget(QString filePath, QWidget* parent);
+    bool isFirstPlay;
 private:
     QMediaPlayer *mediaPlayer;
     QVideoWidget *videoOutput;
     QVBoxLayout *layout;
-    bool isFirstPlay;
     bool hasPlayed;
     QWidget* activeWidget;
 public slots:

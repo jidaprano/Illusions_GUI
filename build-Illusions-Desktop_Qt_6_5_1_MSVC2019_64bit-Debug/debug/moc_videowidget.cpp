@@ -49,6 +49,9 @@ static constexpr auto qt_meta_stringdata_CLASSVideoWidgetENDCLASS = QtMocHelpers
     "pause",
     "onPlaybackStateChanged",
     "QMediaPlayer::PlaybackState",
+    "state",
+    "onMediaStatusChanged",
+    "QMediaPlayer::MediaStatus",
     "status",
     "resetAndPause",
     "resetAndPlay",
@@ -60,7 +63,7 @@ static constexpr auto qt_meta_stringdata_CLASSVideoWidgetENDCLASS = QtMocHelpers
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t {
-    uint offsetsAndSizes[36];
+    uint offsetsAndSizes[42];
     char stringdata0[12];
     char stringdata1[18];
     char stringdata2[1];
@@ -71,14 +74,17 @@ struct qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t {
     char stringdata7[6];
     char stringdata8[23];
     char stringdata9[28];
-    char stringdata10[7];
-    char stringdata11[14];
-    char stringdata12[13];
-    char stringdata13[19];
-    char stringdata14[9];
-    char stringdata15[7];
-    char stringdata16[14];
-    char stringdata17[4];
+    char stringdata10[6];
+    char stringdata11[21];
+    char stringdata12[26];
+    char stringdata13[7];
+    char stringdata14[14];
+    char stringdata15[13];
+    char stringdata16[19];
+    char stringdata17[9];
+    char stringdata18[7];
+    char stringdata19[14];
+    char stringdata20[4];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -94,14 +100,17 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t qt_meta_s
         QT_MOC_LITERAL(72, 5),  // "pause"
         QT_MOC_LITERAL(78, 22),  // "onPlaybackStateChanged"
         QT_MOC_LITERAL(101, 27),  // "QMediaPlayer::PlaybackState"
-        QT_MOC_LITERAL(129, 6),  // "status"
-        QT_MOC_LITERAL(136, 13),  // "resetAndPause"
-        QT_MOC_LITERAL(150, 12),  // "resetAndPlay"
-        QT_MOC_LITERAL(163, 18),  // "updateActiveWidget"
-        QT_MOC_LITERAL(182, 8),  // "QWidget*"
-        QT_MOC_LITERAL(191, 6),  // "widget"
-        QT_MOC_LITERAL(198, 13),  // "checkPosition"
-        QT_MOC_LITERAL(212, 3)   // "pos"
+        QT_MOC_LITERAL(129, 5),  // "state"
+        QT_MOC_LITERAL(135, 20),  // "onMediaStatusChanged"
+        QT_MOC_LITERAL(156, 25),  // "QMediaPlayer::MediaStatus"
+        QT_MOC_LITERAL(182, 6),  // "status"
+        QT_MOC_LITERAL(189, 13),  // "resetAndPause"
+        QT_MOC_LITERAL(203, 12),  // "resetAndPlay"
+        QT_MOC_LITERAL(216, 18),  // "updateActiveWidget"
+        QT_MOC_LITERAL(235, 8),  // "QWidget*"
+        QT_MOC_LITERAL(244, 6),  // "widget"
+        QT_MOC_LITERAL(251, 13),  // "checkPosition"
+        QT_MOC_LITERAL(265, 3)   // "pos"
     },
     "VideoWidget",
     "firstVideoStarted",
@@ -113,6 +122,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSVideoWidgetENDCLASS_t qt_meta_s
     "pause",
     "onPlaybackStateChanged",
     "QMediaPlayer::PlaybackState",
+    "state",
+    "onMediaStatusChanged",
+    "QMediaPlayer::MediaStatus",
     "status",
     "resetAndPause",
     "resetAndPlay",
@@ -132,7 +144,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -140,18 +152,19 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   74,    2, 0x06,    1 /* Public */,
-       3,    0,   75,    2, 0x06,    2 /* Public */,
+       1,    0,   80,    2, 0x06,    1 /* Public */,
+       3,    0,   81,    2, 0x06,    2 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    1,   76,    2, 0x0a,    3 /* Public */,
-       5,    1,   79,    2, 0x0a,    5 /* Public */,
-       7,    1,   82,    2, 0x0a,    7 /* Public */,
-       8,    1,   85,    2, 0x0a,    9 /* Public */,
-      11,    1,   88,    2, 0x0a,   11 /* Public */,
-      12,    1,   91,    2, 0x0a,   13 /* Public */,
-      13,    1,   94,    2, 0x0a,   15 /* Public */,
-      16,    1,   97,    2, 0x0a,   17 /* Public */,
+       4,    1,   82,    2, 0x0a,    3 /* Public */,
+       5,    1,   85,    2, 0x0a,    5 /* Public */,
+       7,    1,   88,    2, 0x0a,    7 /* Public */,
+       8,    1,   91,    2, 0x0a,    9 /* Public */,
+      11,    1,   94,    2, 0x0a,   11 /* Public */,
+      14,    1,   97,    2, 0x0a,   13 /* Public */,
+      15,    1,  100,    2, 0x0a,   15 /* Public */,
+      16,    1,  103,    2, 0x0a,   17 /* Public */,
+      19,    1,  106,    2, 0x0a,   19 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -162,10 +175,11 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSVideoWidgetENDCLASS[] = {
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, 0x80000000 | 9,   10,
+    QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
-    QMetaType::Void, 0x80000000 | 14,   15,
-    QMetaType::Void, QMetaType::LongLong,   17,
+    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, QMetaType::LongLong,   20,
 
        0        // eod
 };
@@ -195,6 +209,9 @@ Q_CONSTINIT const QMetaObject VideoWidget::staticMetaObject = { {
         // method 'onPlaybackStateChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QMediaPlayer::PlaybackState, std::false_type>,
+        // method 'onMediaStatusChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QMediaPlayer::MediaStatus, std::false_type>,
         // method 'resetAndPause'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
@@ -223,16 +240,17 @@ void VideoWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 3: _t->play((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 4: _t->pause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 5: _t->onPlaybackStateChanged((*reinterpret_cast< std::add_pointer_t<QMediaPlayer::PlaybackState>>(_a[1]))); break;
-        case 6: _t->resetAndPause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 7: _t->resetAndPlay((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 8: _t->updateActiveWidget((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
-        case 9: _t->checkPosition((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
+        case 6: _t->onMediaStatusChanged((*reinterpret_cast< std::add_pointer_t<QMediaPlayer::MediaStatus>>(_a[1]))); break;
+        case 7: _t->resetAndPause((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 8: _t->resetAndPlay((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 9: _t->updateActiveWidget((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
+        case 10: _t->checkPosition((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-        case 8:
+        case 9:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -278,13 +296,13 @@ int VideoWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

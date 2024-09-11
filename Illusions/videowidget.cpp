@@ -5,9 +5,17 @@
  * The VideoWidget class represents a widget that contains a video player
  */
 
-VideoWidget::VideoWidget(QString filePath) : QWidget()
+VideoWidget::VideoWidget(QString filePath, QWidget* parent) : QWidget(parent)
 {
-    hasPlayed = false;
+
+    //Setup parenting
+    this->setParent(parent);
+
+    //Setup first play tracker
+    isFirstPlay = true;
+
+    //Setup active illusion tracker
+    activeWidget = this;
 
     //Setup layout
     layout = new QVBoxLayout(this);
@@ -26,8 +34,6 @@ VideoWidget::VideoWidget(QString filePath) : QWidget()
 
     //Set video file source to parameter path
     mediaPlayer->setSource(QUrl::fromLocalFile(filePath));
-
-    isFirstPlay = true;
 }
 
 /*
@@ -68,7 +74,6 @@ void VideoWidget::play([[maybe_unused]] int i) {
  */
 void VideoWidget::resetAndPause([[maybe_unused]] int i) {
     isFirstPlay = true;
-    hasPlayed = false;
     changePosition(0);
     pause(0);
 }
@@ -81,7 +86,6 @@ void VideoWidget::resetAndPause([[maybe_unused]] int i) {
  */
 void VideoWidget::resetAndPlay([[maybe_unused]] int i) {
     isFirstPlay = true;
-    hasPlayed = false;
     changePosition(0);
     play(0);
 }
@@ -114,15 +118,14 @@ void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
 }
 
 void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
-    if(activeWidget == nullptr) return;
     if(isFirstPlay) { //If video has changed during its first playthrough
         QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
         if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
             if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
-                                emit firstVideoFinished(); //Emit finished signal
-                                isFirstPlay = false; //Set first playthrough flag to false
-                                changePosition(0);
-                                play(0);
+                emit firstVideoFinished(); //Emit finished signal
+                isFirstPlay = false; //Set first playthrough flag to false
+                changePosition(0);
+                play(0);
             }
         }
     }

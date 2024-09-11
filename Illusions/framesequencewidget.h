@@ -10,22 +10,22 @@
 #include <QApplication>
 #include <QScreen>
 #include <QTimer>
+#include <QSlider>
 #include <iostream>
-#include "qimprovedslider.h"
 
 class FrameSequenceWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FrameSequenceWidget(QList<QImage> *frameSeq, int interval);
+    FrameSequenceWidget(QList<QImage> *frameSeq, int interval, QWidget* parent);
     QList<QImage> *frameSequence;
+    bool isFirstPlay;
 private:
     QLabel *image;
     QVBoxLayout *layout;
     QPixmap pixmap;
     QSlider *scrubber;
     QTimer *autoScrubTimer;
-    bool isFirstPlay;
 public slots:
     void scrubSequence(int value);
     void playSequence();

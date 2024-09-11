@@ -86,12 +86,14 @@ MainWindow::MainWindow(QWidget *parent)
     topStackedWidget->setCurrentWidget(exhibitWidget);
     this->setCentralWidget(topStackedWidget);
 
-    restartInteractionTimer();
-
     //Select first illusion
     activeButton = opticalButtonsList->first();
     opticalButtonsList->first()->click();
 
+    //set first frame sequence/video tracker playthrough tracker to true
+    isFirstPlay = true;
+
+    restartInteractionTimer();
 }
 
 void MainWindow::importIllusions() {
@@ -190,7 +192,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         illusionLayout->addWidget(getSpacedIllusion(illusion));
     } else if(QFileInfo(filePath).isDir()){ //File is folder, so illusion is frame sequence
         QList<QImage> *frameList = loadFrameSequence(filePath);
-        FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval);
+        FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval, this);
         connect(frameSeq, SIGNAL(firstSequenceStarted()), this, SLOT(pauseInteractionTimer()));
         connect(frameSeq, SIGNAL(firstSequenceFinished()), this, SLOT(restartInteractionTimer()));
 
@@ -200,7 +202,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(resetIsFirstPlay(int)));
         connect(this, SIGNAL(switchedToExhibitScreen(int)), frameSeq, SLOT(resetIsFirstPlay(int)));
     } else { //File is video
-        VideoWidget *videoWidget = new VideoWidget(filePath);
+        VideoWidget *videoWidget = new VideoWidget(filePath, this);
         connect(videoWidget, SIGNAL(firstVideoStarted()), this, SLOT(pauseInteractionTimer()));
         connect(videoWidget, SIGNAL(firstVideoFinished()), this, SLOT(restartInteractionTimer()));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(resetAndPause(int)));
@@ -240,7 +242,7 @@ QWidget* MainWindow::createAudioWidget() {
     secondAudioLayout->setAlignment(Qt::AlignHCenter);
 
     //Soundwave Visualizer
-    visualizer = new FrameSequenceWidget(ss->getSoundwaveSeq(), ss->visualizerInterval);
+    visualizer = new FrameSequenceWidget(ss->getSoundwaveSeq(), ss->visualizerInterval, this);
     secondAudioLayout->addSpacing(125);
     secondAudioLayout->addWidget(visualizer);
     visualizer->playSequence();
@@ -528,12 +530,10 @@ void MainWindow::idleStackedSwitch() {
 
 void MainWindow::switchToExhibitScreen() {
     emit switchedToExhibitScreen(0);
-    //pauseInteractionTimer();
     illusionExplanationText->hideText();
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
     topStackedWidget->setCurrentWidget(exhibitWidget);
-    restartInteractionTimer();
 }
 
 void MainWindow::pauseInteractionTimer() {
@@ -542,8 +542,23 @@ void MainWindow::pauseInteractionTimer() {
 }
 
 void MainWindow::restartInteractionTimer() {
-    std::cout << "TIMER RESTARTED" + std::to_string(++restartTracker)<< std::endl;
-    interactionTimer->start(idleWaitSeconds * 1000);
+    bool restartAllowed = false;
+
+    VideoWidget* maybeVideo = dynamic_cast<VideoWidget*>(activeButton->getWidget());
+    FrameSequenceWidget* maybeFrameSeq = dynamic_cast<FrameSequenceWidget*>(activeButton->getWidget());
+
+    if(maybeVideo != nullptr) {
+        restartAllowed = !maybeVideo->isFirstPlay;
+    } else if(maybeFrameSeq != nullptr) {
+        restartAllowed = !maybeFrameSeq->isFirstPlay;
+    } else {
+        restartAllowed = true;
+    }
+
+    if(restartAllowed) {
+        std::cout << "TIMER RESTARTED" + std::to_string(++restartTracker)<< std::endl;
+        interactionTimer->start(idleWaitSeconds * 1000);
+    }
 }
 
 void MainWindow::changeAudioIllusion(QWidget *widget) {
@@ -576,7 +591,7 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
 void MainWindow::changeOpticalIllusion(QWidget *widget) {
     emit switchedActiveIllusion(widget);
 
-    restartInteractionTimer();
+     restartInteractionTimer();
 
     //Set button corresponding to new display illusion to active outline and set old button to standard outline
     activeButton->setStyleSheet("");

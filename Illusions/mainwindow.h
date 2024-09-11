@@ -33,7 +33,6 @@
 #include "framesequencewidget.h"
 #include "videowidget.h"
 #include "hiddentextwidget.h"
-#include "qimprovedslider.h"
 #include "illusionss.h"
 
 QT_BEGIN_NAMESPACE
@@ -68,6 +67,9 @@ public:
     QWidget *createIllusionTypeButtons();
     QWidget *createMenuWidget();
     ClickableWidget *createIdleScreenWidget();
+
+    //Tracker if video/frame sequence is on first play
+    bool isFirstPlay = true;
 
 private slots:
     void nextIllusionSlot();

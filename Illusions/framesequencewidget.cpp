@@ -1,8 +1,14 @@
 #include "framesequencewidget.h"
 
 //FrameSequenceWidget constructor
-FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval)
+FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval, QWidget* parent) : QWidget(parent)
 {
+    //set parent
+    this->setParent(parent);
+
+    //Setup first play tracker
+    isFirstPlay = true;
+
     //Set this object's list of images to the parameter value
     this->frameSequence = frameSeq;
 
