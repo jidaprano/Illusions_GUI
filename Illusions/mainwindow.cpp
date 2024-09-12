@@ -189,18 +189,22 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         illusion->setPixmap(*illusionIcon);
 
         //Sizing and spacing
-        illusionLayout->addWidget(getSpacedIllusion(illusion));
+        QWidget* spacedIllusion = getSpacedIllusion(illusion);
+        spacedIllusion->setParent(illusionWidget);
+        illusionLayout->addWidget(spacedIllusion);
     } else if(QFileInfo(filePath).isDir()){ //File is folder, so illusion is frame sequence
         QList<QImage> *frameList = loadFrameSequence(filePath);
         FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval, this);
         connect(frameSeq, SIGNAL(firstSequenceStarted()), this, SLOT(pauseInteractionTimer()));
         connect(frameSeq, SIGNAL(firstSequenceFinished()), this, SLOT(restartInteractionTimer()));
-
-        //Sizing and spacing
-        illusionLayout->addWidget(getSpacedIllusion(frameSeq));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(restartSequence(int)));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(resetIsFirstPlay(int)));
         connect(this, SIGNAL(switchedToExhibitScreen(int)), frameSeq, SLOT(resetIsFirstPlay(int)));
+
+        //Sizing and spacing
+        QWidget* spacedIllusion = getSpacedIllusion(frameSeq);
+        spacedIllusion->setParent(illusionWidget);
+        illusionLayout->addWidget(spacedIllusion);
     } else { //File is video
         VideoWidget *videoWidget = new VideoWidget(filePath, this);
         connect(videoWidget, SIGNAL(firstVideoStarted()), this, SLOT(pauseInteractionTimer()));
@@ -210,7 +214,9 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         connect(this, SIGNAL(switchedActiveIllusion(QWidget*)), videoWidget, SLOT(updateActiveWidget(QWidget*)));
 
         //Sizing and spacing
-        illusionLayout->addWidget(getSpacedIllusion(videoWidget));
+        QWidget* spacedIllusion = getSpacedIllusion(videoWidget);
+        spacedIllusion->setParent(illusionWidget);
+        illusionLayout->addWidget(spacedIllusion);
     }
 
     return illusionWidget;
@@ -291,7 +297,7 @@ QString MainWindow::readFirstLine(QString filePath) {
     QString totalText = "";
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::warning(0, file.errorString(), "error reading text file" + filePath);
+        QMessageBox::warning(0, file.errorString(), "error reading text file " + filePath);
     }
     QTextStream in(&file);
     //Read only first line
@@ -304,7 +310,7 @@ QString MainWindow::readTextExcludingFirstLine(QString filePath) {
     QString totalText = "";
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::warning(0, file.errorString(), "error reading text file" + filePath);
+        QMessageBox::warning(0, file.errorString(), "error reading text file " + filePath);
     }
     QTextStream in(&file);
     //Discard first line
@@ -544,9 +550,8 @@ void MainWindow::pauseInteractionTimer() {
 void MainWindow::restartInteractionTimer() {
     bool restartAllowed = false;
 
-    VideoWidget* maybeVideo = static_cast<VideoWidget*>(activeButton->getWidget());
-    FrameSequenceWidget* maybeFrameSeq = static_cast<FrameSequenceWidget*>(activeButton->getWidget());
-
+    VideoWidget* maybeVideo = activeButton->getWidget()->findChild<VideoWidget*>();
+    FrameSequenceWidget* maybeFrameSeq = activeButton->getWidget()->findChild<FrameSequenceWidget*>();
     if(maybeVideo != nullptr) {
         restartAllowed = !maybeVideo->isFirstPlay;
     } else if(maybeFrameSeq != nullptr) {
@@ -595,7 +600,7 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
 
     //Set button corresponding to new display illusion to active outline and set old button to standard outline
     activeButton->setStyleSheet("");
-    activeButton = (WidgetButton*)sender();
+     activeButton = dynamic_cast<WidgetButton*>(sender());
     activeButton->setStyleSheet(ss->activeIllusionButton);
 
     //Change current illusion

@@ -47,8 +47,8 @@ void FrameSequenceWidget::scrubSequence(int value) {
         restartSequence(0);
         playSequence();
         if(isFirstPlay) { //If sequence has finished its first playthrough, change isFirstPlay flag and emit finished signal
-            emit firstSequenceFinished();
             isFirstPlay = false;
+            emit firstSequenceFinished();
         }
     }
 

@@ -117,10 +117,10 @@ void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
         if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
             if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
-                emit firstVideoFinished(); //Emit finished signal
                 isFirstPlay = false; //Set first playthrough flag to false
                 changePosition(0);
                 play(0);
+                emit firstVideoFinished(); //Emit finished signal
             }
         }
     }
