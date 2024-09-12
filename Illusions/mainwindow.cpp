@@ -231,6 +231,8 @@ QWidget* MainWindow::createAudioWidget() {
 
     //Audio setup
     audioMediaPlayer->setAudioOutput(audioOutput);
+    connect(audioMediaPlayer, SIGNAL(playbackStateChanged(QMediaPlayer::PlaybackState)), this, SLOT(onPlaybackStateChanged(QMediaPlayer::PlaybackState)));
+    connect(audioMediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
     //Title of illusion
     audioIllusionLabel = new QLabel(audioIllusionWidget);
@@ -657,13 +659,8 @@ void MainWindow::setProgressBarPosition(qint64 val) {
  * Returns: void
  */
 void MainWindow::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
-    if(isFirstPlayAudio) { //If video has changed during its first playthrough
-        QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
-        if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
-            if(state != QMediaPlayer::StoppedState) { //If the status change is the video is over
-                emit firstVideoStarted(); //Emit started signal
-            }
-        }
+    if(isFirstPlayAudio && state != QMediaPlayer::StoppedState) { //If the status change is the video is over
+        pauseInteractionTimer();
     }
 }
 
@@ -675,16 +672,9 @@ void MainWindow::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
  * Returns: void
  */
 void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
-    if(isFirstPlayAudio) { //If video has changed during its first playthrough
-        QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
-        if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
-            if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
-                isFirstPlayAudio = false; //Set first playthrough flag to false
-                changePosition(0);
-                play(0);
-                emit firstVideoFinished(); //Emit finished signal
-            }
-        }
+    if(isFirstPlayAudio && status == QMediaPlayer::EndOfMedia) { //If the status change is the audio indicates it is over
+        isFirstPlayAudio = false; //Set first playthrough flag to false
+        restartInteractionTimer();
     }
 }
 
