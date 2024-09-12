@@ -90,8 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
     activeButton = opticalButtonsList->first();
     opticalButtonsList->first()->click();
 
-    //set first frame sequence/video tracker playthrough tracker to true
-    isFirstPlay = true;
+    //set first frame sequence/video tracker playthrough tracker
+    isFirstPlayAudio = false;
 
     restartInteractionTimer();
 }
@@ -228,8 +228,6 @@ QWidget* MainWindow::createAudioWidget() {
 
     audioMediaPlayer = new QMediaPlayer;
     audioOutput = new QAudioOutput;
-    videoMediaPlayer = new QMediaPlayer;
-    videoOutput = new QVideoWidget;
 
     //Audio setup
     audioMediaPlayer->setAudioOutput(audioOutput);
@@ -650,6 +648,44 @@ void MainWindow::restartAudio() {
 void MainWindow::setProgressBarPosition(qint64 val) {
     int pos = static_cast<int>(val);
     audioProgressBar->setValue(pos);
+}
+
+/*
+ * Slot function to handle audio playback state changes
+ *
+ * Arguments: QMediaPlayer::PlaybackState - state of media player
+ * Returns: void
+ */
+void MainWindow::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
+    if(isFirstPlayAudio) { //If video has changed during its first playthrough
+        QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
+        if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
+            if(state != QMediaPlayer::StoppedState) { //If the status change is the video is over
+                emit firstVideoStarted(); //Emit started signal
+            }
+        }
+    }
+}
+
+
+/*
+ * Slot function to handle audio media status changes
+ *
+ * Arguments: QMediaPlayer::MediaStatus - state of media player
+ * Returns: void
+ */
+void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
+    if(isFirstPlayAudio) { //If video has changed during its first playthrough
+        QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
+        if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
+            if(status == QMediaPlayer::EndOfMedia) { //If the status change is the video is over
+                isFirstPlayAudio = false; //Set first playthrough flag to false
+                changePosition(0);
+                play(0);
+                emit firstVideoFinished(); //Emit finished signal
+            }
+        }
+    }
 }
 
 /*

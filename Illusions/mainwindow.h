@@ -68,9 +68,6 @@ public:
     QWidget *createMenuWidget();
     ClickableWidget *createIdleScreenWidget();
 
-    //Tracker if video/frame sequence is on first play
-    bool isFirstPlay = true;
-
 private slots:
     void nextIllusionSlot();
     void prevIllusionSlot();
@@ -85,6 +82,8 @@ private slots:
     void changeOpticalIllusion(QWidget* widget);
     void restartAudio();
     void setProgressBarPosition(qint64 val);
+    void onPlaybackStateChanged(QMediaPlayer::PlaybackState state);
+    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 signals:
     void switchedToExhibitScreen(int val);
@@ -120,13 +119,12 @@ private:
     QWidget *audioIllusionWidget;
     QMediaPlayer *audioMediaPlayer;
     QAudioOutput *audioOutput;
-    QMediaPlayer *videoMediaPlayer;
-    QVideoWidget *videoOutput;
     QLabel *audioIllusionLabel;
     QPushButton *audioRestartButton;
     HiddenTextWidget *illusionExplanationText;
     QProgressBar *audioProgressBar;
     FrameSequenceWidget *visualizer;
+    bool isFirstPlayAudio = true;
 
     //Exhibit navigation widget
     QPushButton *audioMenuButton;

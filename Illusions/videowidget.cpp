@@ -96,7 +96,7 @@ void VideoWidget::checkPosition(qint64 pos) {
 
 
 /*
- * Slot function to handle media status changes
+ * Slot function to handle playback state changes
  *
  * Arguments: QMediaPlayer::PlaybackState - state of media player
  * Returns: void
@@ -112,6 +112,13 @@ void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
     }
 }
 
+
+/*
+ * Slot function to handle media status changes
+ *
+ * Arguments: QMediaPlayer::MediaStatus - state of media player
+ * Returns: void
+ */
 void VideoWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if(isFirstPlay) { //If video has changed during its first playthrough
         QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
