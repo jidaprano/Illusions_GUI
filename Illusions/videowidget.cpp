@@ -105,12 +105,7 @@ void VideoWidget::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
     if(isFirstPlay) { //If video has changed during its first playthrough
         QMediaPlayer* activeMediaPlayer = activeWidget->findChild<QMediaPlayer*>();
         if(activeMediaPlayer != nullptr && activeMediaPlayer->source() == this->mediaPlayer->source()) {
-            if(state == QMediaPlayer::StoppedState) { //If the status change is the video is over
-//                emit firstVideoFinished(); //Emit finished signal
-//                isFirstPlay = false; //Set first playthrough flag to false
-//                changePosition(0);
-//                play(0);
-            } else {
+            if(state != QMediaPlayer::StoppedState) { //If the status change is the video is over
                 emit firstVideoStarted(); //Emit started signal
             }
         }

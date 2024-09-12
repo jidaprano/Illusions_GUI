@@ -544,8 +544,8 @@ void MainWindow::pauseInteractionTimer() {
 void MainWindow::restartInteractionTimer() {
     bool restartAllowed = false;
 
-    VideoWidget* maybeVideo = dynamic_cast<VideoWidget*>(activeButton->getWidget());
-    FrameSequenceWidget* maybeFrameSeq = dynamic_cast<FrameSequenceWidget*>(activeButton->getWidget());
+    VideoWidget* maybeVideo = static_cast<VideoWidget*>(activeButton->getWidget());
+    FrameSequenceWidget* maybeFrameSeq = static_cast<FrameSequenceWidget*>(activeButton->getWidget());
 
     if(maybeVideo != nullptr) {
         restartAllowed = !maybeVideo->isFirstPlay;
