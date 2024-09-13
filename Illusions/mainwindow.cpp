@@ -667,8 +667,10 @@ void MainWindow::setProgressBarPosition(qint64 val) {
  * Returns: void
  */
 void MainWindow::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
-    if(isFirstPlayAudio && state != QMediaPlayer::StoppedState) { //If the status change is the video is over
+    if(isFirstPlayAudio && state != QMediaPlayer::StoppedState) { //If the status change indicates the audio is started
         pauseInteractionTimer();
+        visualizer->restartSequence(0);
+        visualizer->playSequence();
     }
 }
 
@@ -680,7 +682,8 @@ void MainWindow::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
  * Returns: void
  */
 void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
-    if(isFirstPlayAudio && status == QMediaPlayer::EndOfMedia) { //If the status change is the audio indicates it is over
+    if(isFirstPlayAudio && status == QMediaPlayer::EndOfMedia) { //If the status change indicates the audio is over
+        visualizer->pauseSequence();
         isFirstPlayAudio = false; //Set first playthrough flag to false
         restartInteractionTimer();
     }
