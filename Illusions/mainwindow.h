@@ -31,7 +31,7 @@
 #include "clickablewidget.h"
 #include "widgetbutton.h"
 #include "framesequencewidget.h"
-#include "videowidget.h"
+#include "videowidget.h" //gives warning but is required
 #include "hiddentextwidget.h"
 #include "illusionss.h"
 
@@ -52,10 +52,10 @@ public:
     int restartTracker = 0;
     int idleWaitSeconds = 3
         ;
-    QString opticalFilePath = "./Content/Optical/";
-    QString audioFilePath = "./Content/Audio/";
-    QString opticalButtonIconsPath = opticalFilePath + "ButtonIcons/";
-    QString audioButtonIconsPath = audioFilePath + "ButtonIcons/";
+    QString opticalFilePath = "./Content/Optical";
+    QString audioFilePath = "./Content/Audio";
+    QString opticalButtonIconsPath = opticalFilePath + "/ButtonIcons/";
+    QString audioButtonIconsPath = audioFilePath + "/ButtonIcons/";
 
     void importIllusions();
     QString readFirstLine(QString filePath);
@@ -100,7 +100,7 @@ private:
     QMap<QString, QString> *audioFileMap;
 
     //Top-level stacked widget (swap between exhibit screen and timeout screen)
-    QStackedWidget *topStackedWidget;
+    QStackedWidget *exhibitAndIdleStackedWidget;
 
     //Top-level exhibit screen
     QWidget *exhibitWidget;
@@ -110,7 +110,7 @@ private:
     QLabel *title;
 
     //Illusion widget on exhibit screen
-    QStackedWidget *illusionStackedWidget;
+    QStackedWidget *illusionStackedWidget; //contains widgets for all optical illusions and one widget for audio illusions
     QVBoxLayout *illusionVLayout;
     int illusionStackIndex = 0;
     QLabel *opticalIllusionLabel;

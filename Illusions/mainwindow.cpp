@@ -18,10 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     interactionTimer->start(idleWaitSeconds * 1000);
 
     //Top-level layered widget
-    topStackedWidget = new QStackedWidget(this);
+    exhibitAndIdleStackedWidget = new QStackedWidget(this);
 
     //Top-level exhibit widget
-    exhibitWidget = new QWidget();
+    exhibitWidget = new QWidget(this);
 
     //Create layout and set margins
     exhibitVLayout = new QVBoxLayout(exhibitWidget);
@@ -81,17 +81,17 @@ MainWindow::MainWindow(QWidget *parent)
     this->setPalette(backgroundImage);
 
     //Add all created widgets to top-level stacked widget and set central widget
-    topStackedWidget->addWidget(exhibitWidget);
-    topStackedWidget->addWidget(idleWidget);
-    topStackedWidget->setCurrentWidget(exhibitWidget);
-    this->setCentralWidget(topStackedWidget);
+    exhibitAndIdleStackedWidget->addWidget(exhibitWidget);
+    exhibitAndIdleStackedWidget->addWidget(idleWidget);
+    exhibitAndIdleStackedWidget->setCurrentWidget(exhibitWidget);
+    this->setCentralWidget(exhibitAndIdleStackedWidget);
 
     //Select first illusion
     activeButton = opticalButtonsList->first();
     opticalButtonsList->first()->click();
 
     //set first frame sequence/video tracker playthrough tracker
-    isFirstPlayAudio = false;
+    isFirstPlayAudio = true;
 
     restartInteractionTimer();
 }
@@ -531,7 +531,7 @@ void MainWindow::switchToIdleScreen() {
 }
 
 void MainWindow::idleStackedSwitch() {
-    topStackedWidget->setCurrentWidget(idleWidget);
+    exhibitAndIdleStackedWidget->setCurrentWidget(idleWidget);
 }
 
 void MainWindow::switchToExhibitScreen() {
@@ -539,7 +539,9 @@ void MainWindow::switchToExhibitScreen() {
     illusionExplanationText->hideText();
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
-    topStackedWidget->setCurrentWidget(exhibitWidget);
+    exhibitAndIdleStackedWidget->setCurrentWidget(exhibitWidget);
+    isFirstPlayAudio = true;
+    restartAudio();
 }
 
 void MainWindow::pauseInteractionTimer() {
@@ -556,6 +558,8 @@ void MainWindow::restartInteractionTimer() {
         restartAllowed = !maybeVideo->isFirstPlay;
     } else if(maybeFrameSeq != nullptr) {
         restartAllowed = !maybeFrameSeq->isFirstPlay;
+    } else if(illusionStackedWidget->currentWidget() == audioIllusionWidget) {
+        restartAllowed = !isFirstPlayAudio;
     } else {
         restartAllowed = true;
     }
@@ -583,8 +587,9 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
     illusionExplanationText->hideText();
     illusionExplanationText->setText(readFirstLine(audioFileMap->value(audioPath)), readTextExcludingFirstLine(audioFileMap->value(audioPath)));
 
-    visualizer->restartSequence(0);
-    visualizer->playSequence();
+    restartAudio();
+
+    isFirstPlayAudio = true;
 }
 
 /*
@@ -632,13 +637,16 @@ void MainWindow::changeOpticalIllusion(QWidget *widget) {
  * Returns: void
  */
 void MainWindow::restartAudio() {
-    //Restart audio player
-    audioMediaPlayer->setPosition(0);
-    //Restart and play visualizer
-    visualizer->restartSequence(0);
-    visualizer->playSequence();
-    //Restart interaction timer
-    restartInteractionTimer();
+    if(illusionStackedWidget->currentWidget() == audioIllusionWidget) {
+        //Restart audio player
+        audioMediaPlayer->setPosition(0);
+        audioMediaPlayer->play();
+        //Restart and play visualizer
+        visualizer->restartSequence(0);
+        visualizer->playSequence();
+        //Restart interaction timer
+        restartInteractionTimer();
+    }
 }
 
 /*
