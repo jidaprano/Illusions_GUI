@@ -109,7 +109,7 @@ void MainWindow::importIllusions() {
             QString illusionPath = "";
             QString textPath = "";
             for(QFileInfo file : illusionFile) {
-                if(file.isDir() || QImageReader::imageFormat(file.absoluteFilePath()) != "" || ss->videoFileSuffixes.contains(file.suffix())) {
+                if(file.isDir() || QImageReader::imageFormat(file.absoluteFilePath()) != "" || ss->videoFileSuffixes.contains(file.suffix().toLower())) {
                     illusionPath = file.absoluteFilePath();
                 } else if(file.suffix() == "txt") {
                     textPath = file.absoluteFilePath();
@@ -141,7 +141,7 @@ void MainWindow::importIllusions() {
             QString illusionPath = "";
             QString textPath = "";
             for(QFileInfo file : illusionFile) {
-                if(ss->audioFileSuffixes.contains(file.suffix())) {
+                if(ss->audioFileSuffixes.contains(file.suffix().toLower())) {
                     illusionPath = file.absoluteFilePath();
                 } else if(file.suffix() == "txt") {
                     textPath = file.absoluteFilePath();
@@ -375,6 +375,9 @@ QWidget* MainWindow::createMenuWidget() {
 
     //For each optical illusion, add button to layout
     QHBoxLayout *opticalSelectLayout = new QHBoxLayout(opticalSelectWidget);
+    opticalSelectLayout->setSpacing(ss->scrollAreaButtonSpacing);
+    opticalSelectLayout->addStretch();
+
     for(int i = 0; i < opticalButtonsList->count(); i++) {
         WidgetButton* button = opticalButtonsList->at(i);
         opticalSelectLayout->addWidget(button);
@@ -383,6 +386,10 @@ QWidget* MainWindow::createMenuWidget() {
 
     //For each audio illusion, add button to layout
     QHBoxLayout *audioSelectLayout = new QHBoxLayout(audioSelectWidget);
+    //audioSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * audioButtonsList->count()));
+    //audioSelectLayout->setSpacing(ss->scrollAreaButtonSpacing);
+    //audioSelectLayout->addStretch();
+
     for(int i = 0; i < audioButtonsList->count(); i++) {
         WidgetButton* button = audioButtonsList->at(i);
         audioSelectLayout->addWidget(button);

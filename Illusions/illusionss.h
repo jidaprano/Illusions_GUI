@@ -79,6 +79,7 @@ public:
     const int fadeDuration = 1000;
     const int scrollDuration = 300;
     const int scrollDistance = 100;
+    const int scrollAreaButtonSpacing = 15;
 
     //Fonts
     QFont ChaletBook_Bold;
