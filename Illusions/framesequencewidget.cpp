@@ -1,5 +1,11 @@
 #include "framesequencewidget.h"
 
+/**
+ * @author Joseph Daprano <joseph.daprano@gmail.com>
+ *
+ * The FrameSequenceWidget class represents a widget that plays a frame sequence
+ */
+
 //FrameSequenceWidget constructor
 FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval, QWidget* parent) : QWidget(parent)
 {

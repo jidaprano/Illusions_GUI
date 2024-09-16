@@ -1,5 +1,11 @@
 #include "clickablewidget.h"
 
+/**
+ * @author Joseph Daprano <joseph.daprano@gmail.com>
+ *
+ * The ClickableWidget class represents a widget that emits a signal whenever it gets clicked
+ */
+
 ClickableWidget::ClickableWidget() : QWidget()
 {}
 

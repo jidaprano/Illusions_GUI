@@ -1,6 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+/**
+ * @author Joseph Daprano <joseph.daprano@gmail.com>
+ *
+ * The MainWindow class represents the top-level GUI for the Illusions exhibit
+ */
+
+
+/*
+ * MainWindow constructor
+ */
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -93,9 +103,15 @@ MainWindow::MainWindow(QWidget *parent)
     //set first frame sequence/video tracker playthrough tracker
     isFirstPlayAudio = true;
 
-    restartInteractionTimer();
+    pauseInteractionTimer();
 }
 
+/*
+ * Function to import all illusions
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::importIllusions() {
     //Instantiate maps
     opticalFileMap = new QMap<QWidget*, QString>();
@@ -104,68 +120,86 @@ void MainWindow::importIllusions() {
     //Import optical illusions
     if(!QDir(opticalFilePath).isEmpty()) {
         QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot);
-        while(opticalFileIterator.hasNext()) {
+        while(opticalFileIterator.hasNext()) { //for each file in the Content/Optical folder
+            //File representing a single illusion
             QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
             QString illusionPath = "";
             QString textPath = "";
-            for(QFileInfo file : illusionFile) {
+            for(QFileInfo& file : illusionFile) { //For each file inside single illusion file
+                //If file is valid optical illusion type, populate illusion path
                 if(file.isDir() || QImageReader::imageFormat(file.absoluteFilePath()) != "" || ss->videoFileSuffixes.contains(file.suffix().toLower())) {
                     illusionPath = file.absoluteFilePath();
-                } else if(file.suffix() == "txt") {
+                } else if(file.suffix() == "txt") { //If file is explanation text file, populate text path
                     textPath = file.absoluteFilePath();
                 }
-                if(!illusionPath.isEmpty() && !textPath.isEmpty()) {
-                    QWidget *illusion = createOpticalWidget(illusionPath);
+                if(!illusionPath.isEmpty() && !textPath.isEmpty()) { //If both illusion path and text path are valid
+                    QWidget *illusion = createOpticalWidget(illusionPath); //Create optical illusion
+                    //Create button corresponding to illusion
                     QString iconPath = opticalButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
                     WidgetButton *button = new WidgetButton(illusion, iconPath);
+                    //Format and add button to menu
                     button->setIconSize(ss->illusionButtonSize);
                     button->setMaximumSize(ss->illusionButtonSize);
                     opticalButtonsList->push_front(button);
                     illusionStackedWidget->addWidget(illusion);
+                    //Connect button clicked signal to slot to switch to this illusion
                     connect(button, SIGNAL(buttonClicked(QWidget*)), this, SLOT(changeOpticalIllusion(QWidget*)));
 
+                    //Store illusion widget and corresponding explanation path for easy switching of explanation text
                     opticalFileMap->insert(illusion, textPath);
                     break;
                 }
             }
             opticalFileIterator.next();
         }
-    } else {
+    } else { //If Content/Optical is empty, output warning
         QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
     }
 
+    //Import audio illusions
     if(!QDir(audioFilePath).isEmpty()) {
         QDirIterator audioFileIterator(audioFilePath);
-        while(audioFileIterator.hasNext()) {
+        while(audioFileIterator.hasNext()) { //For each file in the Content/Audio folder
+            //File representing a single illusion
             QFileInfoList illusionFile = QDir(audioFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
             QString illusionPath = "";
             QString textPath = "";
-            for(QFileInfo file : illusionFile) {
+            for(QFileInfo& file : illusionFile) { //For each file inside single illusion file
+                //If file is valid audio illusion type, populate illusion path
                 if(ss->audioFileSuffixes.contains(file.suffix().toLower())) {
                     illusionPath = file.absoluteFilePath();
-                } else if(file.suffix() == "txt") {
+                } else if(file.suffix() == "txt") { //If file is explanation text file, populate text path
                     textPath = file.absoluteFilePath();
                 }
-                if(!illusionPath.isEmpty() && !textPath.isEmpty()) {
+                if(!illusionPath.isEmpty() && !textPath.isEmpty()) { //If both illusion path and text path are valid
+                    //Store illusion widget and corresponding explanation path for easy switching of explanation text
                     audioFileMap->insert(illusionPath, textPath);
 
-                    QLabel *illusion = new QLabel(illusionPath);
+                    QLabel *illusion = new QLabel(illusionPath); //Create illusion label
+                    //Create and format select button
                     QString iconPath = audioButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
                     WidgetButton *button = new WidgetButton(illusion, iconPath);
                     button->setIconSize(ss->illusionButtonSize);
                     button->setMaximumSize(ss->illusionButtonSize);
                     audioButtonsList->push_front(button);
+                    //Connect button clicked signal to slot to switch to this illusion
                     connect(button, SIGNAL(buttonClicked(QWidget*)), this, SLOT(changeAudioIllusion(QWidget*)));
                     break;
                 }
             }
             audioFileIterator.next();
         }
-    } else {
+    } else { //If Content/Audio is empty, output warning
         QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
     }
 }
 
+/*
+ * Function to create optical illusion widget
+ *
+ * Arguments: QString - path of optical illusion file
+ * Returns: QWidget* - optical illusion widget
+ */
 QWidget* MainWindow::createOpticalWidget(QString filePath) {
     QWidget *illusionWidget = new QWidget(this);
     QVBoxLayout *illusionLayout = new QVBoxLayout(illusionWidget);
@@ -195,6 +229,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
     } else if(QFileInfo(filePath).isDir()){ //File is folder, so illusion is frame sequence
         QList<QImage> *frameList = loadFrameSequence(filePath);
         FrameSequenceWidget *frameSeq = new FrameSequenceWidget(frameList, ss->defaultInterval, this);
+        //Connect appropriate signals and slots
         connect(frameSeq, SIGNAL(firstSequenceStarted()), this, SLOT(pauseInteractionTimer()));
         connect(frameSeq, SIGNAL(firstSequenceFinished()), this, SLOT(restartInteractionTimer()));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), frameSeq, SLOT(restartSequence(int)));
@@ -207,6 +242,7 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
         illusionLayout->addWidget(spacedIllusion);
     } else { //File is video
         VideoWidget *videoWidget = new VideoWidget(filePath, this);
+        //Connect appropriate signals and slots
         connect(videoWidget, SIGNAL(firstVideoStarted()), this, SLOT(pauseInteractionTimer()));
         connect(videoWidget, SIGNAL(firstVideoFinished()), this, SLOT(restartInteractionTimer()));
         connect(illusionStackedWidget, SIGNAL(currentChanged(int)), videoWidget, SLOT(resetAndPause(int)));
@@ -222,6 +258,12 @@ QWidget* MainWindow::createOpticalWidget(QString filePath) {
     return illusionWidget;
 }
 
+/*
+ * Function to create audio illusion widget
+ *
+ * Arguments: none
+ * Returns: QWidget* - audio illusion widget
+ */
 QWidget* MainWindow::createAudioWidget() {
     QWidget *audioIllusionWidget = new QWidget(this);
     QVBoxLayout *audioIllusionLayout = new QVBoxLayout(audioIllusionWidget);
@@ -229,7 +271,7 @@ QWidget* MainWindow::createAudioWidget() {
     audioMediaPlayer = new QMediaPlayer;
     audioOutput = new QAudioOutput;
 
-    //Audio setup
+    //Audio mediaplayer setup
     audioMediaPlayer->setAudioOutput(audioOutput);
     connect(audioMediaPlayer, SIGNAL(playbackStateChanged(QMediaPlayer::PlaybackState)), this, SLOT(onPlaybackStateChanged(QMediaPlayer::PlaybackState)));
     connect(audioMediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
@@ -254,10 +296,9 @@ QWidget* MainWindow::createAudioWidget() {
     visualizer->playSequence();
     secondAudioLayout->addSpacing(100);
 
-    //Progress Bar
+    //Progress Bar (not visible but helps with timing)
     audioProgressBar = new QProgressBar;
     audioProgressBar->setTextVisible(false);
-    //audioProgressBar->setMinimumHeight(300);
     audioProgressBar->setStyleSheet(ss->audioProgressBarStyle);
     connect(audioMediaPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(setProgressBarPosition(qint64)));
     secondAudioLayout->addWidget(audioProgressBar);
@@ -283,6 +324,12 @@ QWidget* MainWindow::createAudioWidget() {
     return audioIllusionWidget;
 }
 
+/*
+ * Function to add appropriate spacing and margins to illusion widget
+ *
+ * Arguments: QWidget* - unspaced illusion widget
+ * Returns: QWidget* - spaced illusion widget
+ */
 QWidget* MainWindow::getSpacedIllusion(QWidget *illusion) {
     illusion->setFixedSize(ss->illusionSize);
     QWidget *spacingWidget = new QWidget();
@@ -293,11 +340,18 @@ QWidget* MainWindow::getSpacedIllusion(QWidget *illusion) {
     return spacingWidget;
 }
 
+/*
+ * Function to read a text file before the first newline
+ *
+ * Arguments: QString - path of text file
+ * Returns: QString -  first line of text file
+ */
 QString MainWindow::readFirstLine(QString filePath) {
     QString totalText = "";
     QFile file(filePath);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if(!file.open(QIODevice::ReadOnly)) { //Error dialog if file cannot be read
         QMessageBox::warning(0, file.errorString(), "error reading text file " + filePath);
+        return "";
     }
     QTextStream in(&file);
     //Read only first line
@@ -306,11 +360,18 @@ QString MainWindow::readFirstLine(QString filePath) {
     return totalText;
 }
 
+/*
+ * Function to read a text file after the first newline
+ *
+ * Arguments: QString - path of text file
+ * Returns: QString - text excluding first line
+ */
 QString MainWindow::readTextExcludingFirstLine(QString filePath) {
     QString totalText = "";
     QFile file(filePath);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if(!file.open(QIODevice::ReadOnly)) { //Error dialog if file cannot be read
         QMessageBox::warning(0, file.errorString(), "error reading text file " + filePath);
+        return "";
     }
     QTextStream in(&file);
     //Discard first line
@@ -323,6 +384,12 @@ QString MainWindow::readTextExcludingFirstLine(QString filePath) {
     return totalText;
 }
 
+/*
+ * Function to load and store a frame sequence
+ *
+ * Arguments: QString - path of folder containing frames
+ * Returns: QList<QImage>* - list of QImages corresponding to frames
+ */
 QList<QImage>* MainWindow::loadFrameSequence(QString filePath) {
     QFileInfoList frameSeqFiles = QDir(filePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
     QList<QImage> *frameList = new QList<QImage>();
@@ -334,6 +401,12 @@ QList<QImage>* MainWindow::loadFrameSequence(QString filePath) {
     return frameList;
 }
 
+/*
+ * Function to create the widget containing buttons to switch between optical and audio illusions
+ *
+ * Arguments: none
+ * Returns: QWidget* - widget containing illusion type switch buttons
+ */
 QWidget* MainWindow::createIllusionTypeButtons() {
     QWidget* illusionTypeSelection = new QWidget(this);
 
@@ -361,6 +434,12 @@ QWidget* MainWindow::createIllusionTypeButtons() {
     return illusionTypeSelection;
 }
 
+/*
+ * Function to create the illusion select menu widget
+ *
+ * Arguments: none
+ * Returns: QWidget* - illusion select menu widget
+ */
 QWidget* MainWindow::createMenuWidget() {
     //Top-level menu widget
     QWidget *topMenuWidget = new QWidget(this);
@@ -386,7 +465,8 @@ QWidget* MainWindow::createMenuWidget() {
 
     //For each audio illusion, add button to layout
     QHBoxLayout *audioSelectLayout = new QHBoxLayout(audioSelectWidget);
-    //audioSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * audioButtonsList->count()));
+    audioSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * audioButtonsList->count()));
+    audioSelectWidget->setContentsMargins(QMargins(0,0,0,0));
     //audioSelectLayout->setSpacing(ss->scrollAreaButtonSpacing);
     //audioSelectLayout->addStretch();
 
@@ -406,19 +486,19 @@ QWidget* MainWindow::createMenuWidget() {
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //Set style and dimensions
     scrollArea->setStyleSheet(ss->scrollAreaStyle);
-    //scrollArea->setMaximumHeight(200);
     // configure gesture and add rubberband effect
     QScroller::grabGesture(scrollArea, QScroller::LeftMouseButtonGesture);
 
     //Create layout to hold menu for switching between illusions AND for switching between types of illusions
     QHBoxLayout *topMenuLayout = new QHBoxLayout(topMenuWidget);
 
+    //Create forward and backward scroll buttons
     QToolButton *backButton = new QToolButton();
     backButton->setIcon(QIcon(ss->backButtonPath));
     backButton->setStyleSheet("");
     backButton->setStyleSheet(ss->menuScrollButtonStyle);
     backButton->setIconSize(ss->menuBackForwardButtonSize);
-    connect(backButton, SIGNAL(clicked(bool)), this, SLOT(prevIllusionSlot()));
+    connect(backButton, SIGNAL(clicked(bool)), this, SLOT(scrollMenuBackward()));
     topMenuLayout->addWidget(backButton);
 
     topMenuLayout->addWidget(scrollArea);
@@ -428,9 +508,10 @@ QWidget* MainWindow::createMenuWidget() {
     forwardButton->setStyleSheet("");
     forwardButton->setStyleSheet(ss->menuScrollButtonStyle);
     forwardButton->setIconSize(ss->menuBackForwardButtonSize);
-    connect(forwardButton, SIGNAL(clicked(bool)), this, SLOT(nextIllusionSlot()));
+    connect(forwardButton, SIGNAL(clicked(bool)), this, SLOT(scrollMenuForward()));
     topMenuLayout->addWidget(forwardButton);
 
+    //Add buttons to switch between optical and audio illusions
     topMenuLayout->addWidget(createIllusionTypeButtons());
 
     //Set illusionSelectWidget to be able to switch between menus
@@ -439,41 +520,67 @@ QWidget* MainWindow::createMenuWidget() {
     return topMenuWidget;
 }
 
+/*
+ * Slot function to switch the exhibit to the optical illusion screen
+ *
+ * Arguments: none
+ * Returns: ClickableWidget* - idle screen widget
+ */
 ClickableWidget* MainWindow::createIdleScreenWidget() {
+    //Format idle screen widget
     ClickableWidget *idleWidget = new ClickableWidget();
     QVBoxLayout *idleLayout = new QVBoxLayout((QWidget*)idleWidget);
     idleLayout->setContentsMargins(ss->idleMargins);
     QLabel *idlePicture = new QLabel();
     QPixmap illusionIcon;
     QRect dimensions(0, 0, 1080, 1970);
+    //Load idle screen picture
     illusionIcon.load(ss->idlePath);
     idlePicture->setPixmap(illusionIcon.copy(dimensions));
 
+    //Connect function to switch to exhibit screen when idle widget is clicked
     idleLayout->addWidget(idlePicture);
     connect(idleWidget, SIGNAL(clicked()), this, SLOT(switchToExhibitScreen()));
 
     return idleWidget;
 }
 
+/*
+ * Slot function to switch the exhibit to the optical illusion screen
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::switchToOpticalMenu() {
-    scrollArea->horizontalScrollBar()->setValue(0);
-    if(illusionSelectWidget->currentIndex() != 0) {
+    scrollArea->horizontalScrollBar()->setValue(0); //Set menu widget to beginning of scroll area
+    if(illusionSelectWidget->currentIndex() != 0) { //If not already on the optical illusion widget
         illusionSelectWidget->setCurrentIndex(0);
+        //Set button styles
         opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[0]));
         audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[1]));
+        //Select first optical illusion
         opticalButtonsList->first()->click();
+        //Pause audio player
         audioMediaPlayer->pause();
     }
 
     restartInteractionTimer();
 }
 
+/*
+ * Slot function to switch the exhibit to the audio illusion screen
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::switchToAudioMenu() {
-    scrollArea->horizontalScrollBar()->setValue(0);
-    if(illusionSelectWidget->currentIndex() != 1) {
+    scrollArea->horizontalScrollBar()->setValue(0); //Set menu widget to beginning of scroll area
+    if(illusionSelectWidget->currentIndex() != 1) { //If not already on the audio illusion widget
         illusionSelectWidget->setCurrentIndex(1);
+        //set button styles
         opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[1]));
         audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[0]));
+        //start first audio illusion
         audioButtonsList->first()->click();
         illusionStackedWidget->setCurrentWidget(audioIllusionWidget);
         audioMediaPlayer->play();
@@ -482,11 +589,19 @@ void MainWindow::switchToAudioMenu() {
     restartInteractionTimer();
 }
 
-void MainWindow::nextIllusionSlot() {
+/*
+ * Slot function to scroll the illusion select menu forward
+ *
+ * Arguments: none
+ * Returns: void
+ */
+void MainWindow::scrollMenuForward() {
+    //Determine bounds of scroll action
     QScrollBar *scrollBar = scrollArea->horizontalScrollBar();
     int startValue = scrollBar->value();
     int endValue = startValue + ss->scrollDistance;
 
+    //Animate scroll
     QPropertyAnimation *animation = new QPropertyAnimation(scrollBar, "value");
     animation->setDuration(ss->scrollDuration);
     animation->setStartValue(startValue);
@@ -497,11 +612,19 @@ void MainWindow::nextIllusionSlot() {
     restartInteractionTimer();
 }
 
-void MainWindow::prevIllusionSlot() {
+/*
+ * Slot function to scroll the illusion select menu backward
+ *
+ * Arguments: none
+ * Returns: void
+ */
+void MainWindow::scrollMenuBackward() {
+    //Determine bounds of scroll action
     QScrollBar *scrollBar = scrollArea->horizontalScrollBar();
     int startValue = scrollBar->value();
     int endValue = startValue - ss->scrollDistance;
 
+    //Animate scroll
     QPropertyAnimation *animation = new QPropertyAnimation(scrollBar, "value");
     animation->setDuration(ss->scrollDuration);
     animation->setStartValue(startValue);
@@ -512,6 +635,12 @@ void MainWindow::prevIllusionSlot() {
     restartInteractionTimer();
 }
 
+/*
+ * Slot function to animate the switch to idle screen
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::switchToIdleScreen() {
     interactionTimer->stop();
 
@@ -537,46 +666,79 @@ void MainWindow::switchToIdleScreen() {
     connect(b, SIGNAL(finished()), this, SLOT(idleStackedSwitch()));
 }
 
+/*
+ * Slot function to switch to idle screen when opacity animation is finished
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::idleStackedSwitch() {
     exhibitAndIdleStackedWidget->setCurrentWidget(idleWidget);
 }
 
+/*
+ * Slot function to switch to the exhibit screen from the idle screen
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::switchToExhibitScreen() {
-    emit switchedToExhibitScreen(0);
-    illusionExplanationText->hideText();
+    emit switchedToExhibitScreen(0); //Emit appropriate signal
+    illusionExplanationText->hideText(); //Reset hidden explanation text
+    //Set appropriate opacities of exhibit and idle screens
     exhibitOpacity->setOpacity(1);
     idleOpacity->setOpacity(0);
     exhibitAndIdleStackedWidget->setCurrentWidget(exhibitWidget);
+    //Restart audio
     isFirstPlayAudio = true;
     restartAudio();
 }
 
+/*
+ * Slot function to pause the interaction timer
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::pauseInteractionTimer() {
     std::cout << "TIMER PAUSED" << std::endl;
     interactionTimer->stop();
 }
 
+/*
+ * Slot function to restart the interaction timer when appropriate
+ *
+ * Arguments: none
+ * Returns: void
+ */
 void MainWindow::restartInteractionTimer() {
     bool restartAllowed = false;
 
     VideoWidget* maybeVideo = activeButton->getWidget()->findChild<VideoWidget*>();
     FrameSequenceWidget* maybeFrameSeq = activeButton->getWidget()->findChild<FrameSequenceWidget*>();
-    if(maybeVideo != nullptr) {
+    if(maybeVideo != nullptr) { //If current widget is video, allow restart if not first playthrough
         restartAllowed = !maybeVideo->isFirstPlay;
-    } else if(maybeFrameSeq != nullptr) {
+    } else if(maybeFrameSeq != nullptr) { //If current widget is frame sequence, restart if not first playthrough
         restartAllowed = !maybeFrameSeq->isFirstPlay;
-    } else if(illusionStackedWidget->currentWidget() == audioIllusionWidget) {
+    } else if(illusionStackedWidget->currentWidget() == audioIllusionWidget) { //If current widget is audio, restart if not first playthrough
         restartAllowed = !isFirstPlayAudio;
-    } else {
+    } else { //If current widget is image, restart
         restartAllowed = true;
     }
 
+    //Restart timer if allowed
     if(restartAllowed) {
         std::cout << "TIMER RESTARTED" + std::to_string(++restartTracker)<< std::endl;
         interactionTimer->start(idleWaitSeconds * 1000);
     }
 }
 
+/*
+ * Slot function to switch the interface to display a different audio illusion
+ *
+ * Arguments: QWidget* - audio illusion widget to switch to
+ * Returns: void
+ */
 void MainWindow::changeAudioIllusion(QWidget *widget) {
     restartInteractionTimer();
 
@@ -585,17 +747,20 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
     activeButton = (WidgetButton*)sender();
     activeButton->setStyleSheet(ss->activeIllusionButton);
 
+    //Determine the path of the new illusion's audio file
     QString audioPath = static_cast<QLabel*>(widget)->text();
+    //Set the audio player to the new file
     audioMediaPlayer->setSource(QUrl::fromLocalFile(audioPath));
     audioProgressBar->setRange(0, audioMediaPlayer->duration());
     audioMediaPlayer->play();
 
+    //Change the title and explanation text
     audioIllusionLabel->setText(QFileInfo(audioPath).baseName());
     illusionExplanationText->hideText();
     illusionExplanationText->setText(readFirstLine(audioFileMap->value(audioPath)), readTextExcludingFirstLine(audioFileMap->value(audioPath)));
 
+    //Restart and play audio and set the first play flag
     restartAudio();
-
     isFirstPlayAudio = true;
 }
 
@@ -674,9 +839,9 @@ void MainWindow::setProgressBarPosition(qint64 val) {
  * Returns: void
  */
 void MainWindow::onPlaybackStateChanged(QMediaPlayer::PlaybackState state) {
-    if(isFirstPlayAudio && state != QMediaPlayer::StoppedState) { //If the status change indicates the audio is started
-        pauseInteractionTimer();
-        visualizer->restartSequence(0);
+    if(isFirstPlayAudio && state != QMediaPlayer::StoppedState) { //If the status change indicates the audio has started for the first time
+        pauseInteractionTimer(); //Pause the interaction timer
+        visualizer->restartSequence(0); //Restart the visualizer
         visualizer->playSequence();
     }
 }

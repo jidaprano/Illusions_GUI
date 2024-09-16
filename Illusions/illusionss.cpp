@@ -1,5 +1,11 @@
 #include "illusionss.h"
 
+/**
+ * @author Joseph Daprano <joseph.daprano@gmail.com>
+ *
+ * The IllusionSS class contains all utility literals and functions required by the Illusions exhibit
+ */
+
 IllusionSS::IllusionSS() {
     //chalet bold
     int id = QFontDatabase::addApplicationFont(chaletBookBoldPath);

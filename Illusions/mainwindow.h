@@ -69,8 +69,8 @@ public:
     ClickableWidget *createIdleScreenWidget();
 
 private slots:
-    void nextIllusionSlot();
-    void prevIllusionSlot();
+    void scrollMenuForward();
+    void scrollMenuBackward();
     void switchToOpticalMenu();
     void switchToAudioMenu();
     void switchToIdleScreen();

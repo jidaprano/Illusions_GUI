@@ -4,6 +4,7 @@
  *
  * The WidgetButton class subclasses the QToolButton class to associate a specific QWidget* with a button
  */
+
 WidgetButton::WidgetButton(QWidget *_widget, QString _iconPath) : QToolButton()
 {
     this->widget = _widget;

@@ -3,6 +3,12 @@
 #include <QStyleOptionSlider>
 #include <QMouseEvent>
 
+/**
+ * @author Joseph Daprano <joseph.daprano@gmail.com>
+ *
+ * The QImprovedSlider class is an improved version of the QSlider class that allows clicking on the slider to jump around
+ */
+
 class DirectJump : public QProxyStyle
 {
 public:

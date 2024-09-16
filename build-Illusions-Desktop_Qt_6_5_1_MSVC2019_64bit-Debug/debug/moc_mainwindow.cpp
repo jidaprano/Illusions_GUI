@@ -46,8 +46,8 @@ static constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers:
     "switchedActiveIllusion",
     "QWidget*",
     "widget",
-    "nextIllusionSlot",
-    "prevIllusionSlot",
+    "scrollMenuForward",
+    "scrollMenuBackward",
     "switchToOpticalMenu",
     "switchToAudioMenu",
     "switchToIdleScreen",
@@ -76,8 +76,8 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata4[23];
     char stringdata5[9];
     char stringdata6[7];
-    char stringdata7[17];
-    char stringdata8[17];
+    char stringdata7[18];
+    char stringdata8[19];
     char stringdata9[20];
     char stringdata10[18];
     char stringdata11[19];
@@ -107,25 +107,25 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(40, 22),  // "switchedActiveIllusion"
         QT_MOC_LITERAL(63, 8),  // "QWidget*"
         QT_MOC_LITERAL(72, 6),  // "widget"
-        QT_MOC_LITERAL(79, 16),  // "nextIllusionSlot"
-        QT_MOC_LITERAL(96, 16),  // "prevIllusionSlot"
-        QT_MOC_LITERAL(113, 19),  // "switchToOpticalMenu"
-        QT_MOC_LITERAL(133, 17),  // "switchToAudioMenu"
-        QT_MOC_LITERAL(151, 18),  // "switchToIdleScreen"
-        QT_MOC_LITERAL(170, 17),  // "idleStackedSwitch"
-        QT_MOC_LITERAL(188, 21),  // "switchToExhibitScreen"
-        QT_MOC_LITERAL(210, 21),  // "pauseInteractionTimer"
-        QT_MOC_LITERAL(232, 23),  // "restartInteractionTimer"
-        QT_MOC_LITERAL(256, 19),  // "changeAudioIllusion"
-        QT_MOC_LITERAL(276, 21),  // "changeOpticalIllusion"
-        QT_MOC_LITERAL(298, 12),  // "restartAudio"
-        QT_MOC_LITERAL(311, 22),  // "setProgressBarPosition"
-        QT_MOC_LITERAL(334, 22),  // "onPlaybackStateChanged"
-        QT_MOC_LITERAL(357, 27),  // "QMediaPlayer::PlaybackState"
-        QT_MOC_LITERAL(385, 5),  // "state"
-        QT_MOC_LITERAL(391, 20),  // "onMediaStatusChanged"
-        QT_MOC_LITERAL(412, 25),  // "QMediaPlayer::MediaStatus"
-        QT_MOC_LITERAL(438, 6)   // "status"
+        QT_MOC_LITERAL(79, 17),  // "scrollMenuForward"
+        QT_MOC_LITERAL(97, 18),  // "scrollMenuBackward"
+        QT_MOC_LITERAL(116, 19),  // "switchToOpticalMenu"
+        QT_MOC_LITERAL(136, 17),  // "switchToAudioMenu"
+        QT_MOC_LITERAL(154, 18),  // "switchToIdleScreen"
+        QT_MOC_LITERAL(173, 17),  // "idleStackedSwitch"
+        QT_MOC_LITERAL(191, 21),  // "switchToExhibitScreen"
+        QT_MOC_LITERAL(213, 21),  // "pauseInteractionTimer"
+        QT_MOC_LITERAL(235, 23),  // "restartInteractionTimer"
+        QT_MOC_LITERAL(259, 19),  // "changeAudioIllusion"
+        QT_MOC_LITERAL(279, 21),  // "changeOpticalIllusion"
+        QT_MOC_LITERAL(301, 12),  // "restartAudio"
+        QT_MOC_LITERAL(314, 22),  // "setProgressBarPosition"
+        QT_MOC_LITERAL(337, 22),  // "onPlaybackStateChanged"
+        QT_MOC_LITERAL(360, 27),  // "QMediaPlayer::PlaybackState"
+        QT_MOC_LITERAL(388, 5),  // "state"
+        QT_MOC_LITERAL(394, 20),  // "onMediaStatusChanged"
+        QT_MOC_LITERAL(415, 25),  // "QMediaPlayer::MediaStatus"
+        QT_MOC_LITERAL(441, 6)   // "status"
     },
     "MainWindow",
     "switchedToExhibitScreen",
@@ -134,8 +134,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "switchedActiveIllusion",
     "QWidget*",
     "widget",
-    "nextIllusionSlot",
-    "prevIllusionSlot",
+    "scrollMenuForward",
+    "scrollMenuBackward",
     "switchToOpticalMenu",
     "switchToAudioMenu",
     "switchToIdleScreen",
@@ -231,9 +231,9 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'switchedActiveIllusion'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QWidget *, std::false_type>,
-        // method 'nextIllusionSlot'
+        // method 'scrollMenuForward'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'prevIllusionSlot'
+        // method 'scrollMenuBackward'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'switchToOpticalMenu'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -278,8 +278,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->switchedToExhibitScreen((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 1: _t->switchedActiveIllusion((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
-        case 2: _t->nextIllusionSlot(); break;
-        case 3: _t->prevIllusionSlot(); break;
+        case 2: _t->scrollMenuForward(); break;
+        case 3: _t->scrollMenuBackward(); break;
         case 4: _t->switchToOpticalMenu(); break;
         case 5: _t->switchToAudioMenu(); break;
         case 6: _t->switchToIdleScreen(); break;

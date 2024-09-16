@@ -29,7 +29,8 @@ public:
     //Stylesheets
     const QString activeIllusionButton =
         "QToolButton {"
-        "border: 4px solid #7b2d19; }"
+        "border: 4px solid #7b2d19;"
+        "background-color: white; }"
         ;
 
     const QString labelColor =
