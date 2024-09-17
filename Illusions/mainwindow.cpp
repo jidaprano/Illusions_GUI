@@ -7,10 +7,7 @@
  * The MainWindow class represents the top-level GUI for the Illusions exhibit
  */
 
-
-/*
- * MainWindow constructor
- */
+//MainWindow constructor
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -394,7 +391,7 @@ QList<QImage>* MainWindow::loadFrameSequence(QString filePath) {
     QFileInfoList frameSeqFiles = QDir(filePath).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
     QList<QImage> *frameList = new QList<QImage>();
 
-    for(QFileInfo frame : frameSeqFiles) {
+    for(QFileInfo& frame : frameSeqFiles) {
         frameList->insert(frameList->end(), QImage(frame.absoluteFilePath()));
     }
 
@@ -455,26 +452,26 @@ QWidget* MainWindow::createMenuWidget() {
     //For each optical illusion, add button to layout
     QHBoxLayout *opticalSelectLayout = new QHBoxLayout(opticalSelectWidget);
     opticalSelectLayout->setSpacing(ss->scrollAreaButtonSpacing);
-    opticalSelectLayout->addStretch();
 
     for(int i = 0; i < opticalButtonsList->count(); i++) {
         WidgetButton* button = opticalButtonsList->at(i);
         opticalSelectLayout->addWidget(button);
+        button->setStyleSheet(ss->inactiveIllusionButton);
     }
     illusionSelectWidget->addWidget(opticalSelectWidget);
 
     //For each audio illusion, add button to layout
     QHBoxLayout *audioSelectLayout = new QHBoxLayout(audioSelectWidget);
-    audioSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * audioButtonsList->count()));
-    audioSelectWidget->setContentsMargins(QMargins(0,0,0,0));
-    //audioSelectLayout->setSpacing(ss->scrollAreaButtonSpacing);
-    //audioSelectLayout->addStretch();
+    audioSelectWidget->setLayout(audioSelectLayout);
+    audioSelectLayout->setSpacing(ss->scrollAreaButtonSpacing);
 
     for(int i = 0; i < audioButtonsList->count(); i++) {
         WidgetButton* button = audioButtonsList->at(i);
         audioSelectLayout->addWidget(button);
+        button->setStyleSheet(ss->inactiveIllusionButton);
     }
     illusionSelectWidget->addWidget(audioSelectWidget);
+    illusionSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * opticalButtonsList->count()));
     illusionSelectWidget->setStyleSheet(ss->illusionSelectStyle);
 
     //QScrollArea setup
@@ -558,6 +555,8 @@ void MainWindow::switchToOpticalMenu() {
         //Set button styles
         opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[0]));
         audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[1]));
+        //Resize menu widget
+        illusionSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * opticalButtonsList->count()));
         //Select first optical illusion
         opticalButtonsList->first()->click();
         //Pause audio player
@@ -580,6 +579,8 @@ void MainWindow::switchToAudioMenu() {
         //set button styles
         opticalMenuButton->setIcon(QIcon(ss->opticalMenuButtonIcons[1]));
         audioMenuButton->setIcon(QIcon(ss->audioMenuButtonIcons[0]));
+        //Resize menu widget
+        illusionSelectWidget->setFixedWidth((ss->illusionButtonSize.width() * audioButtonsList->count()));
         //start first audio illusion
         audioButtonsList->first()->click();
         illusionStackedWidget->setCurrentWidget(audioIllusionWidget);
@@ -743,7 +744,7 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
     restartInteractionTimer();
 
     //Set appropriate button outlining
-    activeButton->setStyleSheet("");
+    activeButton->setStyleSheet(ss->inactiveIllusionButton);
     activeButton = (WidgetButton*)sender();
     activeButton->setStyleSheet(ss->activeIllusionButton);
 

@@ -33,6 +33,11 @@ public:
         "background-color: white; }"
         ;
 
+    const QString inactiveIllusionButton =
+        "QToolButton {"
+        "background-color: white; }"
+        ;
+
     const QString labelColor =
         "QLabel {"
         "color: rgb(123, 45, 25); }"

@@ -1,5 +1,11 @@
 #include "hiddentextwidget.h"
 
+/**
+ * @author Joseph Daprano <joseph.daprano@gmail.com>
+ *
+ * The HiddenTextWidget class represents a widget that has a button that reveals hidden text
+ */
+
 HiddenTextWidget::HiddenTextWidget(QString questionText, QString hiddenText) : QWidget()
 {
     layout = new QVBoxLayout(this);
