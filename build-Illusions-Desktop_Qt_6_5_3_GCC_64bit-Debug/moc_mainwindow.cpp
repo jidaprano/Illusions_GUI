@@ -40,83 +40,119 @@ namespace {
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::stringData(
     "MainWindow",
-    "nextIllusionSlot",
+    "switchedToExhibitScreen",
     "",
-    "prevIllusionSlot",
+    "val",
+    "switchedActiveIllusion",
+    "QWidget*",
+    "widget",
+    "scrollMenuForward",
+    "scrollMenuBackward",
     "switchToOpticalMenu",
     "switchToAudioMenu",
     "switchToIdleScreen",
     "idleStackedSwitch",
     "switchToExhibitScreen",
+    "pauseInteractionTimer",
     "restartInteractionTimer",
     "changeAudioIllusion",
-    "QWidget*",
-    "widget",
     "changeOpticalIllusion",
     "restartAudio",
     "setProgressBarPosition",
-    "val"
+    "onPlaybackStateChanged",
+    "QMediaPlayer::PlaybackState",
+    "state",
+    "onMediaStatusChanged",
+    "QMediaPlayer::MediaStatus",
+    "status"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[34];
+    uint offsetsAndSizes[52];
     char stringdata0[11];
-    char stringdata1[17];
+    char stringdata1[24];
     char stringdata2[1];
-    char stringdata3[17];
-    char stringdata4[20];
-    char stringdata5[18];
-    char stringdata6[19];
+    char stringdata3[4];
+    char stringdata4[23];
+    char stringdata5[9];
+    char stringdata6[7];
     char stringdata7[18];
-    char stringdata8[22];
-    char stringdata9[24];
-    char stringdata10[20];
-    char stringdata11[9];
-    char stringdata12[7];
+    char stringdata8[19];
+    char stringdata9[20];
+    char stringdata10[18];
+    char stringdata11[19];
+    char stringdata12[18];
     char stringdata13[22];
-    char stringdata14[13];
-    char stringdata15[23];
-    char stringdata16[4];
+    char stringdata14[22];
+    char stringdata15[24];
+    char stringdata16[20];
+    char stringdata17[22];
+    char stringdata18[13];
+    char stringdata19[23];
+    char stringdata20[23];
+    char stringdata21[28];
+    char stringdata22[6];
+    char stringdata23[21];
+    char stringdata24[26];
+    char stringdata25[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
 Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_stringdata_CLASSMainWindowENDCLASS = {
     {
         QT_MOC_LITERAL(0, 10),  // "MainWindow"
-        QT_MOC_LITERAL(11, 16),  // "nextIllusionSlot"
-        QT_MOC_LITERAL(28, 0),  // ""
-        QT_MOC_LITERAL(29, 16),  // "prevIllusionSlot"
-        QT_MOC_LITERAL(46, 19),  // "switchToOpticalMenu"
-        QT_MOC_LITERAL(66, 17),  // "switchToAudioMenu"
-        QT_MOC_LITERAL(84, 18),  // "switchToIdleScreen"
-        QT_MOC_LITERAL(103, 17),  // "idleStackedSwitch"
-        QT_MOC_LITERAL(121, 21),  // "switchToExhibitScreen"
-        QT_MOC_LITERAL(143, 23),  // "restartInteractionTimer"
-        QT_MOC_LITERAL(167, 19),  // "changeAudioIllusion"
-        QT_MOC_LITERAL(187, 8),  // "QWidget*"
-        QT_MOC_LITERAL(196, 6),  // "widget"
-        QT_MOC_LITERAL(203, 21),  // "changeOpticalIllusion"
-        QT_MOC_LITERAL(225, 12),  // "restartAudio"
-        QT_MOC_LITERAL(238, 22),  // "setProgressBarPosition"
-        QT_MOC_LITERAL(261, 3)   // "val"
+        QT_MOC_LITERAL(11, 23),  // "switchedToExhibitScreen"
+        QT_MOC_LITERAL(35, 0),  // ""
+        QT_MOC_LITERAL(36, 3),  // "val"
+        QT_MOC_LITERAL(40, 22),  // "switchedActiveIllusion"
+        QT_MOC_LITERAL(63, 8),  // "QWidget*"
+        QT_MOC_LITERAL(72, 6),  // "widget"
+        QT_MOC_LITERAL(79, 17),  // "scrollMenuForward"
+        QT_MOC_LITERAL(97, 18),  // "scrollMenuBackward"
+        QT_MOC_LITERAL(116, 19),  // "switchToOpticalMenu"
+        QT_MOC_LITERAL(136, 17),  // "switchToAudioMenu"
+        QT_MOC_LITERAL(154, 18),  // "switchToIdleScreen"
+        QT_MOC_LITERAL(173, 17),  // "idleStackedSwitch"
+        QT_MOC_LITERAL(191, 21),  // "switchToExhibitScreen"
+        QT_MOC_LITERAL(213, 21),  // "pauseInteractionTimer"
+        QT_MOC_LITERAL(235, 23),  // "restartInteractionTimer"
+        QT_MOC_LITERAL(259, 19),  // "changeAudioIllusion"
+        QT_MOC_LITERAL(279, 21),  // "changeOpticalIllusion"
+        QT_MOC_LITERAL(301, 12),  // "restartAudio"
+        QT_MOC_LITERAL(314, 22),  // "setProgressBarPosition"
+        QT_MOC_LITERAL(337, 22),  // "onPlaybackStateChanged"
+        QT_MOC_LITERAL(360, 27),  // "QMediaPlayer::PlaybackState"
+        QT_MOC_LITERAL(388, 5),  // "state"
+        QT_MOC_LITERAL(394, 20),  // "onMediaStatusChanged"
+        QT_MOC_LITERAL(415, 25),  // "QMediaPlayer::MediaStatus"
+        QT_MOC_LITERAL(441, 6)   // "status"
     },
     "MainWindow",
-    "nextIllusionSlot",
+    "switchedToExhibitScreen",
     "",
-    "prevIllusionSlot",
+    "val",
+    "switchedActiveIllusion",
+    "QWidget*",
+    "widget",
+    "scrollMenuForward",
+    "scrollMenuBackward",
     "switchToOpticalMenu",
     "switchToAudioMenu",
     "switchToIdleScreen",
     "idleStackedSwitch",
     "switchToExhibitScreen",
+    "pauseInteractionTimer",
     "restartInteractionTimer",
     "changeAudioIllusion",
-    "QWidget*",
-    "widget",
     "changeOpticalIllusion",
     "restartAudio",
     "setProgressBarPosition",
-    "val"
+    "onPlaybackStateChanged",
+    "QMediaPlayer::PlaybackState",
+    "state",
+    "onMediaStatusChanged",
+    "QMediaPlayer::MediaStatus",
+    "status"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -128,26 +164,37 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       2,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    1,  116,    2, 0x06,    1 /* Public */,
+       4,    1,  119,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   86,    2, 0x08,    1 /* Private */,
-       3,    0,   87,    2, 0x08,    2 /* Private */,
-       4,    0,   88,    2, 0x08,    3 /* Private */,
-       5,    0,   89,    2, 0x08,    4 /* Private */,
-       6,    0,   90,    2, 0x08,    5 /* Private */,
-       7,    0,   91,    2, 0x08,    6 /* Private */,
-       8,    0,   92,    2, 0x08,    7 /* Private */,
-       9,    0,   93,    2, 0x08,    8 /* Private */,
-      10,    1,   94,    2, 0x08,    9 /* Private */,
-      13,    1,   97,    2, 0x08,   11 /* Private */,
-      14,    0,  100,    2, 0x08,   13 /* Private */,
-      15,    1,  101,    2, 0x08,   14 /* Private */,
+       7,    0,  122,    2, 0x08,    5 /* Private */,
+       8,    0,  123,    2, 0x08,    6 /* Private */,
+       9,    0,  124,    2, 0x08,    7 /* Private */,
+      10,    0,  125,    2, 0x08,    8 /* Private */,
+      11,    0,  126,    2, 0x08,    9 /* Private */,
+      12,    0,  127,    2, 0x08,   10 /* Private */,
+      13,    0,  128,    2, 0x08,   11 /* Private */,
+      14,    0,  129,    2, 0x08,   12 /* Private */,
+      15,    0,  130,    2, 0x08,   13 /* Private */,
+      16,    1,  131,    2, 0x08,   14 /* Private */,
+      17,    1,  134,    2, 0x08,   16 /* Private */,
+      18,    0,  137,    2, 0x08,   18 /* Private */,
+      19,    1,  138,    2, 0x08,   19 /* Private */,
+      20,    1,  141,    2, 0x08,   21 /* Private */,
+      23,    1,  144,    2, 0x08,   23 /* Private */,
+
+ // signals: parameters
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, 0x80000000 | 5,    6,
 
  // slots: parameters
     QMetaType::Void,
@@ -158,10 +205,13 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 11,   12,
-    QMetaType::Void, 0x80000000 | 11,   12,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::LongLong,   16,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::LongLong,    3,
+    QMetaType::Void, 0x80000000 | 21,   22,
+    QMetaType::Void, 0x80000000 | 24,   25,
 
        0        // eod
 };
@@ -175,9 +225,15 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSMainWindowENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
-        // method 'nextIllusionSlot'
+        // method 'switchedToExhibitScreen'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'prevIllusionSlot'
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'switchedActiveIllusion'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QWidget *, std::false_type>,
+        // method 'scrollMenuForward'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'scrollMenuBackward'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'switchToOpticalMenu'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -188,6 +244,8 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'idleStackedSwitch'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'switchToExhibitScreen'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'pauseInteractionTimer'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'restartInteractionTimer'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -201,7 +259,13 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'setProgressBarPosition'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<qint64, std::false_type>
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        // method 'onPlaybackStateChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QMediaPlayer::PlaybackState, std::false_type>,
+        // method 'onMediaStatusChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QMediaPlayer::MediaStatus, std::false_type>
     >,
     nullptr
 } };
@@ -212,37 +276,65 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->nextIllusionSlot(); break;
-        case 1: _t->prevIllusionSlot(); break;
-        case 2: _t->switchToOpticalMenu(); break;
-        case 3: _t->switchToAudioMenu(); break;
-        case 4: _t->switchToIdleScreen(); break;
-        case 5: _t->idleStackedSwitch(); break;
-        case 6: _t->switchToExhibitScreen(); break;
-        case 7: _t->restartInteractionTimer(); break;
-        case 8: _t->changeAudioIllusion((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
-        case 9: _t->changeOpticalIllusion((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
-        case 10: _t->restartAudio(); break;
-        case 11: _t->setProgressBarPosition((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
+        case 0: _t->switchedToExhibitScreen((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 1: _t->switchedActiveIllusion((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
+        case 2: _t->scrollMenuForward(); break;
+        case 3: _t->scrollMenuBackward(); break;
+        case 4: _t->switchToOpticalMenu(); break;
+        case 5: _t->switchToAudioMenu(); break;
+        case 6: _t->switchToIdleScreen(); break;
+        case 7: _t->idleStackedSwitch(); break;
+        case 8: _t->switchToExhibitScreen(); break;
+        case 9: _t->pauseInteractionTimer(); break;
+        case 10: _t->restartInteractionTimer(); break;
+        case 11: _t->changeAudioIllusion((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
+        case 12: _t->changeOpticalIllusion((*reinterpret_cast< std::add_pointer_t<QWidget*>>(_a[1]))); break;
+        case 13: _t->restartAudio(); break;
+        case 14: _t->setProgressBarPosition((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
+        case 15: _t->onPlaybackStateChanged((*reinterpret_cast< std::add_pointer_t<QMediaPlayer::PlaybackState>>(_a[1]))); break;
+        case 16: _t->onMediaStatusChanged((*reinterpret_cast< std::add_pointer_t<QMediaPlayer::MediaStatus>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-        case 8:
+        case 1:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QWidget* >(); break;
             }
             break;
-        case 9:
+        case 11:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QWidget* >(); break;
             }
             break;
+        case 12:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QWidget* >(); break;
+            }
+            break;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (MainWindow::*)(int );
+            if (_t _q_method = &MainWindow::switchedToExhibitScreen; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (MainWindow::*)(QWidget * );
+            if (_t _q_method = &MainWindow::switchedActiveIllusion; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 1;
+                return;
+            }
         }
     }
 }
@@ -266,14 +358,28 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 17;
     }
     return _id;
+}
+
+// SIGNAL 0
+void MainWindow::switchedToExhibitScreen(int _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void MainWindow::switchedActiveIllusion(QWidget * _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_WARNING_POP

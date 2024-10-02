@@ -485,6 +485,7 @@ QWidget* MainWindow::createMenuWidget() {
     scrollArea->setStyleSheet(ss->scrollAreaStyle);
     // configure gesture and add rubberband effect
     QScroller::grabGesture(scrollArea, QScroller::LeftMouseButtonGesture);
+    connect(&QScroller, SIGNAL(stateChanged(QScroller::State)), this, SLOT(restartInteractionTimer()));
 
     //Create layout to hold menu for switching between illusions AND for switching between types of illusions
     QHBoxLayout *topMenuLayout = new QHBoxLayout(topMenuWidget);
@@ -702,7 +703,6 @@ void MainWindow::switchToExhibitScreen() {
  * Returns: void
  */
 void MainWindow::pauseInteractionTimer() {
-    std::cout << "TIMER PAUSED" << std::endl;
     interactionTimer->stop();
 }
 
@@ -729,7 +729,6 @@ void MainWindow::restartInteractionTimer() {
 
     //Restart timer if allowed
     if(restartAllowed) {
-        std::cout << "TIMER RESTARTED" + std::to_string(++restartTracker)<< std::endl;
         interactionTimer->start(idleWaitSeconds * 1000);
     }
 }

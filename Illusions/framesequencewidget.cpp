@@ -27,7 +27,7 @@ FrameSequenceWidget::FrameSequenceWidget(QList<QImage> *frameSeq, int interval, 
     image->setScaledContents(true);
     layout->addWidget(image);
 
-    //Scrubber setup
+    //Scrubber setup (for timing, not visible)
     scrubber = new QSlider();
     scrubber->setOrientation(Qt::Horizontal);
     scrubber->setRange(0, frameSequence->length() - 1);

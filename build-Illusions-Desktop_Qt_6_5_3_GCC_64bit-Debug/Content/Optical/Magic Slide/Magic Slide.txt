@@ -1,0 +1,3 @@
+Watch the marble roll up the slide. Should it be able to do that? 
+
+It’s actually rolling along a flat surface. Depth cues and expectations of what a slide looks like influence our brain to view it as a normal slide, even when we know that the ball rolling up hill defies gravity.

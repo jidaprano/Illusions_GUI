@@ -80,7 +80,7 @@ public:
     const QSize illusionButtonSize = QSize(170,170);
     const QSize illusionTypeButtonSize = QSize(255,87);
     const QSize menuBackForwardButtonSize = QSize(50, 50);
-    const QSize illusionSize = QSize(700,700);
+    const QSize illusionSize = QSize(600,600);
     const int illusionSideMargin = 125;
     const int fadeDuration = 1000;
     const int scrollDuration = 300;
