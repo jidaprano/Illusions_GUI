@@ -116,7 +116,7 @@ void MainWindow::importIllusions() {
 
     //Import optical illusions
     if(!QDir(opticalFilePath).isEmpty()) {
-        QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot);
+        QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
         while(opticalFileIterator.hasNext()) { //for each file in the Content/Optical folder
             //File representing a single illusion
             QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -155,7 +155,7 @@ void MainWindow::importIllusions() {
 
     //Import audio illusions
     if(!QDir(audioFilePath).isEmpty()) {
-        QDirIterator audioFileIterator(audioFilePath);
+        QDirIterator audioFileIterator(audioFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
         while(audioFileIterator.hasNext()) { //For each file in the Content/Audio folder
             //File representing a single illusion
             QFileInfoList illusionFile = QDir(audioFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -485,7 +485,6 @@ QWidget* MainWindow::createMenuWidget() {
     scrollArea->setStyleSheet(ss->scrollAreaStyle);
     // configure gesture and add rubberband effect
     QScroller::grabGesture(scrollArea, QScroller::LeftMouseButtonGesture);
-    connect(&QScroller, SIGNAL(stateChanged(QScroller::State)), this, SLOT(restartInteractionTimer()));
 
     //Create layout to hold menu for switching between illusions AND for switching between types of illusions
     QHBoxLayout *topMenuLayout = new QHBoxLayout(topMenuWidget);
