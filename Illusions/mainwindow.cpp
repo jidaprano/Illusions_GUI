@@ -739,12 +739,12 @@ void MainWindow::restartInteractionTimer() {
  * Returns: void
  */
 void MainWindow::changeAudioIllusion(QWidget *widget) {
-    restartInteractionTimer();
-
     //Set appropriate button outlining
     activeButton->setStyleSheet(ss->inactiveIllusionButton);
     activeButton = (WidgetButton*)sender();
     activeButton->setStyleSheet(ss->activeIllusionButton);
+
+    restartInteractionTimer();
 
     //Determine the path of the new illusion's audio file
     QString audioPath = static_cast<QLabel*>(widget)->text();
@@ -772,12 +772,12 @@ void MainWindow::changeAudioIllusion(QWidget *widget) {
 void MainWindow::changeOpticalIllusion(QWidget *widget) {
     emit switchedActiveIllusion(widget);
 
-     restartInteractionTimer();
-
     //Set button corresponding to new display illusion to active outline and set old button to standard outline
     activeButton->setStyleSheet("");
-     activeButton = dynamic_cast<WidgetButton*>(sender());
+    activeButton = dynamic_cast<WidgetButton*>(sender());
     activeButton->setStyleSheet(ss->activeIllusionButton);
+
+    restartInteractionTimer();
 
     //Change current illusion
     illusionStackedWidget->setCurrentWidget(widget);

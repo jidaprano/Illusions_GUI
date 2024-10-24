@@ -21,6 +21,7 @@ VideoWidget::VideoWidget(QString filePath, QWidget* parent) : QWidget(parent)
 
     //Instantiate and add video playing widget
     videoOutput = new QVideoWidget(this);
+    videoOutput->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
     layout->addWidget(videoOutput);
     videoOutput->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
 
