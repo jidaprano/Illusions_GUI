@@ -7,7 +7,6 @@
 
 VideoWidget::VideoWidget(QString filePath, QWidget* parent) : QWidget(parent)
 {
-
     //Setup parenting
     this->setParent(parent);
 
@@ -23,6 +22,7 @@ VideoWidget::VideoWidget(QString filePath, QWidget* parent) : QWidget(parent)
     //Instantiate and add video playing widget
     videoOutput = new QVideoWidget(this);
     layout->addWidget(videoOutput);
+    videoOutput->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
 
     //Instantiate media player object and attach it to the video output widget
     mediaPlayer = new QMediaPlayer(this);
