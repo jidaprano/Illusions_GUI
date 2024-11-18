@@ -1,3 +1,0 @@
-Did the lines look the same size or different at the start? What about when they meet? 
-
-The brain estimates size based on visual cues for distance. Normally, environmental cues are helpful for this and give us good information. But here, environmental cues make objects of the same size appear to be different sizes.

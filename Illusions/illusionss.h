@@ -86,6 +86,7 @@ public:
     const int scrollDuration = 300;
     const int scrollDistance = 100;
     const int scrollAreaButtonSpacing = 15;
+    const int scrollAreaHeight = 200;
 
     //Fonts
     QFont ChaletBook_Bold;

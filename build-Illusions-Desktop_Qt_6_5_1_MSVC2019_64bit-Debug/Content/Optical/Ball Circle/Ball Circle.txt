@@ -1,3 +1,0 @@
-What do you see as you watch the dots move? Do you see the circle moving as one object or as individual dots moving in straight lines? 
-
-Each dot is moving in a straight line at a constant speed. Focusing on one dot makes this clear, but viewing the dots as a single object makes it look like a spinning circle. This demonstrates how the brain can automatically group similar objects into one object based on similarity, continuity, and proximity.

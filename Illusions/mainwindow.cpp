@@ -477,6 +477,7 @@ QWidget* MainWindow::createMenuWidget() {
     //QScrollArea setup
     scrollArea = new QScrollArea(this);
     scrollArea->setWidget(illusionSelectWidget);
+    scrollArea->setFixedHeight(ss->scrollAreaHeight);
 
     // hide scrollbars
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
