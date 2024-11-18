@@ -9,5 +9,6 @@ int main(int argc, char *argv[])
     w.setWindowTitle("Illusions");
     w.setWindowState(Qt::WindowFullScreen);
     w.show();
+    a.setOverrideCursor(Qt::BlankCursor);
     return a.exec();
 }
