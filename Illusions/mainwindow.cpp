@@ -115,6 +115,8 @@ void MainWindow::importIllusions() {
     audioFileMap = new QMap<QString, QString>();
 
     //Import optical illusions
+    QFileInfoList sas = QDir(".").entryInfoList();
+
     if(!QDir(opticalFilePath).isEmpty()) {
         QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
         while(opticalFileIterator.hasNext()) { //for each file in the Content/Optical folder
