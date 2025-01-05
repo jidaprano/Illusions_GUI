@@ -49,14 +49,6 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
-    int restartTracker = 0;
-    int idleWaitSeconds = 3
-        ;
-    QString opticalFilePath = "./Content/Optical";
-    QString audioFilePath = "./Content/Audio";
-    QString opticalButtonIconsPath = opticalFilePath + "/ButtonIcons/";
-    QString audioButtonIconsPath = audioFilePath + "/ButtonIcons/";
-
     void importIllusions();
     QString readFirstLine(QString filePath);
     QString readTextExcludingFirstLine(QString filePath);
@@ -66,15 +58,19 @@ public:
     QList<QImage> *loadFrameSequence(QString filePath);
     QWidget *createIllusionTypeButtons();
     QWidget *createMenuWidget();
-    ClickableWidget *createIdleScreenWidget();
+    void importIdleScreens();
+    ClickableWidget *createIdleScreenWidget(QString idleScreenPath);
 
 private slots:
     void scrollMenuForward();
     void scrollMenuBackward();
     void switchToOpticalMenu();
     void switchToAudioMenu();
-    void switchToIdleScreen();
-    void idleStackedSwitch();
+    void animateSwitchToIdleStack();
+    void switchToIdleStack();
+    void animateSwitchIdleScreen();
+    void switchIdleScreen();
+    void startIdleSwitchTimer();
     void switchToExhibitScreen();
     void pauseInteractionTimer();
     void restartInteractionTimer();
@@ -137,8 +133,10 @@ private:
     QScrollArea *scrollArea;
 
     //Idle widget
-    ClickableWidget *idleWidget;
+    QStackedWidget *idleStackedWidget;
     QTimer *interactionTimer;
+    QTimer *idleScreenTimer;
+    QPropertyAnimation *fadeInAnimationIdleScreen;
 
     //Opacities
     QGraphicsOpacityEffect *idleOpacity;

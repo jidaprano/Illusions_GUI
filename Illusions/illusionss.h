@@ -13,11 +13,16 @@ public:
     IllusionSS();
 
     //Paths
+    const QString opticalFilePath = "./Content/Optical";
+    const QString audioFilePath = "./Content/Audio";
+    const QString opticalButtonIconsPath = opticalFilePath + "/ButtonIcons/";
+    const QString audioButtonIconsPath = audioFilePath + "/ButtonIcons/";
+
     const QString chaletBookBoldPath = ":/fonts/StyleResources/Fonts/ChaletBook-Bold_10028 2.ttf";
     const QString chaletBookRegularPath = ":/fonts/StyleResources/Fonts/ChaletBook_10032 2.ttf";
     const QString chaletBookObliquePath = ":/fonts/StyleResources/Fonts/ChaletOblique-London.ttf";
     const QString backgroundPath = ":/images/StyleResources/Illusions_Background_APR24.png";
-    const QString idlePath = ":/images/StyleResources/idleScreen.png";
+    const QString idleScreensPath = ":/idleScreens/StyleResources/IdleScreens";
     const QString audioMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Auditory-Button_APR24.png",
                                       ":/images/StyleResources/Illusions_Brown-Auditory-Button_APR24.png" };
     const QString opticalMenuButtonIcons[2] = { ":/images/StyleResources/Illusions_Red-Optical-Button_APR24.png",
@@ -97,9 +102,12 @@ public:
     const int visualizerInterval = 38;
     const int defaultInterval = 24;
 
+    //Timer intervals
+    const int interactionTimerSeconds = 3;
+    const int idleSwitchSeconds = 3;
+
     //Functions
     QPalette backgroundImage();
-    QPalette idleImage();
     QList<QImage>* getSoundwaveSeq();
     QString getEmptyFileMessage(QString fileName);
 

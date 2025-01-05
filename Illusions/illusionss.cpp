@@ -40,20 +40,6 @@ QPalette IllusionSS::backgroundImage() {
 }
 
 /*
- * Function to return correctly formatted idle screen image
- *
- * Arguments: none
- * Returns: QPalette - formatted idle screen palette
- */
-QPalette IllusionSS::idleImage() {
-    QPixmap idle(idlePath);
-    idle = idle.scaled(physicalScreenDimensions, Qt::IgnoreAspectRatio);
-    QPalette palette;
-    palette.setBrush(QPalette::Window, idle);
-    return palette;
-}
-
-/*
  * Function to get the list of images in the soundwave visualizer sequence
  *
  * Arguments: none

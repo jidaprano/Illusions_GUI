@@ -10,12 +10,8 @@
         <file>StyleResources/Illusions_Left-Arrow_APR24.png</file>
         <file>StyleResources/Illusions_Brown-Auditory-Button_APR24.png</file>
         <file>StyleResources/Illusions_Background_APR24.png</file>
-        <file>StyleResources/idleScreen.png</file>
         <file>StyleResources/Illusions_Red-Auditory-Button_APR24.png</file>
         <file>StyleResources/Illusions_Brown-Optical-Button_APR24.png</file>
-    </qresource>
-    <qresource prefix="/videos">
-        <file>StyleResources/soundwave.mp4</file>
     </qresource>
     <qresource prefix="/soundwaveSequence">
         <file>StyleResources/soundwave/soundwaves_00060.png</file>
@@ -79,5 +75,11 @@
         <file>StyleResources/soundwave/soundwaves_00002.png</file>
         <file>StyleResources/soundwave/soundwaves_00001.png</file>
         <file>StyleResources/soundwave/soundwaves_00000.png</file>
+    </qresource>
+    <qresource prefix="/idleScreens">
+        <file>StyleResources/IdleScreens/idleScreen1.png</file>
+        <file>StyleResources/IdleScreens/idleScreen2.png</file>
+        <file>StyleResources/IdleScreens/idleScreen4.png</file>
+        <file>StyleResources/IdleScreens/idleScreen5.png</file>
     </qresource>
 </RCC>

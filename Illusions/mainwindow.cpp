@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Idle screen timer
     interactionTimer = new QTimer(this);
-    connect(interactionTimer, SIGNAL(timeout()), this, SLOT(switchToIdleScreen()));
-    interactionTimer->start(idleWaitSeconds * 1000);
+    connect(interactionTimer, SIGNAL(timeout()), this, SLOT(animateSwitchToIdleStack()));
+    interactionTimer->start(ss->interactionTimerSeconds * 1000);
 
     //Top-level layered widget
     exhibitAndIdleStackedWidget = new QStackedWidget(this);
@@ -76,12 +76,17 @@ MainWindow::MainWindow(QWidget *parent)
     exhibitVLayout->addWidget(menuWidget);
     exhibitVLayout->addSpacing(300);
 
-    //Idle screen widget
-    idleWidget = createIdleScreenWidget();
-    //instantiate opacity for idle screen
+    //Idle screen stacked widget
+    idleStackedWidget = new QStackedWidget(this);
+    //Instantiate opacity for idle screen
     idleOpacity = new QGraphicsOpacityEffect(this);
-    idleWidget->setGraphicsEffect(idleOpacity);
     idleOpacity->setOpacity(0);
+
+    importIdleScreens();
+
+    //Idle screen switch timer
+    idleScreenTimer = new QTimer(this);
+    connect(idleScreenTimer, SIGNAL(timeout()), this, SLOT(animateSwitchIdleScreen()));
 
     //Add background image
     QPalette backgroundImage = ss->backgroundImage();
@@ -89,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Add all created widgets to top-level stacked widget and set central widget
     exhibitAndIdleStackedWidget->addWidget(exhibitWidget);
-    exhibitAndIdleStackedWidget->addWidget(idleWidget);
+    exhibitAndIdleStackedWidget->addWidget(idleStackedWidget);
     exhibitAndIdleStackedWidget->setCurrentWidget(exhibitWidget);
     this->setCentralWidget(exhibitAndIdleStackedWidget);
 
@@ -115,10 +120,8 @@ void MainWindow::importIllusions() {
     audioFileMap = new QMap<QString, QString>();
 
     //Import optical illusions
-    QFileInfoList sas = QDir(".").entryInfoList();
-
-    if(!QDir(opticalFilePath).isEmpty()) {
-        QDirIterator opticalFileIterator(opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    if(!QDir(ss->opticalFilePath).isEmpty()) {
+        QDirIterator opticalFileIterator(ss->opticalFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
         while(opticalFileIterator.hasNext()) { //for each file in the Content/Optical folder
             //File representing a single illusion
             QFileInfoList illusionFile = QDir(opticalFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -134,7 +137,7 @@ void MainWindow::importIllusions() {
                 if(!illusionPath.isEmpty() && !textPath.isEmpty()) { //If both illusion path and text path are valid
                     QWidget *illusion = createOpticalWidget(illusionPath); //Create optical illusion
                     //Create button corresponding to illusion
-                    QString iconPath = opticalButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
+                    QString iconPath = ss->opticalButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
                     WidgetButton *button = new WidgetButton(illusion, iconPath);
                     //Format and add button to menu
                     button->setIconSize(ss->illusionButtonSize);
@@ -152,12 +155,12 @@ void MainWindow::importIllusions() {
             opticalFileIterator.next();
         }
     } else { //If Content/Optical is empty, output warning
-        QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
+        QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(ss->opticalFilePath));
     }
 
     //Import audio illusions
-    if(!QDir(audioFilePath).isEmpty()) {
-        QDirIterator audioFileIterator(audioFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    if(!QDir(ss->audioFilePath).isEmpty()) {
+        QDirIterator audioFileIterator(ss->audioFilePath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
         while(audioFileIterator.hasNext()) { //For each file in the Content/Audio folder
             //File representing a single illusion
             QFileInfoList illusionFile = QDir(audioFileIterator.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -176,7 +179,7 @@ void MainWindow::importIllusions() {
 
                     QLabel *illusion = new QLabel(illusionPath); //Create illusion label
                     //Create and format select button
-                    QString iconPath = audioButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
+                    QString iconPath = ss->audioButtonIconsPath + QFileInfo(illusionPath).baseName() + ".jpg";
                     WidgetButton *button = new WidgetButton(illusion, iconPath);
                     button->setIconSize(ss->illusionButtonSize);
                     button->setMaximumSize(ss->illusionButtonSize);
@@ -189,7 +192,7 @@ void MainWindow::importIllusions() {
             audioFileIterator.next();
         }
     } else { //If Content/Audio is empty, output warning
-        QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(opticalFilePath));
+        QMessageBox::warning(0, ss->warningTitle, ss->getEmptyFileMessage(ss->opticalFilePath));
     }
 }
 
@@ -521,12 +524,32 @@ QWidget* MainWindow::createMenuWidget() {
 }
 
 /*
- * Slot function to switch the exhibit to the optical illusion screen
+ * Function to populate idle stacked widget with idle image widgets
  *
- * Arguments: none
+ * Arguments: void
+ * Returns: void
+ */
+void MainWindow::importIdleScreens() {
+    if(!QDir(ss->idleScreensPath).isEmpty()) {
+        QDirIterator idleScreensIterator(ss->idleScreensPath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        while(idleScreensIterator.hasNext()) {
+            ClickableWidget* idleWidget = createIdleScreenWidget(idleScreensIterator.filePath());
+            idleStackedWidget->addWidget(idleWidget);
+            idleScreensIterator.next();
+        }
+
+        idleStackedWidget->setGraphicsEffect(idleOpacity);
+        idleStackedWidget->setCurrentIndex(0);
+    }
+}
+
+/*
+ * Function to create and return an idle screen widget with an image at the specified path
+ *
+ * Arguments: QString - idle screen image path
  * Returns: ClickableWidget* - idle screen widget
  */
-ClickableWidget* MainWindow::createIdleScreenWidget() {
+ClickableWidget* MainWindow::createIdleScreenWidget(QString idleScreenPath) {
     //Format idle screen widget
     ClickableWidget *idleWidget = new ClickableWidget();
     QVBoxLayout *idleLayout = new QVBoxLayout((QWidget*)idleWidget);
@@ -535,7 +558,7 @@ ClickableWidget* MainWindow::createIdleScreenWidget() {
     QPixmap illusionIcon;
     QRect dimensions(0, 0, 1080, 1970);
     //Load idle screen picture
-    illusionIcon.load(ss->idlePath);
+    illusionIcon.load(idleScreenPath);
     idlePicture->setPixmap(illusionIcon.copy(dimensions));
 
     //Connect function to switch to exhibit screen when idle widget is clicked
@@ -645,29 +668,30 @@ void MainWindow::scrollMenuBackward() {
  * Arguments: none
  * Returns: void
  */
-void MainWindow::switchToIdleScreen() {
+void MainWindow::animateSwitchToIdleStack() {
     interactionTimer->stop();
 
     //Fade in idle widget
-    QPropertyAnimation *a = new QPropertyAnimation(idleOpacity,"opacity");
-    a->setDuration(ss->fadeDuration);
-    a->setStartValue(0);
-    a->setEndValue(1);
+    QPropertyAnimation *fadeInAnimation = new QPropertyAnimation(idleOpacity,"opacity");
+    fadeInAnimation->setDuration(ss->fadeDuration);
+    fadeInAnimation->setStartValue(0);
+    fadeInAnimation->setEndValue(1);
 
     //Fade out exhibit widget
-    QPropertyAnimation *b = new QPropertyAnimation(exhibitOpacity,"opacity");
-    b->setDuration(ss->fadeDuration);
-    b->setStartValue(1);
-    b->setEndValue(0);
+    QPropertyAnimation *fadeOutAnimation = new QPropertyAnimation(exhibitOpacity,"opacity");
+    fadeOutAnimation->setDuration(ss->fadeDuration);
+    fadeOutAnimation->setStartValue(1);
+    fadeOutAnimation->setEndValue(0);
 
     //Start animations
-    b->start(QPropertyAnimation::DeleteWhenStopped);
-    a->start(QPropertyAnimation::DeleteWhenStopped);
-    a->setPaused(true);
+    fadeOutAnimation->start(QPropertyAnimation::DeleteWhenStopped);
+    fadeInAnimation->start(QPropertyAnimation::DeleteWhenStopped);
+    fadeInAnimation->setPaused(true);
 
     //Create connections for transition
-    connect(b, SIGNAL(finished()), a, SLOT(resume()));
-    connect(b, SIGNAL(finished()), this, SLOT(idleStackedSwitch()));
+    connect(fadeOutAnimation, SIGNAL(finished()), fadeInAnimation, SLOT(resume()));
+    connect(fadeOutAnimation, SIGNAL(finished()), this, SLOT(switchToIdleStack()));
+    connect(fadeInAnimation, SIGNAL(finished()), this, SLOT(startIdleSwitchTimer()));
 }
 
 /*
@@ -676,8 +700,66 @@ void MainWindow::switchToIdleScreen() {
  * Arguments: none
  * Returns: void
  */
-void MainWindow::idleStackedSwitch() {
-    exhibitAndIdleStackedWidget->setCurrentWidget(idleWidget);
+void MainWindow::switchToIdleStack() {
+    exhibitAndIdleStackedWidget->setCurrentWidget(idleStackedWidget);
+}
+
+/*
+ * Slot function to start idle screen switch timer
+ *
+ * Arguments: none
+ * Returns: void
+ */
+void MainWindow::startIdleSwitchTimer() {
+    idleScreenTimer->start(ss->idleSwitchSeconds * 1000);
+}
+
+/*
+ * Slot function animate switching of the idle screen image
+ *
+ * Arguments: none
+ * Returns: void
+ */
+void MainWindow::animateSwitchIdleScreen() {
+    idleScreenTimer->stop();
+
+    //Fade out idle widget
+    QPropertyAnimation *fadeOutAnimationIdleScreen = new QPropertyAnimation(idleOpacity,"opacity");
+    fadeOutAnimationIdleScreen->setDuration(ss->fadeDuration);
+    fadeOutAnimationIdleScreen->setStartValue(1);
+    fadeOutAnimationIdleScreen->setEndValue(0);
+
+    //Fade in idle widget
+    fadeInAnimationIdleScreen = new QPropertyAnimation(idleOpacity,"opacity");
+    fadeInAnimationIdleScreen->setDuration(ss->fadeDuration);
+    fadeInAnimationIdleScreen->setStartValue(0);
+    fadeInAnimationIdleScreen->setEndValue(1);
+
+    //Start fade out animation
+    fadeOutAnimationIdleScreen->start(QPropertyAnimation::DeleteWhenStopped);
+
+    //Create connections for transition
+    connect(fadeOutAnimationIdleScreen, SIGNAL(finished()), this, SLOT(switchIdleScreen()));
+}
+
+/*
+ * Slot function to switch the idle screen image
+ *
+ * Arguments: none
+ * Returns: void
+ */
+void MainWindow::switchIdleScreen() {
+    int index = idleStackedWidget->currentIndex();
+    if(index < idleStackedWidget->count() -1) { //If not on last screensaver, move to next
+        index++;
+    } else { //If on last screensaver, start from the first one
+        index = 0;
+    }
+    idleStackedWidget->setCurrentIndex(index);
+    //Start fade in animation
+    fadeInAnimationIdleScreen->start(QPropertyAnimation::DeleteWhenStopped);
+    //Restart idle screen switch timer
+    idleScreenTimer->start(ss->idleSwitchSeconds * 1000);
 }
 
 /*
@@ -696,6 +778,9 @@ void MainWindow::switchToExhibitScreen() {
     //Restart audio
     isFirstPlayAudio = true;
     restartAudio();
+    //Stop idle screen image switching
+    idleStackedWidget->setCurrentIndex(1);
+    idleScreenTimer->stop();
 }
 
 /*
@@ -731,7 +816,7 @@ void MainWindow::restartInteractionTimer() {
 
     //Restart timer if allowed
     if(restartAllowed) {
-        interactionTimer->start(idleWaitSeconds * 1000);
+        interactionTimer->start(ss->interactionTimerSeconds * 1000);
     }
 }
 
