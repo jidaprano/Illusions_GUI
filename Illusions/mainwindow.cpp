@@ -531,12 +531,17 @@ QWidget* MainWindow::createMenuWidget() {
  */
 void MainWindow::importIdleScreens() {
     if(!QDir(ss->idleScreensPath).isEmpty()) {
-        QDirIterator idleScreensIterator(ss->idleScreensPath, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        QDirIterator idleScreensIterator(ss->idleScreensPath, QDir::AllEntries | QDir::NoDotAndDotDot);
         while(idleScreensIterator.hasNext()) {
-            ClickableWidget* idleWidget = createIdleScreenWidget(idleScreensIterator.filePath());
-            idleStackedWidget->addWidget(idleWidget);
+            if(idleScreensIterator.filePath() != "") {
+                ClickableWidget* idleWidget = createIdleScreenWidget(idleScreensIterator.filePath());
+                idleStackedWidget->addWidget(idleWidget);
+            }
             idleScreensIterator.next();
         }
+
+        ClickableWidget* idleWidget = createIdleScreenWidget(idleScreensIterator.filePath());
+        idleStackedWidget->addWidget(idleWidget);
 
         idleStackedWidget->setGraphicsEffect(idleOpacity);
         idleStackedWidget->setCurrentIndex(0);

@@ -78,8 +78,7 @@
     </qresource>
     <qresource prefix="/idleScreens">
         <file>StyleResources/IdleScreens/idleScreen1.png</file>
-        <file>StyleResources/IdleScreens/idleScreen2.png</file>
-        <file>StyleResources/IdleScreens/idleScreen4.png</file>
-        <file>StyleResources/IdleScreens/idleScreen5.png</file>
+        <file>StyleResources/IdleScreens/idleScreen2.jpg</file>
+        <file>StyleResources/IdleScreens/idleScreen3.jpg</file>
     </qresource>
 </RCC>
