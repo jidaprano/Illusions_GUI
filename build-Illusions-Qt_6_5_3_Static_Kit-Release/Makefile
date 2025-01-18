@@ -1317,14 +1317,15 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_Resources.cpp
 qrc_Resources.cpp: ../Illusions/Resources.qrc \
 		../../../../qtStatic-6.5.3/libexec/rcc \
-		../Illusions/StyleResources/soundwave.mp4 \
+		../Illusions/StyleResources/IdleScreens/idleScreen2.jpg \
+		../Illusions/StyleResources/IdleScreens/idleScreen1.png \
+		../Illusions/StyleResources/IdleScreens/idleScreen3.jpg \
 		../Illusions/StyleResources/Illusions_Right-Arrow_APR24.png \
 		../Illusions/StyleResources/Illusions_Red-Auditory-Button_APR24.png \
 		../Illusions/StyleResources/Illusions_Left-Arrow_APR24.png \
 		../Illusions/StyleResources/Illusions_Brown-Optical-Button_APR24.png \
 		../Illusions/StyleResources/Illusions_Background_APR24.png \
 		../Illusions/StyleResources/Illusions_Brown-Auditory-Button_APR24.png \
-		../Illusions/StyleResources/idleScreen.png \
 		../Illusions/StyleResources/Illusions_Red-Optical-Button_APR24.png \
 		../Illusions/StyleResources/soundwave/soundwaves_00010.png \
 		../Illusions/StyleResources/soundwave/soundwaves_00047.png \
@@ -4227,12 +4228,7 @@ mainwindow.o: ../Illusions/mainwindow.cpp ../Illusions/mainwindow.h \
 		../../../../qtStatic-6.5.3/include/QtGui/QPalette \
 		../../../../qtStatic-6.5.3/include/QtGui/QFontDatabase \
 		../../../../qtStatic-6.5.3/include/QtGui/qfontdatabase.h \
-		ui_mainwindow.h \
-		../../../../qtStatic-6.5.3/include/QtWidgets/QMenuBar \
-		../../../../qtStatic-6.5.3/include/QtWidgets/qmenubar.h \
-		../../../../qtStatic-6.5.3/include/QtWidgets/qmenu.h \
-		../../../../qtStatic-6.5.3/include/QtWidgets/QStatusBar \
-		../../../../qtStatic-6.5.3/include/QtWidgets/qstatusbar.h
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Illusions/mainwindow.cpp
 
 qimprovedslider.o: ../Illusions/qimprovedslider.cpp ../Illusions/qimprovedslider.h \

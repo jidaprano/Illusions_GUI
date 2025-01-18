@@ -103,8 +103,8 @@ public:
     const int defaultInterval = 24;
 
     //Timer intervals
-    const int interactionTimerSeconds = 3;
-    const int idleSwitchSeconds = 3;
+    const int interactionTimerSeconds = 60;
+    const int idleSwitchSeconds = 15;
 
     //Functions
     QPalette backgroundImage();
